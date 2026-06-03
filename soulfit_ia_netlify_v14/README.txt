@@ -1,3 +1,3 @@
-SoulFit+ IA V18
+SoulFit+ IA V22 completa
 
-Correção: impressão A4 horizontal em uma única folha com treinos A/B/C/D compactados para dobrar ao meio.
+Correções: ficha de impressão voltou, treinador removido, IA preenche editor e ficha, primeira prescrição, patologia, idade e funcional.

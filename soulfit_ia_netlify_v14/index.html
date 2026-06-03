@@ -3,162 +3,131 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SoulFit+ | Evolução de Treinos</title>
+<title>SoulFit+ | IA de Treinos</title>
 <style>
-:root{--red:#e00000;--yellow:#ffe100;--ink:#171717;--soft:#fff9dc;--bg:#f4f5f7;--muted:#687076;--purple:#7c4dff}
-*{box-sizing:border-box} body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:#111} header{background:#111;color:#fff;padding:14px 18px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap} h1{margin:0;font-size:21px}.tag{font-size:12px;opacity:.82}.wrap{max-width:1360px;margin:18px auto;padding:0 12px}.app{display:grid;grid-template-columns:390px 1fr;gap:14px}.panel{background:#fff;border-radius:16px;padding:15px;box-shadow:0 7px 22px rgba(0,0,0,.08)}h2{font-size:17px;margin:0 0 10px}.mini{font-size:12px;color:var(--muted);line-height:1.35}.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}label{font-size:12px;font-weight:800;display:block;margin:8px 0 4px}input,select,textarea{width:100%;border:1px solid #cfd3d7;border-radius:10px;padding:9px;font-size:14px;background:#fff}textarea{min-height:76px;resize:vertical}button{border:0;border-radius:10px;background:#111;color:#fff;font-weight:800;padding:10px 12px;cursor:pointer}button:hover{opacity:.92}.redbtn{background:var(--red)}.light{background:#eef0f2;color:#111;border:1px solid #cfd3d7}.yellow{background:var(--yellow);color:#111}.btns{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.tabbar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}.tab{background:#e9ebee;color:#111}.tab.active{background:#111;color:#fff}.exercise-line{display:grid;grid-template-columns:2fr .7fr .55fr .55fr .55fr .55fr;gap:5px;margin-bottom:5px}.exercise-line input{padding:7px;border-radius:7px}.section-title{font-weight:900;margin:10px 0 6px}.preview-img{display:none;max-width:100%;border-radius:10px;margin-top:8px;border:1px solid #ddd}.promptbox{background:#101010;color:#fff;border-radius:12px;padding:12px;font-family:ui-monospace,Consolas,monospace;font-size:12px;white-space:pre-wrap;max-height:250px;overflow:auto}.history-item{border:1px solid #ddd;background:#fafafa;border-radius:10px;padding:9px;margin:8px 0}.print-actions{position:sticky;top:0;background:#fff;padding-bottom:10px;z-index:4}.sheet{width:297mm;min-height:210mm;margin:10px auto;background:white;position:relative;overflow:hidden;padding:10mm 11mm;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.12)}.watermark{position:absolute;inset:0;pointer-events:none;opacity:.08;background:radial-gradient(circle at 2% 6%, #7c90d8 0 15%, transparent 16%),radial-gradient(circle at 98% 90%, #7c90d8 0 16%, transparent 17%)}.sheet-inner{position:relative;z-index:1}.top{display:grid;grid-template-columns:1fr 1.3fr 1fr;align-items:start;margin-bottom:4mm;gap:6mm}.brand{display:flex;align-items:center;gap:8px}.brand-logo{width:58mm;max-width:100%;height:auto;display:block}.brand.right{justify-content:flex-end}.dumb{font-size:34px;text-align:center;filter:grayscale(1)}.info{font-size:11.5px;font-weight:800;line-height:1.25}.pline{display:inline-block;border-bottom:1.5px solid #111;height:15px;min-width:130px;margin-left:5px;vertical-align:bottom}.pline.long{min-width:210px}.obsblock{font-size:11.5px;font-weight:800}.obsblock .line{display:block;border-bottom:1.5px solid #111;height:15px;margin:4px 0 0}.print-grid{display:grid;grid-template-columns:1fr 1fr;gap:7mm 14mm}.leftcol,.rightcol{display:grid;grid-template-rows:1fr 1fr;gap:6mm}.workout h3{text-align:left;margin:0 0 1.5mm;background:#111;color:#fff;padding:2px 14px;width:max-content;font-size:15px;text-transform:uppercase;border-right:16px solid var(--red);border-radius:3px 8px 0 0}.workout h3.purple{color:#613cff}table{width:100%;border-collapse:separate;border-spacing:3px;font-size:12px}th{background:#050505;color:white;border:2px solid white;padding:5px 3px;text-align:center}td{border:1.2px solid #777;height:6.7mm;background:white;padding:1px 3px;vertical-align:middle}.soft{background:var(--soft)}.excol{width:52%}.srcol{width:12%}.loadcol{width:9%}.footer-note{position:absolute;bottom:5mm;left:11mm;right:11mm;font-size:10px;color:#777;text-align:center}.mobile-note{display:none}.danger-note{border-left:4px solid var(--red);padding:8px;background:#fff5f5;border-radius:8px;font-size:12px;line-height:1.35;margin-top:8px}@media(max-width:980px){.app{grid-template-columns:1fr}.sheet{width:100%;min-height:auto;overflow:auto}.exercise-line{grid-template-columns:1fr 70px 54px 54px 54px 54px}.mobile-note{display:block}.top{grid-template-columns:1fr}.dumb{text-align:left}.info{margin-top:8px}.print-grid{grid-template-columns:1fr}.leftcol,.rightcol{gap:8mm}}@media print{body{background:#fff}.no-print,header{display:none!important}.wrap{max-width:none;margin:0;padding:0}.app{display:block}.panel{box-shadow:none;padding:0}.sheet{box-shadow:none;border-radius:0;margin:0;width:297mm;min-height:210mm;padding:6mm 7mm;page-break-after:avoid}.workout h3{font-size:13px}table{font-size:9.8px;border-spacing:2px}td{height:6.2mm;padding:1px 3px}th{padding:3px 2px}.brand-logo{width:52mm}.footer-note{display:none}@page{size:A4 landscape;margin:0}}
-
-.brand-text{font-size:32px;font-weight:900;font-family:Arial,sans-serif;line-height:1}
-.soul{color:#e00000;}
-.fit{color:#000000;}
-
-
-/* V7: upload de foto removido */
-#foto,#preview,.preview-img{display:none!important}
-
-
-/* V8 ajustes Luna: logo único em texto, cabeçalho compacto e treinos inativos em branco */
-.brand-logo,.brand.right,.dumb{display:none!important}
-.compact-top{
-  display:grid!important;
-  grid-template-columns:42mm 1fr!important;
-  gap:5mm!important;
-  align-items:center!important;
-  margin-bottom:1.8mm!important;
-  min-height:18mm!important;
+:root{
+  --red:#e00000;
+  --ink:#171717;
+  --bg:#f4f5f7;
+  --muted:#687076;
+  --soft:#fff8d9;
 }
-.brand-text-only{
-  display:flex!important;
-  align-items:center!important;
-  justify-content:flex-start!important;
-}
-.brand-text{
-  font-size:25px!important;
-  font-weight:900!important;
-  font-family:Arial Black, Impact, Arial, sans-serif!important;
-  letter-spacing:-1px!important;
-  line-height:1!important;
-  white-space:nowrap!important;
-}
-.soul{color:#e00000!important}
-.fit{color:#000!important}
-.compact-info{
-  font-size:10.5px!important;
-  line-height:1.05!important;
-}
-.pline{
-  height:12px!important;
-  min-width:80px!important;
-  margin-left:3px!important;
-  margin-right:7px!important;
-}
-.pline.long{min-width:170px!important}
-.pline.small{min-width:70px!important}
-.pline.obsline{min-width:320px!important}
-.sheet{padding:5mm 7mm!important}
-.print-grid{gap:4mm 8mm!important}
-.leftcol,.rightcol{gap:3mm!important}
-.workout.inactive td{color:transparent!important}
-.workout.inactive td::selection{color:transparent!important}
-.workout.inactive h3{opacity:.9}
-@media print{
-  .compact-top{grid-template-columns:38mm 1fr!important;margin-bottom:1mm!important;min-height:15mm!important}
-  .brand-text{font-size:22px!important}
-  .compact-info{font-size:9.4px!important}
-  .pline{height:10px!important}
-  .pline.long{min-width:150px!important}
-  .pline.obsline{min-width:280px!important}
-  .sheet{padding:4mm 6mm!important}
-  .print-grid{gap:3mm 6mm!important}
-  .leftcol,.rightcol{gap:2.5mm!important}
-}
-
-
-/* V17 IA: divisão respeitada na geração */
-.workout.inactive tbody td{color:transparent!important;background:white!important}
-.workout.inactive tbody td *{display:none!important}
-.workout.inactive .generated-text{display:none!important}
-
-
-/* V17 IA: sem prompt, PDF e observações restauradas */
-#promptArea{display:none!important}
-.obsline{display:inline-block!important}
-
-
-/* V17 IA: melhor enquadramento para computador */
-@media screen and (min-width:981px){
-  .wrap{max-width:100vw;margin:10px auto;padding:0 8px}
-  .app{grid-template-columns:340px minmax(0,1fr);gap:10px}
-  aside.panel{max-height:calc(100vh - 92px);overflow:auto}
-  main.panel{overflow:hidden;padding:10px}
-  .sheet{width:100%;max-width:1030px;min-height:auto;margin:6px auto;padding:4.5mm 5.5mm}
-  .compact-top{grid-template-columns:34mm 1fr!important;gap:3mm!important;min-height:13mm!important;margin-bottom:1mm!important}
-  .brand-text{font-size:21px!important}
-  .compact-info{font-size:9px!important}
-  .pline{height:9px!important;min-width:55px!important}
-  .pline.long{min-width:120px!important}
-  .pline.obsline{min-width:220px!important}
-  .print-grid{gap:3mm 5mm!important}
-  .leftcol,.rightcol{gap:2.2mm!important}
-  .workout h3{font-size:12px!important;padding:1px 10px!important}
-  table{font-size:8.7px!important;border-spacing:1.5px!important}
-  th{padding:2px 1px!important}
-  td{height:4.8mm!important;padding:1px 2px!important}
-  .excol{width:50%!important}.srcol{width:12%!important}.loadcol{width:9.5%!important}
-}
-@media screen and (max-width:1280px) and (min-width:981px){
-  .app{grid-template-columns:315px minmax(0,1fr)}
-  .sheet{max-width:930px}
-  table{font-size:8px!important}
-  td{height:4.4mm!important}
-}
-
-
-/* V17 IA: aba/modo patologia exclusiva */
-.pathology-toggle{
-  margin:8px 0 4px;
-  border:1px solid #f1b9b9;
-  background:#fff5f5;
-  border-radius:12px;
-  padding:9px;
-}
-.checkline{
-  display:flex!important;
-  align-items:flex-start;
-  gap:8px;
-  margin:0!important;
-  cursor:pointer;
-  font-weight:500!important;
-}
-.checkline input{
-  width:auto!important;
-  margin-top:3px;
-  transform:scale(1.08);
-}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:#111}
+header{background:#111;color:#fff;padding:14px 18px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+h1{margin:0;font-size:21px}.tag{font-size:12px;opacity:.82}
+.wrap{max-width:1440px;margin:14px auto;padding:0 12px}
+.app{display:grid;grid-template-columns:360px minmax(0,1fr);gap:12px}
+.panel{background:#fff;border-radius:16px;padding:14px;box-shadow:0 7px 22px rgba(0,0,0,.08)}
+aside.panel{max-height:calc(100vh - 86px);overflow:auto}
+main.panel{overflow:auto}
+h2{font-size:17px;margin:0 0 10px}
+label{font-size:12px;font-weight:800;display:block;margin:8px 0 4px}
+input,select,textarea{width:100%;border:1px solid #cfd3d7;border-radius:10px;padding:9px;font-size:14px;background:#fff}
+textarea{min-height:74px;resize:vertical}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+button{border:0;border-radius:10px;background:#111;color:#fff;font-weight:800;padding:10px 12px;cursor:pointer}
+button:hover{opacity:.92}.redbtn{background:var(--red)}.light{background:#eef0f2;color:#111;border:1px solid #cfd3d7}
+.btns,.tabbar{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.tab{background:#e9ebee;color:#111}.tab.active{background:#111;color:#fff}
+.exercise-line{display:grid;grid-template-columns:2.1fr .7fr .55fr .55fr .55fr .55fr;gap:5px;margin-bottom:5px}
+.exercise-line input{padding:7px;border-radius:7px}
+.section-title{font-weight:900;margin:10px 0 6px}
+.mini{font-size:12px;color:var(--muted);line-height:1.35}
+.danger-note{border-left:4px solid var(--red);padding:8px;background:#fff5f5;border-radius:8px;font-size:12px;line-height:1.35;margin-top:8px}
+.ia-status{margin-top:10px;border:1px solid #ffd0d0;background:#fff5f5;color:#111;padding:10px;border-radius:10px;font-size:12px;line-height:1.35}
+.ia-status.ok{border-color:#b7e4c7;background:#f0fff4}.ia-status.err{border-color:#ffb3b3;background:#fff0f0;color:#9b1111}
+.history-item{border:1px solid #ddd;background:#fafafa;border-radius:10px;padding:9px;margin:8px 0}
+.pathology-toggle{margin:8px 0 4px;border:1px solid #f1b9b9;background:#fff5f5;border-radius:12px;padding:9px}
+.checkline{display:flex!important;align-items:flex-start;gap:8px;margin:0!important;cursor:pointer;font-weight:500!important}
+.checkline input{width:auto!important;margin-top:3px;transform:scale(1.08)}
 .checkline span{display:block;font-size:12px;line-height:1.25}
 .checkline small{display:block;color:#687076;font-weight:500;margin-top:2px}
-body.patologia-exclusiva-on .pathology-toggle{
-  border-color:#e00000;
-  background:#ffecec;
+.print-actions{position:sticky;top:0;background:#fff;padding-bottom:10px;z-index:5}
+
+/* ficha para tela */
+.print-title{margin:18px 0 8px;font-size:18px;font-weight:900}
+.sheet{
+  display:block;
+  width:1120px;
+  max-width:100%;
+  min-height:690px;
+  background:white;
+  margin:10px auto 40px;
+  border-radius:14px;
+  box-shadow:0 8px 28px rgba(0,0,0,.14);
+  padding:14px;
+  overflow:visible;
 }
-body.patologia-exclusiva-on .pathology-toggle b{color:#e00000}
+.sheet-head{display:grid;grid-template-columns:160px 1fr;gap:14px;align-items:center;margin-bottom:10px}
+.logo{font-family:Arial Black,Impact,Arial,sans-serif;font-size:30px;font-weight:900;letter-spacing:-1px;white-space:nowrap}
+.logo .soul{color:var(--red)}.logo .fit{color:#111}
+.sheet-info{font-size:12px;line-height:1.35;font-weight:700}
+.line{display:inline-block;min-width:86px;border-bottom:1px solid #111;margin:0 10px 0 4px;min-height:13px;vertical-align:bottom}
+.line.long{min-width:180px}.line.obs{min-width:360px}
+.print-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.col{display:flex;flex-direction:column;gap:14px}
+.workout{min-height:245px}
+.workout h3{display:inline-block;background:#171a1f;color:#fff;font-size:13px;padding:4px 16px;margin:0 0 5px;border-right:14px solid var(--red);border-radius:3px 8px 0 0}
+table{width:100%;border-collapse:separate;border-spacing:2px;table-layout:fixed;font-size:10px}
+th{background:#171a1f;color:#fff;height:28px;text-align:center;font-size:10px;padding:2px;border:1px solid #fff}
+td{border:1px solid #666;height:22px;padding:2px 4px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+td:nth-child(n+2){background:var(--soft);text-align:center}
+.excol{width:55%}.srcol{width:12%}.loadcol{width:8.25%}
+.workout.inactive td{color:transparent;background:#fff!important}
+.footer-note{text-align:center;font-size:10px;color:#777;margin-top:6px}
 
-.ia-status{margin-top:10px;border:1px solid #ffd0d0;background:#fff5f5;color:#111;padding:10px;border-radius:10px;font-size:12px;line-height:1.35}.ia-status.ok{border-color:#b7e4c7;background:#f0fff4}.ia-status.err{border-color:#ffb3b3;background:#fff0f0;color:#9b1111}
+@media(max-width:980px){
+  .app{grid-template-columns:1fr}
+  aside.panel{max-height:none}
+  .exercise-line{grid-template-columns:1fr 70px 54px 54px 54px 54px}
+  .sheet{overflow:auto}
+  .print-grid{grid-template-columns:1fr}
+}
 
-/* V17: remover treinador e corrigir área editável */
-label[for="treinador"], #treinador{display:none!important}
-.treinador-row,.trainer-row{display:none!important}
-
+/* impressão A4 horizontal em uma folha */
+@page{size:A4 landscape;margin:3mm}
+@media print{
+  html,body{width:297mm!important;height:210mm!important;margin:0!important;padding:0!important;overflow:hidden!important;background:#fff!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body *{visibility:hidden!important}
+  .sheet,.sheet *{visibility:visible!important}
+  .sheet{
+    position:absolute!important;left:0!important;top:0!important;
+    width:291mm!important;height:204mm!important;min-height:0!important;max-height:204mm!important;
+    margin:0!important;padding:2.5mm 3mm!important;box-shadow:none!important;border-radius:0!important;overflow:hidden!important;
+    page-break-inside:avoid!important;break-inside:avoid!important;
+  }
+  .sheet-head{grid-template-columns:32mm 1fr!important;gap:2mm!important;height:10mm!important;margin-bottom:1mm!important}
+  .logo{font-size:18px!important}
+  .sheet-info{font-size:7.2px!important;line-height:.95!important}
+  .line{min-width:38px!important;min-height:6px!important;height:7px!important;margin-right:4px!important}
+  .line.long{min-width:88px!important}.line.obs{min-width:168px!important}
+  .print-grid{grid-template-columns:1fr 1fr!important;grid-template-rows:1fr 1fr!important;gap:1.8mm 3mm!important;height:188mm!important}
+  .col{display:contents!important}
+  .workout{height:92mm!important;min-height:0!important;max-height:92mm!important;overflow:hidden!important;page-break-inside:avoid!important;break-inside:avoid!important}
+  .workout h3{font-size:8.2px!important;line-height:1!important;padding:1px 6px!important;margin:0 0 .8mm!important;border-right:8px solid var(--red)!important;border-radius:2px!important}
+  table{border-spacing:.55mm!important;font-size:6.8px!important}
+  th{height:5.5mm!important;font-size:6.5px!important;padding:0!important;line-height:1!important}
+  td{height:6.6mm!important;max-height:6.6mm!important;font-size:6.6px!important;line-height:1!important;padding:0 .8mm!important}
+  .excol{width:55%!important}.srcol{width:10%!important}.loadcol{width:8.75%!important}
+  .no-print,header,aside,.print-title,.print-actions,#editor,.tabbar,h2.no-print{display:none!important;visibility:hidden!important}
+  main.panel,.panel,.wrap,.app{display:block!important;box-shadow:none!important;padding:0!important;margin:0!important;max-width:none!important;background:#fff!important}
+  .footer-note{display:none!important}
+}
 </style>
 </head>
 <body>
-<header><div><h1>SoulFit+ Evolução de Treinos</h1><div class="tag">Ficha horizontal, histórico e progressão no padrão de montagem da Luna</div></div><div class="tag">V7 | evolução por restrição/patologia + PDF</div></header>
+<header>
+  <div><h1>SoulFit+ IA de Treinos</h1><div class="tag">Prescrição, evolução, patologias, funcional e ficha A4 horizontal</div></div>
+  <div class="tag">V22 completa</div>
+</header>
+
 <div class="wrap">
 <div class="app">
 <aside class="panel no-print">
 <h2>1. Dados do aluno</h2>
 <label>Aluno(a)</label><input id="aluno" placeholder="Nome do aluno">
-<div class="row"><div>
+
 <div class="row">
   <div><label>Idade</label><input id="idade" type="number" min="10" max="100" placeholder="Ex: 32"></div>
   <div><label>Tipo de prescrição</label><select id="tipoPrescricao">
@@ -167,6 +136,7 @@ label[for="treinador"], #treinador{display:none!important}
     <option>Adaptação por lesão/patologia</option>
   </select></div>
 </div>
+
 <div class="row">
   <div><label>Modalidade</label><select id="modalidadeTreino">
     <option>Musculação</option>
@@ -179,165 +149,322 @@ label[for="treinador"], #treinador{display:none!important}
     <option>Treina atualmente</option>
   </select></div>
 </div>
-<label>Objetivo</label><select id="objetivo"><option>Hipertrofia</option><option>Emagrecimento</option><option>Hipertrofia + emagrecimento</option><option>Condicionamento</option><option>Força</option><option>Retorno/controle de dor</option></select></div><div><label>Nível</label><select id="nivel"><option>Iniciante</option><option>Intermediário</option><option>Avançado</option></select></div></div>
-<div class="row"><div><label>Sexo</label><select id="sexo"><option>Mulher</option><option>Homem</option></select></div><div><label>Preferência de ordem</label><select id="ordemPreferencia"><option>Automática pelo sexo</option><option>Começar por inferiores</option><option>Começar por superiores</option><option>Equilibrado</option></select></div></div>
-<div class="row"><div><label>Frequência semanal</label><select id="freq"><option>2x</option><option>3x</option><option selected>4x</option><option>5x</option><option>6x</option></select></div><div><label>Divisão</label><select id="divisao"><option>A/B</option><option selected>A/B/C</option><option>A/B/C/D</option><option>MI/MS</option></select></div></div>
-<div class="row"><div><label>Data da ficha</label><input id="dataFicha" type="date"></div></div>
-<label>Patologia do aluno (caso tenha)</label><textarea id="patologia" placeholder="Ex: condromalácia patelar, hérnia lombar, hipertensão, diabetes, obesidade, lesão de ombro..."></textarea>
+
+<div class="row">
+  <div><label>Objetivo</label><select id="objetivo"><option>Hipertrofia</option><option>Emagrecimento</option><option>Hipertrofia + emagrecimento</option><option>Condicionamento</option><option>Força</option><option>Retorno/controle de dor</option></select></div>
+  <div><label>Nível</label><select id="nivel"><option>Iniciante</option><option>Intermediário</option><option>Avançado</option></select></div>
+</div>
+
+<div class="row">
+  <div><label>Sexo</label><select id="sexo"><option>Mulher</option><option>Homem</option></select></div>
+  <div><label>Preferência de ordem</label><select id="ordemPreferencia"><option>Automática pelo sexo</option><option>Começar por inferiores</option><option>Começar por superiores</option><option>Equilibrado</option></select></div>
+</div>
+
+<div class="row">
+  <div><label>Frequência semanal</label><select id="freq"><option>2x</option><option>3x</option><option selected>4x</option><option>5x</option><option>6x</option></select></div>
+  <div><label>Divisão</label><select id="divisao"><option>A/B</option><option selected>A/B/C</option><option>A/B/C/D</option><option>MI/MS</option></select></div>
+</div>
+
+<div class="row">
+  <div><label>Data da ficha</label><input id="dataFicha" type="date"></div>
+  <div></div>
+</div>
+
+<label>Patologia do aluno (caso tenha)</label>
+<textarea id="patologia" placeholder="Ex: condromalácia patelar, hérnia lombar, hipertensão, diabetes, obesidade, lesão de ombro..."></textarea>
+
 <div class="pathology-toggle">
   <label class="checkline">
     <input type="checkbox" id="modoPatologiaExclusiva">
-    <span><b>Prescrição exclusiva para patologia</b><small>Quando marcado, a evolução do treino prioriza a condição clínica acima do objetivo estético.</small></span>
+    <span><b>Prescrição exclusiva para patologia</b><small>Quando marcado, a condição clínica fica acima do objetivo estético.</small></span>
   </label>
 </div>
-<label>Restrições, dores ou prioridade</label><textarea id="restricoes" placeholder="Ex: priorizar glúteos, joelho sensível, evitar impacto..."></textarea>
-<label>Observação para imprimir</label><textarea id="obs" placeholder="Ex: progredir carga quando bater o topo das repetições com boa técnica."></textarea>
+
+<label>Restrições, dores ou prioridade</label>
+<textarea id="restricoes" placeholder="Ex: priorizar glúteos, joelho sensível, evitar impacto..."></textarea>
+
+<label>Observação para imprimir</label>
+<textarea id="obs" placeholder="Ex: progredir carga quando bater o topo das repetições com boa técnica."></textarea>
+
 <h2>2. Treino antigo do aluno (opcional)</h2>
-<label>Cole/digite o treino antigo</label><textarea id="treinoAntigo" placeholder="Cole aqui o treino antigo do aluno.\n\nExemplo:\nTREINO A\n1️⃣ Hip thrust 4x10\n2️⃣ Stiff 3x12\n3️⃣ Búlgaro 3x10\nFINAL (3 voltas): agachamento 15 + step rápido 30s"></textarea>
-<div class="danger-note">Cole o treino antigo do aluno no campo abaixo. O sistema usará essas informações para sugerir uma nova ficha com progressão, mantendo o padrão SoulFit+.</div>
-<div class="btns"><button class="redbtn" onclick="gerarComIA()">Gerar com IA</button><button class="light" onclick="gerarEvolucao()">Gerar por regras</button><button onclick="salvarHistorico()">Salvar histórico</button><button class="light" onclick="baixarPDF()">Baixar PDF</button></div>
+<label>Cole/digite o treino antigo</label>
+<textarea id="treinoAntigo" placeholder="Cole aqui o treino antigo se houver. Para primeira prescrição, pode deixar em branco."></textarea>
+<div class="danger-note">Para aluno novo, escolha <b>Primeira prescrição</b>. Para aluno lesionado ou com nova condição, escolha <b>Adaptação por lesão/patologia</b>.</div>
+
+<div class="btns">
+  <button class="redbtn" onclick="gerarComIA()">Gerar com IA</button>
+  <button class="light" onclick="gerarEvolucao()">Gerar por regras</button>
+  <button onclick="salvarHistorico()">Salvar histórico</button>
+  <button class="light" onclick="baixarPDF()">Baixar PDF</button>
+</div>
+
 <div id="iaStatus" class="ia-status" style="display:none"></div>
 <h2 style="margin-top:14px">Histórico local</h2><div id="historico"></div>
 </aside>
-<main class="panel">
-<div class="print-actions no-print"><button onclick="window.print()">Imprimir horizontal</button> <button class="light" onclick="baixarPDF()">Baixar PDF</button> <button class="light" onclick="limparFicha()">Limpar ficha</button> <button class="light" onclick="preencherExemplo()">Exemplo SoulFit+</button><div class="mini mobile-note">No celular a ficha pode aparecer empilhada, mas na impressão sai em A4 horizontal.</div></div>
-<h2 class="no-print">3. Editar ficha</h2>
-<div class="tabbar no-print"><button class="tab active" onclick="abrirTreino('A',this)">Treino A</button><button class="tab" onclick="abrirTreino('B',this)">Treino B</button><button class="tab" onclick="abrirTreino('C',this)">Treino C</button><button class="tab" onclick="abrirTreino('D',this)">Treino D</button></div>
-<div id="editor" class="no-print"></div>
-<section class="sheet" id="sheet">
-<div class="watermark"></div><div class="sheet-inner">
 
-<div class="top compact-top">
-  <div class="brand brand-text-only">
-    <div class="brand-text"><span class="soul">Soul</span><span class="fit">Fit+</span></div>
-  </div>
-  <div class="info compact-info">
-    <div><b>Aluno(a):</b> <span id="pAluno" class="pline long"></span> <b>Objetivo:</b> <span id="pObjetivo" class="pline"></span> <b>Data:</b> <span id="pData" class="pline small"></span></div>
-    <div><b>Frequência:</b> <span id="pFreq" class="pline small"></span></div>
-    <div><b>Observações:</b> <span id="pObs" class="pline obsline"></span></div>
-  </div>
+<main class="panel">
+<div class="print-actions no-print">
+  <button onclick="window.print()">Imprimir horizontal</button>
+  <button class="light" onclick="baixarPDF()">Baixar PDF</button>
+  <button class="light" onclick="limparFicha()">Limpar ficha</button>
+  <button class="light" onclick="preencherExemplo()">Exemplo SoulFit+</button>
 </div>
-<div class="print-grid"><div class="leftcol"><div id="boxC"></div><div id="boxD"></div></div><div class="rightcol"><div id="boxA"></div><div id="boxB"></div></div></div>
-</div><div class="footer-note">SoulFit+ | ficha gerada para revisão profissional antes da aplicação</div>
+
+<h2 class="no-print">3. Editar ficha</h2>
+<div class="tabbar no-print">
+  <button class="tab active" onclick="abrirTreino('A',this)">Treino A</button>
+  <button class="tab" onclick="abrirTreino('B',this)">Treino B</button>
+  <button class="tab" onclick="abrirTreino('C',this)">Treino C</button>
+  <button class="tab" onclick="abrirTreino('D',this)">Treino D</button>
+</div>
+<div id="editor" class="no-print"></div>
+
+<div class="print-title no-print">4. Ficha para impressão</div>
+<section class="sheet" id="sheet">
+  <div class="sheet-head">
+    <div class="logo"><span class="soul">Soul</span><span class="fit">Fit+</span></div>
+    <div class="sheet-info">
+      <div><b>Aluno(a):</b><span id="pAluno" class="line long"></span> <b>Objetivo:</b><span id="pObjetivo" class="line"></span> <b>Data:</b><span id="pData" class="line"></span></div>
+      <div><b>Frequência:</b><span id="pFreq" class="line"></span> <b>Observações:</b><span id="pObs" class="line obs"></span></div>
+    </div>
+  </div>
+  <div class="print-grid">
+    <div class="col"><div id="boxC"></div><div id="boxD"></div></div>
+    <div class="col"><div id="boxA"></div><div id="boxB"></div></div>
+  </div>
+  <div class="footer-note">SoulFit+ | ficha gerada para revisão profissional antes da aplicação</div>
 </section>
 </main>
 </div>
 </div>
+
 <script>
-const letras=['A','B','C','D']; let atual='A';
+const letras=['A','B','C','D']; 
+let atual='A';
 let treinos={A:[],B:[],C:[],D:[]};
+
 function linhaVazia(){return {ex:'',sr:'',c1:'',c2:'',c3:'',c4:''}}
-letras.forEach(l=>{treinos[l]=Array.from({length:10},linhaVazia)})
 function $(id){return document.getElementById(id)}
-function init(){ $('dataFicha').value=new Date().toISOString().slice(0,10); renderEditor(); syncPrint(); carregarHistorico(); ['aluno','objetivo','obs','dataFicha','treinador'].forEach(id=>$(id).addEventListener('input',syncPrint)); ['objetivo','nivel','freq','divisao','restricoes','treinoAntigo'].forEach(id=>$(id).addEventListener('change',syncPrint)); $('foto').addEventListener('change',e=>{const f=e.target.files[0]; if(!f)return; const r=new FileReader(); r.onload=ev=>{preview.src=ev.target.result;preview.style.display='block'}; r.readAsDataURL(f)});}
-function abrirTreino(l,btn){atual=l; document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderEditor();}
-function renderEditor(){let html='<div class="section-title">TREINO '+atual+'</div>'; treinos[atual].forEach((r,i)=>{html+=`<div class="exercise-line"><input placeholder="${i+1}️⃣ Exercício" value="${esc(r.ex)}" oninput="treinos['${atual}'][${i}].ex=this.value;syncPrint()"><input placeholder="Série/Rep" value="${esc(r.sr)}" oninput="treinos['${atual}'][${i}].sr=this.value;syncPrint()"><input placeholder="Carga" value="${esc(r.c1)}" oninput="treinos['${atual}'][${i}].c1=this.value;syncPrint()"><input placeholder="Carga" value="${esc(r.c2)}" oninput="treinos['${atual}'][${i}].c2=this.value;syncPrint()"><input placeholder="Carga" value="${esc(r.c3)}" oninput="treinos['${atual}'][${i}].c3=this.value;syncPrint()"><input placeholder="Carga" value="${esc(r.c4)}" oninput="treinos['${atual}'][${i}].c4=this.value;syncPrint()"></div>`}); $('editor').innerHTML=html;}
 function esc(v){return String(v||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;')}
-function syncPrint(){ $('pAluno').textContent=$('aluno').value; $('pObjetivo').textContent=$('objetivo').value; $('pObs').textContent=$('obs').value; $('pData').textContent=($('dataFicha').value||'').split('-').reverse().join('/'); $('pTreinador').textContent=$('treinador').value; $('pFreq').textContent=$('freq').value + '/semana'; letras.forEach(l=>$("box"+l).innerHTML=workoutHTML(l));}
-function workoutHTML(l){let purple=''; let rows=treinos[l].map(r=>`<tr><td>${esc(r.ex)}</td><td class="soft">${esc(r.sr)}</td><td class="soft">${esc(r.c1)}</td><td class="soft">${esc(r.c2)}</td><td class="soft">${esc(r.c3)}</td><td class="soft">${esc(r.c4)}</td></tr>`).join(''); return `<div class="workout"><h3 class="${purple}">Treino ${l}</h3><table><thead><tr><th class="excol">Exercício</th><th class="srcol">Série<br>s/Rep</th><th class="loadcol">Carga</th><th class="loadcol">Carga</th><th class="loadcol">Carga</th><th class="loadcol">Carga</th></tr></thead><tbody>${rows}</tbody></table></div>`}
-function gerarEvolucao(){let obj=$('objetivo').value, nivel=$('nivel').value, div=$('divisao').value, restr=$('restricoes').value.toLowerCase(); letras.forEach(l=>treinos[l]=Array.from({length:10},linhaVazia)); let base;
- if(div==='MI/MS') base=templates.MIMS; else if(div==='A/B') base=templates.AB; else if(div==='A/B/C/D') base=templates.ABCD; else base=templates.ABC;
- Object.keys(base).forEach(l=>{treinos[l]=base[l].map(x=>({ex:x[0],sr:x[1],c1:'',c2:'',c3:'',c4:''})); while(treinos[l].length<8) treinos[l].push(linhaVazia())});
- if(obj.includes('Emagrecimento')) addFinal();
- if(restr.includes('joelho')) trocar(['Agachamento livre','Hack squat'],['Agachamento assistido','Leg press amplitude controlada']);
- if(restr.includes('lombar')||restr.includes('coluna')) trocar(['Stiff','Levantamento terra romeno'],['Mesa flexora','Pull through na polia']);
- if(nivel==='Avançado') intensificar(); renderEditor(); syncPrint();}
+function valor(id){return $(id)?$(id).value:''}
+function checked(id){return !!($(id)&&$(id).checked)}
+
+function init(){
+  letras.forEach(l=>{if(!treinos[l].length)treinos[l]=Array.from({length:10},linhaVazia)})
+  $('dataFicha').value=new Date().toISOString().slice(0,10);
+  renderEditor();
+  syncPrint();
+  carregarHistorico();
+  document.addEventListener('input', syncPrint);
+  document.addEventListener('change', syncPrint);
+}
+
+function divisaoAtual(){return valor('divisao')||'A/B/C'}
+function treinosAtivos(){
+  const d=divisaoAtual();
+  if(d==='A/B')return ['A','B'];
+  if(d==='A/B/C')return ['A','B','C'];
+  if(d==='A/B/C/D')return ['A','B','C','D'];
+  if(d==='MI/MS')return ['A','B'];
+  return ['A','B','C'];
+}
+function nomeTreino(l){
+  if(divisaoAtual()==='MI/MS'){
+    if(l==='A')return 'Treino A - MI';
+    if(l==='B')return 'Treino B - MS';
+  }
+  return 'Treino '+l;
+}
+
+function abrirTreino(l,btn){
+  atual=l;
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  else{
+    const b=[...document.querySelectorAll('.tab')].find(x=>x.textContent.includes('Treino '+l));
+    if(b)b.classList.add('active');
+  }
+  renderEditor();
+}
+
+function renderEditor(){
+  let html='<div class="section-title">TREINO '+atual+'</div>';
+  treinos[atual].forEach((r,i)=>{
+    html+=`<div class="exercise-line">
+      <input placeholder="${i+1}️⃣ Exercício" value="${esc(r.ex)}" oninput="treinos['${atual}'][${i}].ex=this.value;syncPrint()">
+      <input placeholder="Série/Rep" value="${esc(r.sr)}" oninput="treinos['${atual}'][${i}].sr=this.value;syncPrint()">
+      <input placeholder="Carga" value="${esc(r.c1)}" oninput="treinos['${atual}'][${i}].c1=this.value;syncPrint()">
+      <input placeholder="Carga" value="${esc(r.c2)}" oninput="treinos['${atual}'][${i}].c2=this.value;syncPrint()">
+      <input placeholder="Carga" value="${esc(r.c3)}" oninput="treinos['${atual}'][${i}].c3=this.value;syncPrint()">
+      <input placeholder="Carga" value="${esc(r.c4)}" oninput="treinos['${atual}'][${i}].c4=this.value;syncPrint()">
+    </div>`;
+  });
+  $('editor').innerHTML=html;
+}
+
+function syncPrint(){
+  if(!$('pAluno'))return;
+  $('pAluno').textContent=valor('aluno');
+  $('pObjetivo').textContent=valor('objetivo');
+  $('pObs').textContent=[valor('obs'),valor('patologia'),valor('restricoes')].filter(Boolean).join(' | ');
+  $('pData').textContent=(valor('dataFicha')||'').split('-').reverse().join('/');
+  $('pFreq').textContent=valor('freq') ? valor('freq') + '/semana' : '';
+  letras.forEach(l=>$("box"+l).innerHTML=workoutHTML(l));
+}
+
+function workoutHTML(l){
+  const ativo=treinosAtivos().includes(l);
+  const rows=treinos[l].map(r=>`<tr>
+    <td>${ativo?esc(r.ex):''}</td>
+    <td>${ativo?esc(r.sr):''}</td>
+    <td>${ativo?esc(r.c1):''}</td>
+    <td>${ativo?esc(r.c2):''}</td>
+    <td>${ativo?esc(r.c3):''}</td>
+    <td>${ativo?esc(r.c4):''}</td>
+  </tr>`).join('');
+  return `<div class="workout ${ativo?'':'inactive'}"><h3>${nomeTreino(l)}</h3>
+    <table><thead><tr><th class="excol">Exercício</th><th class="srcol">Série<br>s/Rep</th><th class="loadcol">Carga</th><th class="loadcol">Carga</th><th class="loadcol">Carga</th><th class="loadcol">Carga</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+
+function parseTreino(txt){
+  const res={A:[],B:[],C:[],D:[]};
+  let atualLetra=null;
+  String(txt||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean).forEach(raw=>{
+    const h=raw.match(/treino\s*([abcd])/i);
+    if(h){atualLetra=h[1].toUpperCase();return}
+    if(!atualLetra||!res[atualLetra])return;
+    let s=raw.replace(/^[\-\•\*\d\.\)\s✅👉➡️🔥]+/g,'').replace(/^[1-9]️⃣\s*/g,'').trim();
+    if(!s)return;
+    let ex=s,sr='';
+    let m=s.match(/(.+?)\s*[-–]\s*((?:\d+\s*x\s*[\d\-]+.*|[2345]x[\d\-]+.*|FINAL.*|.*voltas?.*|.*seg.*|.*s$))$/i)||s.match(/(.+?)\s+((?:\d+\s*x\s*[\d\-]+.*|[2345]x[\d\-]+.*))$/i);
+    if(m){ex=m[1].trim();sr=m[2].trim()}
+    res[atualLetra].push({ex,sr,c1:'',c2:'',c3:'',c4:''});
+  });
+  return res;
+}
+
+function aplicarTreinoTexto(txt){
+  const parsed=parseTreino(txt);
+  letras.forEach(l=>{
+    treinos[l]=Array.from({length:10},(_,i)=>parsed[l][i]||linhaVazia());
+  });
+  renderEditor();
+  syncPrint();
+  $('sheet').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function dadosIA(){
+  return {
+    aluno:valor('aluno'),idade:valor('idade'),objetivo:valor('objetivo'),nivel:valor('nivel'),sexo:valor('sexo'),
+    tipoPrescricao:valor('tipoPrescricao'),modalidadeTreino:valor('modalidadeTreino'),experienciaPrevia:valor('experienciaPrevia'),
+    ordemPreferencia:valor('ordemPreferencia'),frequencia:valor('freq'),divisao:valor('divisao'),dataFicha:valor('dataFicha'),
+    patologia:valor('patologia'),modoPatologiaExclusiva:checked('modoPatologiaExclusiva'),restricoes:valor('restricoes'),observacoes:valor('obs'),
+    treinoAntigo:valor('treinoAntigo')
+  };
+}
+
+function statusIA(msg,cls){
+  const b=$('iaStatus');
+  b.style.display='block';
+  b.className='ia-status '+(cls||'');
+  b.textContent=msg;
+}
+
+async function gerarComIA(){
+  const dados=dadosIA();
+  const precisa=(dados.tipoPrescricao||'').toLowerCase().includes('evolução');
+  if(precisa && !dados.treinoAntigo.trim()){
+    statusIA('Para evolução com treino anterior, cole a ficha antiga. Para aluno novo, escolha Primeira prescrição.','err');
+    return;
+  }
+  statusIA('Gerando treino com IA... aguarde.','');
+  try{
+    const resp=await fetch('/.netlify/functions/gerar-treino',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(dados)
+    });
+    const json=await resp.json().catch(()=>({}));
+    if(!resp.ok)throw new Error(json.error||'Erro ao gerar treino.');
+    if(!json.treino)throw new Error('A IA não retornou um treino válido.');
+    aplicarTreinoTexto(json.treino);
+    statusIA('Treino gerado com IA e aplicado na área de edição e na ficha de impressão. Revise antes de imprimir.','ok');
+  }catch(e){
+    statusIA('Erro: '+e.message,'err');
+  }
+}
+
+function gerarEvolucao(){
+  letras.forEach(l=>treinos[l]=Array.from({length:10},linhaVazia));
+  let base;
+  const div=valor('divisao');
+  if(div==='MI/MS')base=templates.MIMS; else if(div==='A/B')base=templates.AB; else if(div==='A/B/C/D')base=templates.ABCD; else base=templates.ABC;
+  Object.keys(base).forEach(l=>{
+    treinos[l]=Array.from({length:10},(_,i)=>{
+      const x=base[l][i];
+      return x?{ex:x[0],sr:x[1],c1:'',c2:'',c3:'',c4:''}:linhaVazia();
+    });
+  });
+  if(valor('objetivo').includes('Emagrecimento'))addFinal();
+  const restr=valor('restricoes').toLowerCase()+ ' ' + valor('patologia').toLowerCase();
+  if(restr.includes('joelho'))trocar(['Agachamento livre','Hack squat'],['Agachamento assistido','Leg press amplitude controlada']);
+  if(restr.includes('lombar')||restr.includes('coluna'))trocar(['Stiff','Levantamento terra romeno'],['Mesa flexora','Pull through na polia']);
+  renderEditor();syncPrint();
+}
+
 const templates={
-ABC:{A:[['Hip thrust','4x8-10'],['Stiff','3x10-12'],['Búlgaro','3x10 cada'],['Abdutora','3x15-20'],['Glúteo polia','3x12-15'],['Panturrilha','4x12-15']],B:[['Supino máquina','3x10-12'],['Remada baixa','3x10-12'],['Desenvolvimento','3x10'],['Puxada frente','3x10-12'],['Rosca direta','3x12'],['Tríceps corda','3x12']],C:[['Agachamento livre','4x8-10'],['Leg press','4x10-12'],['Cadeira extensora','3x12-15'],['Mesa flexora','3x12'],['Adutora','3x15'],['Abdominal prancha','3x30s']],D:[['Puxada alta','3x10-12'],['Remada articulada','3x10-12'],['Elevação lateral','3x12-15'],['Crucifixo inverso','3x12'],['Rosca martelo','3x12'],['Tríceps testa','3x12']]},
-AB:{A:[['Agachamento','4x10'],['Leg press','3x12'],['Stiff','3x12'],['Hip thrust','4x10'],['Abdutora','3x20'],['Panturrilha','4x15']],B:[['Puxada frente','3x12'],['Remada baixa','3x12'],['Supino máquina','3x12'],['Desenvolvimento','3x10'],['Rosca direta','3x12'],['Tríceps corda','3x12'],['Abdominal','3x15']]},
+ABC:{A:[['Hip thrust','4x8-10'],['Stiff','3x10-12'],['Búlgaro','3x10 cada'],['Abdutora','3x15-20'],['Glúteo polia','3x12-15'],['Panturrilha','4x12-15']],B:[['Supino máquina','3x10-12'],['Remada baixa','3x10-12'],['Desenvolvimento','3x10'],['Puxada frente','3x10-12'],['Rosca direta','3x12'],['Tríceps corda','3x12']],C:[['Agachamento livre','4x8-10'],['Leg press','4x10-12'],['Cadeira extensora','3x12-15'],['Mesa flexora','3x12'],['Adutora','3x15'],['Abdominal prancha','3x30s']],D:[]},
+AB:{A:[['Agachamento','4x10'],['Leg press','3x12'],['Stiff','3x12'],['Hip thrust','4x10'],['Abdutora','3x20'],['Panturrilha','4x15']],B:[['Puxada frente','3x12'],['Remada baixa','3x12'],['Supino máquina','3x12'],['Desenvolvimento','3x10'],['Rosca direta','3x12'],['Tríceps corda','3x12'],['Abdominal','3x15']],C:[],D:[]},
 ABCD:{A:[['Hip thrust','4x8-10'],['Stiff','3x10'],['Búlgaro','3x10'],['Abdutora','3x20'],['Glúteo polia','3x15']],B:[['Supino inclinado','3x10'],['Puxada frente','3x10'],['Remada baixa','3x12'],['Desenvolvimento','3x10'],['Tríceps corda','3x12']],C:[['Agachamento livre','4x8'],['Leg press','4x10'],['Extensora','3x12'],['Passada','3x10'],['Panturrilha','4x15']],D:[['Puxada neutra','3x10'],['Remada articulada','3x10'],['Elevação lateral','3x15'],['Crucifixo inverso','3x15'],['Rosca alternada','3x12']]},
-MIMS:{A:[['Agachamento','4x10'],['Leg press','3x12'],['Cadeira extensora','3x15'],['Mesa flexora','3x12'],['Panturrilha','4x15']],B:[['Puxada frente','3x12'],['Remada baixa','3x12'],['Supino máquina','3x12'],['Desenvolvimento','3x10'],['Rosca direta','3x12'],['Tríceps corda','3x12']],C:[['Hip thrust','4x10'],['Stiff','3x12'],['Búlgaro','3x10'],['Abdutora','3x20'],['Glúteo polia','3x15']],D:[['Remada articulada','3x10'],['Puxada alta','3x10'],['Elevação lateral','3x15'],['Crucifixo inverso','3x15'],['Core prancha','3x30s']]}
+MIMS:{A:[['Agachamento','4x10'],['Leg press','3x12'],['Cadeira extensora','3x15'],['Mesa flexora','3x12'],['Panturrilha','4x15']],B:[['Puxada frente','3x12'],['Remada baixa','3x12'],['Supino máquina','3x12'],['Desenvolvimento','3x10'],['Rosca direta','3x12'],['Tríceps corda','3x12']],C:[],D:[]}
 };
-function addFinal(){['A','C'].forEach(l=>{let idx=treinos[l].findIndex(r=>!r.ex); if(idx>=0){treinos[l][idx]={ex:'FINAL: 3 voltas | agachamento 15 + polichinelo 30s + step rápido 30s',sr:'3v',c1:'',c2:'',c3:'',c4:''}}})}
-function intensificar(){Object.values(treinos).forEach(arr=>arr.forEach(r=>{if(r.ex && /Abdutora|Extensora|Glúteo|Elevação/.test(r.ex)) r.sr+=' + controle'}))}
-function trocar(a,b){Object.values(treinos).forEach(arr=>arr.forEach(r=>{a.forEach((x,i)=>{if(r.ex===x) r.ex=b[i]||b[0]})}))}
-function gerarPrompt(){let txt=`Liora, evolua este treino no padrão de montagem da Luna/SoulFit+.\n\nRegras do meu padrão:\n- Entregar em TREINO A, B, C e D quando fizer sentido.\n- Exercícios numerados com 1️⃣ 2️⃣ 3️⃣.\n- Séries/repetições objetivas.\n- Quando o objetivo for emagrecimento/condicionamento, incluir FINAL em 3 voltas no estilo: exercício + cardio curto + step rápido.\n- Não trocar por trocar: aplicar sobrecarga progressiva, especificidade, controle de volume, recuperação e variação inteligente.\n- Manter linguagem prática para ficha de academia.\n- Considerar restrições e evitar exercícios incompatíveis.\n- Gerar ficha pronta para eu imprimir.\n\nDADOS DO ALUNO\nAluno: ${$('aluno').value||'não informado'}\nObjetivo: ${$('objetivo').value}\nNível: ${$('nivel').value}\nFrequência: ${$('freq').value}\nDivisão desejada: ${$('divisao').value}\nRestrições/prioridade: ${$('restricoes').value||'não informado'}\n\nTREINO ANTIGO\n${$('treinoAntigo').value||'Vou enviar a foto ou preencher depois.'}\n\nAgora gere o novo treino com evolução técnica e, ao final, explique em 5 linhas o raciocínio da progressão.`; $('promptText').textContent=txt; $('promptArea').style.display='block';}
-function copiarPrompt(){navigator.clipboard.writeText($('promptText').textContent); alert('Prompt copiado!')}
-function salvarHistorico(){const item={id:Date.now(),aluno:$('aluno').value,objetivo:$('objetivo').value,data:new Date().toLocaleDateString('pt-BR'),dataFicha:$('dataFicha').value,treinador:$('treinador').value,freq:$('freq').value,obs:$('obs').value,treinos}; let h=JSON.parse(localStorage.getItem('soulfit_hist')||'[]'); h.unshift(item); localStorage.setItem('soulfit_hist',JSON.stringify(h.slice(0,30))); carregarHistorico();}
-function carregarHistorico(){let h=JSON.parse(localStorage.getItem('soulfit_hist')||'[]'); $('historico').innerHTML=h.length?h.map((x,i)=>`<div class="history-item"><b>${esc(x.aluno||'Sem nome')}</b><br><span class="mini">${esc(x.objetivo)} | ${x.data}</span><div class="btns"><button class="light" onclick="restaurar(${i})">Abrir</button></div></div>`).join(''):'<div class="mini">Nada salvo ainda.</div>'}
-function restaurar(i){let h=JSON.parse(localStorage.getItem('soulfit_hist')||'[]'); let x=h[i]; if(!x)return; $('aluno').value=x.aluno||''; $('objetivo').value=x.objetivo||'Hipertrofia'; $('dataFicha').value=x.dataFicha||new Date().toISOString().slice(0,10); $('treinador').value=x.treinador||''; $('freq').value=x.freq||'4x'; $('obs').value=x.obs||''; treinos=x.treinos; renderEditor(); syncPrint();}
-function baixarBackup(){let blob=new Blob([localStorage.getItem('soulfit_hist')||'[]'],{type:'application/json'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='backup_soulfit_treinos.json'; a.click();}
-function limparFicha(){if(!confirm('Limpar ficha atual?'))return; letras.forEach(l=>treinos[l]=Array.from({length:10},linhaVazia)); renderEditor(); syncPrint();}
-function preencherExemplo(){$('aluno').value='Maria Exemplo'; $('objetivo').value='Hipertrofia + emagrecimento'; $('nivel').value='Intermediário'; $('freq').value='4x'; $('divisao').value='A/B/C'; $('restricoes').value='Priorizar glúteos e posterior'; $('obs').value='Progressão de carga com técnica limpa.'; $('treinador').value='Luna / SoulFit+'; gerarEvolucao();}
+
+function addFinal(){['A','C'].forEach(l=>{let idx=treinos[l].findIndex(r=>!r.ex); if(idx>=0)treinos[l][idx]={ex:'FINAL: 3 voltas | agachamento 15 + polichinelo 30s + step rápido 30s',sr:'3v',c1:'',c2:'',c3:'',c4:''}})}
+function trocar(a,b){Object.values(treinos).forEach(arr=>arr.forEach(r=>{a.forEach((x,i)=>{if(r.ex===x)r.ex=b[i]||b[0]})}))}
+
+function salvarHistorico(){
+  const item={id:Date.now(),aluno:valor('aluno'),objetivo:valor('objetivo'),data:new Date().toLocaleDateString('pt-BR'),dados:dadosIA(),treinos};
+  let h=JSON.parse(localStorage.getItem('soulfit_hist')||'[]');
+  h.unshift(item); localStorage.setItem('soulfit_hist',JSON.stringify(h.slice(0,30)));
+  carregarHistorico();
+}
+
+function carregarHistorico(){
+  let h=JSON.parse(localStorage.getItem('soulfit_hist')||'[]');
+  $('historico').innerHTML=h.length?h.map((x,i)=>`<div class="history-item"><b>${esc(x.aluno||'Sem nome')}</b><br><span class="mini">${esc(x.objetivo||'')} | ${x.data}</span><div class="btns"><button class="light" onclick="restaurar(${i})">Abrir</button></div></div>`).join(''):'<div class="mini">Nada salvo ainda.</div>';
+}
+
+function restaurar(i){
+  let h=JSON.parse(localStorage.getItem('soulfit_hist')||'[]');
+  let x=h[i]; if(!x)return;
+  const d=x.dados||{};
+  ['aluno','idade','objetivo','nivel','sexo','tipoPrescricao','modalidadeTreino','experienciaPrevia','ordemPreferencia','freq','divisao','dataFicha','patologia','restricoes','obs','treinoAntigo'].forEach(id=>{if($(id)&&d[id]!==undefined)$(id).value=d[id]});
+  treinos=x.treinos||treinos;
+  renderEditor();syncPrint();
+}
+
+function limparFicha(){
+  if(!confirm('Limpar ficha atual?'))return;
+  letras.forEach(l=>treinos[l]=Array.from({length:10},linhaVazia));
+  renderEditor();syncPrint();
+}
+
+function preencherExemplo(){
+  $('aluno').value='Maria Exemplo';
+  $('idade').value='32';
+  $('objetivo').value='Hipertrofia + emagrecimento';
+  $('nivel').value='Intermediário';
+  $('sexo').value='Mulher';
+  $('freq').value='4x';
+  $('divisao').value='A/B/C';
+  $('restricoes').value='Priorizar glúteos e posterior';
+  $('obs').value='Progressão de carga com técnica limpa.';
+  gerarEvolucao();
+}
+
+function baixarPDF(){window.print()}
+
 init();
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script>
-(function(){
-function el(id){return document.getElementById(id)}
-function val(id){const x=el(id);return x?(x.value||""):""}
-function checked(id){const x=el(id);return !!(x&&x.checked)}
-function statusIA(msg,cls){const b=el("iaStatus");if(!b)return;b.style.display="block";b.className="ia-status "+(cls||"");b.textContent=msg}
-function dados(){return{aluno:val("aluno"),idade:val("idade"),objetivo:val("objetivo"),nivel:val("nivel"),sexo:val("sexo"),tipoPrescricao:val("tipoPrescricao"),modalidadeTreino:val("modalidadeTreino"),experienciaPrevia:val("experienciaPrevia"),ordemPreferencia:val("ordemPreferencia"),frequencia:val("freq"),divisao:val("divisao"),dataFicha:val("dataFicha"),patologia:val("patologia"),modoPatologiaExclusiva:checked("modoPatologiaExclusiva"),restricoes:val("restricoes"),observacoes:val("obs"),treinoAntigo:val("treinoAntigo")}}
-function permitidas(d){if(d==="A/B")return["A","B"];if(d==="A/B/C")return["A","B","C"];if(d==="A/B/C/D")return["A","B","C","D"];if(d==="MI/MS")return["A","B"];return["A","B","C"]}
-function parse(txt){const r={A:[],B:[],C:[],D:[]};let a=null;String(txt||"").split(/\r?\n/).map(x=>x.trim()).filter(Boolean).forEach(raw=>{let h=raw.match(/treino\s*([abcd])/i);if(h){a=h[1].toUpperCase();return}if(!a||!r[a])return;let s=raw.replace(/^[\-\•\*\d\.\)\s✅👉➡️🔥]+/g,"").replace(/^[1-9]️⃣\s*/g,"").trim();if(!s)return;let ex=s,sr="";let m=s.match(/(.+?)\s*[-–]\s*((?:\d+\s*x\s*[\d\-]+.*|[2345]x[\d\-]+.*|FINAL.*|.*voltas?.*))$/i)||s.match(/(.+?)\s+((?:\d+\s*x\s*[\d\-]+.*|[2345]x[\d\-]+.*))$/i);if(m){ex=m[1].trim();sr=m[2].trim()}r[a].push({ex,sr})});return r}
-function printBox(L){return document.getElementById("printTreino"+L)||[...document.querySelectorAll(".workout")].find(w=>(w.querySelector("h3")?.textContent||"").toUpperCase().includes("TREINO "+L))}
-function limparPrint(L){const b=printBox(L);if(!b)return;b.querySelectorAll("td").forEach(td=>td.textContent="")}
-function linhaPrint(L,i,ex,sr){const b=printBox(L);if(!b)return;const tr=[...b.querySelectorAll("tbody tr")][i];if(!tr)return;const c=[...tr.querySelectorAll("td")];if(c[0])c[0].textContent=ex||"";if(c[1])c[1].textContent=sr||""}
-function clicarAba(L){const btn=[...document.querySelectorAll("button")].find(b=>(b.textContent||"").trim().toUpperCase()==="TREINO "+L); if(btn) btn.click()}
-
-/* Correção forte: preenche os campos editáveis da aba atual usando placeholders */
-function inputsDaAbaAtual(){
-  const fields=[...document.querySelectorAll("input")].filter(x=>{
-    const r=x.getBoundingClientRect();
-    const ph=(x.placeholder||"").toLowerCase();
-    return r.width>35 && r.height>15 && (ph.includes("exerc") || ph.includes("série") || ph.includes("serie") || ph.includes("carga"));
-  });
-  return fields;
-}
-function preencherAbaAtual(itens){
-  const ins=inputsDaAbaAtual();
-  if(!ins.length)return false;
-  for(let i=0;i<10;i++){
-    const base=i*6;
-    if(ins[base]){ins[base].value=itens[i]?.ex||"";ins[base].dispatchEvent(new Event("input",{bubbles:true}))}
-    if(ins[base+1]){ins[base+1].value=itens[i]?.sr||"";ins[base+1].dispatchEvent(new Event("input",{bubbles:true}))}
-    for(let j=2;j<6;j++){if(ins[base+j]){ins[base+j].value="";ins[base+j].dispatchEvent(new Event("input",{bubbles:true}))}}
-  }
-  return true;
-}
-function aplicar(txt){
-  const d=dados(), p=parse(txt), letras=permitidas(d.divisao);
-  ["A","B","C","D"].forEach(limparPrint);
-  letras.forEach(L=>{
-    const itens=(p[L]||[]).slice(0,10);
-    itens.forEach((it,i)=>linhaPrint(L,i,it.ex,it.sr));
-  });
-  // Preenche cada aba em sequência, dando tempo para a interface trocar
-  letras.forEach((L,idx)=>{
-    setTimeout(()=>{clicarAba(L); setTimeout(()=>preencherAbaAtual((p[L]||[]).slice(0,10)),120)}, idx*320);
-  });
-  setTimeout(()=>{clicarAba(letras[0]||"A");["aplicarDivisaoSoulFitV13","aplicarDivisaoSoulFitV12"].forEach(fn=>{if(typeof window[fn]==="function")window[fn]()})}, letras.length*360+200);
-}
-window.gerarComIA=async function(){
-  const d=dados();
-  const precisa=(d.tipoPrescricao||"").toLowerCase().includes("evolução");
-  if(precisa&&!d.treinoAntigo.trim()){statusIA("Para evolução com treino anterior, cole a ficha antiga. Para aluno novo, escolha Primeira prescrição.","err");return}
-  statusIA("Gerando treino com IA... aguarde.","");
-  try{
-    const resp=await fetch("/.netlify/functions/gerar-treino",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(d)});
-    const json=await resp.json().catch(()=>({}));
-    if(!resp.ok)throw new Error(json.error||"Erro ao gerar treino.");
-    if(!json.treino)throw new Error("A IA não retornou um treino válido.");
-    aplicar(json.treino);
-    statusIA("Treino gerado com IA e preenchido na ficha. Aguarde 2 segundos para aparecer também nas abas editáveis.","ok")
-  }catch(e){statusIA("Erro: "+e.message+" Confira a variável OPENAI_API_KEY no Netlify.","err")}
-}
-window.baixarPDF=function(){window.print()}
-})();
-</script>
-
 </body>
 </html>
