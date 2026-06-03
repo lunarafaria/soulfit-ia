@@ -1,3 +1,3 @@
-SoulFit+ IA V16
+SoulFit+ IA V18
 
-Inclui primeira prescrição sem treino anterior, adaptação por lesão/patologia, idade e modalidade funcional.
+Correção: impressão A4 horizontal em uma única folha com treinos A/B/C/D compactados para dobrar ao meio.

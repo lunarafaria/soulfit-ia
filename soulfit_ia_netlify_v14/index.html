@@ -74,18 +74,18 @@
 }
 
 
-/* V16 IA: divisão respeitada na geração */
+/* V17 IA: divisão respeitada na geração */
 .workout.inactive tbody td{color:transparent!important;background:white!important}
 .workout.inactive tbody td *{display:none!important}
 .workout.inactive .generated-text{display:none!important}
 
 
-/* V16 IA: sem prompt, PDF e observações restauradas */
+/* V17 IA: sem prompt, PDF e observações restauradas */
 #promptArea{display:none!important}
 .obsline{display:inline-block!important}
 
 
-/* V16 IA: melhor enquadramento para computador */
+/* V17 IA: melhor enquadramento para computador */
 @media screen and (min-width:981px){
   .wrap{max-width:100vw;margin:10px auto;padding:0 8px}
   .app{grid-template-columns:340px minmax(0,1fr);gap:10px}
@@ -114,7 +114,7 @@
 }
 
 
-/* V16 IA: aba/modo patologia exclusiva */
+/* V17 IA: aba/modo patologia exclusiva */
 .pathology-toggle{
   margin:8px 0 4px;
   border:1px solid #f1b9b9;
@@ -144,6 +144,11 @@ body.patologia-exclusiva-on .pathology-toggle{
 body.patologia-exclusiva-on .pathology-toggle b{color:#e00000}
 
 .ia-status{margin-top:10px;border:1px solid #ffd0d0;background:#fff5f5;color:#111;padding:10px;border-radius:10px;font-size:12px;line-height:1.35}.ia-status.ok{border-color:#b7e4c7;background:#f0fff4}.ia-status.err{border-color:#ffb3b3;background:#fff0f0;color:#9b1111}
+
+/* V17: remover treinador e corrigir área editável */
+label[for="treinador"], #treinador{display:none!important}
+.treinador-row,.trainer-row{display:none!important}
+
 </style>
 </head>
 <body>
@@ -177,7 +182,7 @@ body.patologia-exclusiva-on .pathology-toggle b{color:#e00000}
 <label>Objetivo</label><select id="objetivo"><option>Hipertrofia</option><option>Emagrecimento</option><option>Hipertrofia + emagrecimento</option><option>Condicionamento</option><option>Força</option><option>Retorno/controle de dor</option></select></div><div><label>Nível</label><select id="nivel"><option>Iniciante</option><option>Intermediário</option><option>Avançado</option></select></div></div>
 <div class="row"><div><label>Sexo</label><select id="sexo"><option>Mulher</option><option>Homem</option></select></div><div><label>Preferência de ordem</label><select id="ordemPreferencia"><option>Automática pelo sexo</option><option>Começar por inferiores</option><option>Começar por superiores</option><option>Equilibrado</option></select></div></div>
 <div class="row"><div><label>Frequência semanal</label><select id="freq"><option>2x</option><option>3x</option><option selected>4x</option><option>5x</option><option>6x</option></select></div><div><label>Divisão</label><select id="divisao"><option>A/B</option><option selected>A/B/C</option><option>A/B/C/D</option><option>MI/MS</option></select></div></div>
-<div class="row"><div><label>Data da ficha</label><input id="dataFicha" type="date"></div><div><label>Treinador(a)</label><input id="treinador" placeholder="Luna / SoulFit+"></div></div>
+<div class="row"><div><label>Data da ficha</label><input id="dataFicha" type="date"></div></div>
 <label>Patologia do aluno (caso tenha)</label><textarea id="patologia" placeholder="Ex: condromalácia patelar, hérnia lombar, hipertensão, diabetes, obesidade, lesão de ombro..."></textarea>
 <div class="pathology-toggle">
   <label class="checkline">
@@ -208,7 +213,7 @@ body.patologia-exclusiva-on .pathology-toggle b{color:#e00000}
   </div>
   <div class="info compact-info">
     <div><b>Aluno(a):</b> <span id="pAluno" class="pline long"></span> <b>Objetivo:</b> <span id="pObjetivo" class="pline"></span> <b>Data:</b> <span id="pData" class="pline small"></span></div>
-    <div><b>Treinador(a):</b> <span id="pTreinador" class="pline"></span> <b>Frequência:</b> <span id="pFreq" class="pline small"></span></div>
+    <div><b>Frequência:</b> <span id="pFreq" class="pline small"></span></div>
     <div><b>Observações:</b> <span id="pObs" class="pline obsline"></span></div>
   </div>
 </div>
@@ -266,23 +271,70 @@ init();
 
 
 
+
+
+
 <script>
 (function(){
 function el(id){return document.getElementById(id)}
 function val(id){const x=el(id);return x?(x.value||""):""}
 function checked(id){const x=el(id);return !!(x&&x.checked)}
 function statusIA(msg,cls){const b=el("iaStatus");if(!b)return;b.style.display="block";b.className="ia-status "+(cls||"");b.textContent=msg}
-function dados(){return{aluno:val("aluno"),idade:val("idade"),objetivo:val("objetivo"),nivel:val("nivel"),sexo:val("sexo"),tipoPrescricao:val("tipoPrescricao"),modalidadeTreino:val("modalidadeTreino"),experienciaPrevia:val("experienciaPrevia"),ordemPreferencia:val("ordemPreferencia"),frequencia:val("freq"),divisao:val("divisao"),dataFicha:val("dataFicha"),treinador:val("treinador"),patologia:val("patologia"),modoPatologiaExclusiva:checked("modoPatologiaExclusiva"),restricoes:val("restricoes"),observacoes:val("obs"),treinoAntigo:val("treinoAntigo")}}
+function dados(){return{aluno:val("aluno"),idade:val("idade"),objetivo:val("objetivo"),nivel:val("nivel"),sexo:val("sexo"),tipoPrescricao:val("tipoPrescricao"),modalidadeTreino:val("modalidadeTreino"),experienciaPrevia:val("experienciaPrevia"),ordemPreferencia:val("ordemPreferencia"),frequencia:val("freq"),divisao:val("divisao"),dataFicha:val("dataFicha"),patologia:val("patologia"),modoPatologiaExclusiva:checked("modoPatologiaExclusiva"),restricoes:val("restricoes"),observacoes:val("obs"),treinoAntigo:val("treinoAntigo")}}
 function permitidas(d){if(d==="A/B")return["A","B"];if(d==="A/B/C")return["A","B","C"];if(d==="A/B/C/D")return["A","B","C","D"];if(d==="MI/MS")return["A","B"];return["A","B","C"]}
 function parse(txt){const r={A:[],B:[],C:[],D:[]};let a=null;String(txt||"").split(/\r?\n/).map(x=>x.trim()).filter(Boolean).forEach(raw=>{let h=raw.match(/treino\s*([abcd])/i);if(h){a=h[1].toUpperCase();return}if(!a||!r[a])return;let s=raw.replace(/^[\-\•\*\d\.\)\s✅👉➡️🔥]+/g,"").replace(/^[1-9]️⃣\s*/g,"").trim();if(!s)return;let ex=s,sr="";let m=s.match(/(.+?)\s*[-–]\s*((?:\d+\s*x\s*[\d\-]+.*|[2345]x[\d\-]+.*|FINAL.*|.*voltas?.*))$/i)||s.match(/(.+?)\s+((?:\d+\s*x\s*[\d\-]+.*|[2345]x[\d\-]+.*))$/i);if(m){ex=m[1].trim();sr=m[2].trim()}r[a].push({ex,sr})});return r}
 function printBox(L){return document.getElementById("printTreino"+L)||[...document.querySelectorAll(".workout")].find(w=>(w.querySelector("h3")?.textContent||"").toUpperCase().includes("TREINO "+L))}
 function limparPrint(L){const b=printBox(L);if(!b)return;b.querySelectorAll("td").forEach(td=>td.textContent="")}
 function linhaPrint(L,i,ex,sr){const b=printBox(L);if(!b)return;const tr=[...b.querySelectorAll("tbody tr")][i];if(!tr)return;const c=[...tr.querySelectorAll("td")];if(c[0])c[0].textContent=ex||"";if(c[1])c[1].textContent=sr||""}
-function clicarAba(L){const btn=[...document.querySelectorAll("button")].find(b=>(b.textContent||"").trim().toUpperCase()==="TREINO "+L);if(btn)btn.click()}
-function inputsVisiveis(){return [...document.querySelectorAll("input")].filter(x=>{const r=x.getBoundingClientRect();const ph=(x.placeholder||"").toLowerCase();return r.width>20&&r.height>10&&(ph.includes("exerc")||ph.includes("série")||ph.includes("serie")||ph.includes("carga"))})}
-function preencherEditorAtual(itens){const ins=inputsVisiveis();if(ins.length<20)return false;for(let i=0;i<10;i++){const base=i*6;if(ins[base])ins[base].value=itens[i]?.ex||"";if(ins[base+1])ins[base+1].value=itens[i]?.sr||"";for(let j=2;j<6;j++){if(ins[base+j])ins[base+j].value=""}}return true}
-function aplicar(txt){const d=dados();const p=parse(txt);["A","B","C","D"].forEach(limparPrint);permitidas(d.divisao).forEach(L=>{const itens=(p[L]||[]).slice(0,10);itens.forEach((it,i)=>linhaPrint(L,i,it.ex,it.sr));clicarAba(L);setTimeout(()=>preencherEditorAtual(itens),50)});setTimeout(()=>{clicarAba(permitidas(d.divisao)[0]||"A");["aplicarDivisaoSoulFitV13","aplicarDivisaoSoulFitV12"].forEach(fn=>{if(typeof window[fn]==="function")window[fn]()})},450)}
-window.gerarComIA=async function(){const d=dados();const precisa=(d.tipoPrescricao||"").toLowerCase().includes("evolução");if(precisa&&!d.treinoAntigo.trim()){statusIA("Para evolução com treino anterior, cole a ficha antiga. Para aluno novo, escolha Primeira prescrição.","err");return}statusIA("Gerando treino com IA... aguarde.","");try{const resp=await fetch("/.netlify/functions/gerar-treino",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(d)});const json=await resp.json().catch(()=>({}));if(!resp.ok)throw new Error(json.error||"Erro ao gerar treino.");if(!json.treino)throw new Error("A IA não retornou um treino válido.");aplicar(json.treino);statusIA("Treino gerado com IA e preenchido nos campos editáveis e na ficha. Revise antes de imprimir.","ok")}catch(e){statusIA("Erro: "+e.message+" Confira a variável OPENAI_API_KEY no Netlify.","err")}}
+function clicarAba(L){const btn=[...document.querySelectorAll("button")].find(b=>(b.textContent||"").trim().toUpperCase()==="TREINO "+L); if(btn) btn.click()}
+
+/* Correção forte: preenche os campos editáveis da aba atual usando placeholders */
+function inputsDaAbaAtual(){
+  const fields=[...document.querySelectorAll("input")].filter(x=>{
+    const r=x.getBoundingClientRect();
+    const ph=(x.placeholder||"").toLowerCase();
+    return r.width>35 && r.height>15 && (ph.includes("exerc") || ph.includes("série") || ph.includes("serie") || ph.includes("carga"));
+  });
+  return fields;
+}
+function preencherAbaAtual(itens){
+  const ins=inputsDaAbaAtual();
+  if(!ins.length)return false;
+  for(let i=0;i<10;i++){
+    const base=i*6;
+    if(ins[base]){ins[base].value=itens[i]?.ex||"";ins[base].dispatchEvent(new Event("input",{bubbles:true}))}
+    if(ins[base+1]){ins[base+1].value=itens[i]?.sr||"";ins[base+1].dispatchEvent(new Event("input",{bubbles:true}))}
+    for(let j=2;j<6;j++){if(ins[base+j]){ins[base+j].value="";ins[base+j].dispatchEvent(new Event("input",{bubbles:true}))}}
+  }
+  return true;
+}
+function aplicar(txt){
+  const d=dados(), p=parse(txt), letras=permitidas(d.divisao);
+  ["A","B","C","D"].forEach(limparPrint);
+  letras.forEach(L=>{
+    const itens=(p[L]||[]).slice(0,10);
+    itens.forEach((it,i)=>linhaPrint(L,i,it.ex,it.sr));
+  });
+  // Preenche cada aba em sequência, dando tempo para a interface trocar
+  letras.forEach((L,idx)=>{
+    setTimeout(()=>{clicarAba(L); setTimeout(()=>preencherAbaAtual((p[L]||[]).slice(0,10)),120)}, idx*320);
+  });
+  setTimeout(()=>{clicarAba(letras[0]||"A");["aplicarDivisaoSoulFitV13","aplicarDivisaoSoulFitV12"].forEach(fn=>{if(typeof window[fn]==="function")window[fn]()})}, letras.length*360+200);
+}
+window.gerarComIA=async function(){
+  const d=dados();
+  const precisa=(d.tipoPrescricao||"").toLowerCase().includes("evolução");
+  if(precisa&&!d.treinoAntigo.trim()){statusIA("Para evolução com treino anterior, cole a ficha antiga. Para aluno novo, escolha Primeira prescrição.","err");return}
+  statusIA("Gerando treino com IA... aguarde.","");
+  try{
+    const resp=await fetch("/.netlify/functions/gerar-treino",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(d)});
+    const json=await resp.json().catch(()=>({}));
+    if(!resp.ok)throw new Error(json.error||"Erro ao gerar treino.");
+    if(!json.treino)throw new Error("A IA não retornou um treino válido.");
+    aplicar(json.treino);
+    statusIA("Treino gerado com IA e preenchido na ficha. Aguarde 2 segundos para aparecer também nas abas editáveis.","ok")
+  }catch(e){statusIA("Erro: "+e.message+" Confira a variável OPENAI_API_KEY no Netlify.","err")}
+}
 window.baixarPDF=function(){window.print()}
 })();
 </script>
