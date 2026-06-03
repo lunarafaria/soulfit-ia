@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoulFit+ | Evolução de Treinos</title>
+<style>
+:root{--red:#e00000;--yellow:#ffe100;--ink:#171717;--soft:#fff9dc;--bg:#f4f5f7;--muted:#687076;--purple:#7c4dff}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:#111} header{background:#111;color:#fff;padding:14px 18px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap} h1{margin:0;font-size:21px}.tag{font-size:12px;opacity:.82}.wrap{max-width:1360px;margin:18px auto;padding:0 12px}.app{display:grid;grid-template-columns:390px 1fr;gap:14px}.panel{background:#fff;border-radius:16px;padding:15px;box-shadow:0 7px 22px rgba(0,0,0,.08)}h2{font-size:17px;margin:0 0 10px}.mini{font-size:12px;color:var(--muted);line-height:1.35}.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}label{font-size:12px;font-weight:800;display:block;margin:8px 0 4px}input,select,textarea{width:100%;border:1px solid #cfd3d7;border-radius:10px;padding:9px;font-size:14px;background:#fff}textarea{min-height:76px;resize:vertical}button{border:0;border-radius:10px;background:#111;color:#fff;font-weight:800;padding:10px 12px;cursor:pointer}button:hover{opacity:.92}.redbtn{background:var(--red)}.light{background:#eef0f2;color:#111;border:1px solid #cfd3d7}.yellow{background:var(--yellow);color:#111}.btns{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.tabbar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}.tab{background:#e9ebee;color:#111}.tab.active{background:#111;color:#fff}.exercise-line{display:grid;grid-template-columns:2fr .7fr .55fr .55fr .55fr .55fr;gap:5px;margin-bottom:5px}.exercise-line input{padding:7px;border-radius:7px}.section-title{font-weight:900;margin:10px 0 6px}.preview-img{display:none;max-width:100%;border-radius:10px;margin-top:8px;border:1px solid #ddd}.promptbox{background:#101010;color:#fff;border-radius:12px;padding:12px;font-family:ui-monospace,Consolas,monospace;font-size:12px;white-space:pre-wrap;max-height:250px;overflow:auto}.history-item{border:1px solid #ddd;background:#fafafa;border-radius:10px;padding:9px;margin:8px 0}.print-actions{position:sticky;top:0;background:#fff;padding-bottom:10px;z-index:4}.sheet{width:297mm;min-height:210mm;margin:10px auto;background:white;position:relative;overflow:hidden;padding:10mm 11mm;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.12)}.watermark{position:absolute;inset:0;pointer-events:none;opacity:.08;background:radial-gradient(circle at 2% 6%, #7c90d8 0 15%, transparent 16%),radial-gradient(circle at 98% 90%, #7c90d8 0 16%, transparent 17%)}.sheet-inner{position:relative;z-index:1}.top{display:grid;grid-template-columns:1fr 1.3fr 1fr;align-items:start;margin-bottom:4mm;gap:6mm}.brand{display:flex;align-items:center;gap:8px}.brand-logo{width:58mm;max-width:100%;height:auto;display:block}.brand.right{justify-content:flex-end}.dumb{font-size:34px;text-align:center;filter:grayscale(1)}.info{font-size:11.5px;font-weight:800;line-height:1.25}.pline{display:inline-block;border-bottom:1.5px solid #111;height:15px;min-width:130px;margin-left:5px;vertical-align:bottom}.pline.long{min-width:210px}.obsblock{font-size:11.5px;font-weight:800}.obsblock .line{display:block;border-bottom:1.5px solid #111;height:15px;margin:4px 0 0}.print-grid{display:grid;grid-template-columns:1fr 1fr;gap:7mm 14mm}.leftcol,.rightcol{display:grid;grid-template-rows:1fr 1fr;gap:6mm}.workout h3{text-align:left;margin:0 0 1.5mm;background:#111;color:#fff;padding:2px 14px;width:max-content;font-size:15px;text-transform:uppercase;border-right:16px solid var(--red);border-radius:3px 8px 0 0}.workout h3.purple{color:#613cff}table{width:100%;border-collapse:separate;border-spacing:3px;font-size:12px}th{background:#050505;color:white;border:2px solid white;padding:5px 3px;text-align:center}td{border:1.2px solid #777;height:6.7mm;background:white;padding:1px 3px;vertical-align:middle}.soft{background:var(--soft)}.excol{width:52%}.srcol{width:12%}.loadcol{width:9%}.footer-note{position:absolute;bottom:5mm;left:11mm;right:11mm;font-size:10px;color:#777;text-align:center}.mobile-note{display:none}.danger-note{border-left:4px solid var(--red);padding:8px;background:#fff5f5;border-radius:8px;font-size:12px;line-height:1.35;margin-top:8px}@media(max-width:980px){.app{grid-template-columns:1fr}.sheet{width:100%;min-height:auto;overflow:auto}.exercise-line{grid-template-columns:1fr 70px 54px 54px 54px 54px}.mobile-note{display:block}.top{grid-template-columns:1fr}.dumb{text-align:left}.info{margin-top:8px}.print-grid{grid-template-columns:1fr}.leftcol,.rightcol{gap:8mm}}@media print{body{background:#fff}.no-print,header{display:none!important}.wrap{max-width:none;margin:0;padding:0}.app{display:block}.panel{box-shadow:none;padding:0}.sheet{box-shadow:none;border-radius:0;margin:0;width:297mm;min-height:210mm;padding:6mm 7mm;page-break-after:avoid}.workout h3{font-size:13px}table{font-size:9.8px;border-spacing:2px}td{height:6.2mm;padding:1px 3px}th{padding:3px 2px}.brand-logo{width:52mm}.footer-note{display:none}@page{size:A4 landscape;margin:0}}
+
+.brand-text{font-size:32px;font-weight:900;font-family:Arial,sans-serif;line-height:1}
+.soul{color:#e00000;}
+.fit{color:#000000;}
+
+
+/* V7: upload de foto removido */
+#foto,#preview,.preview-img{display:none!important}
+
+
+/* V8 ajustes Luna: logo único em texto, cabeçalho compacto e treinos inativos em branco */
+.brand-logo,.brand.right,.dumb{display:none!important}
+.compact-top{
+  display:grid!important;
+  grid-template-columns:42mm 1fr!important;
+  gap:5mm!important;
+  align-items:center!important;
+  margin-bottom:1.8mm!important;
+  min-height:18mm!important;
+}
+.brand-text-only{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+}
+.brand-text{
+  font-size:25px!important;
+  font-weight:900!important;
+  font-family:Arial Black, Impact, Arial, sans-serif!important;
+  letter-spacing:-1px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+.soul{color:#e00000!important}
+.fit{color:#000!important}
+.compact-info{
+  font-size:10.5px!important;
+  line-height:1.05!important;
+}
+.pline{
+  height:12px!important;
+  min-width:80px!important;
+  margin-left:3px!important;
+  margin-right:7px!important;
+}
+.pline.long{min-width:170px!important}
+.pline.small{min-width:70px!important}
+.pline.obsline{min-width:320px!important}
+.sheet{padding:5mm 7mm!important}
+.print-grid{gap:4mm 8mm!important}
+.leftcol,.rightcol{gap:3mm!important}
+.workout.inactive td{color:transparent!important}
+.workout.inactive td::selection{color:transparent!important}
+.workout.inactive h3{opacity:.9}
+@media print{
+  .compact-top{grid-template-columns:38mm 1fr!important;margin-bottom:1mm!important;min-height:15mm!important}
+  .brand-text{font-size:22px!important}
+  .compact-info{font-size:9.4px!important}
+  .pline{height:10px!important}
+  .pline.long{min-width:150px!important}
+  .pline.obsline{min-width:280px!important}
+  .sheet{padding:4mm 6mm!important}
+  .print-grid{gap:3mm 6mm!important}
+  .leftcol,.rightcol{gap:2.5mm!important}
+}
+
+
+/* V14 IA: divisão respeitada na geração */
+.workout.inactive tbody td{color:transparent!important;background:white!important}
+.workout.inactive tbody td *{display:none!important}
+.workout.inactive .generated-text{display:none!important}
+
+
+/* V14 IA: sem prompt, PDF e observações restauradas */
+#promptArea{display:none!important}
+.obsline{display:inline-block!important}
+
+
+/* V14 IA: melhor enquadramento para computador */
+@media screen and (min-width:981px){
+  .wrap{max-width:100vw;margin:10px auto;padding:0 8px}
+  .app{grid-template-columns:340px minmax(0,1fr);gap:10px}
+  aside.panel{max-height:calc(100vh - 92px);overflow:auto}
+  main.panel{overflow:hidden;padding:10px}
+  .sheet{width:100%;max-width:1030px;min-height:auto;margin:6px auto;padding:4.5mm 5.5mm}
+  .compact-top{grid-template-columns:34mm 1fr!important;gap:3mm!important;min-height:13mm!important;margin-bottom:1mm!important}
+  .brand-text{font-size:21px!important}
+  .compact-info{font-size:9px!important}
+  .pline{height:9px!important;min-width:55px!important}
+  .pline.long{min-width:120px!important}
+  .pline.obsline{min-width:220px!important}
+  .print-grid{gap:3mm 5mm!important}
+  .leftcol,.rightcol{gap:2.2mm!important}
+  .workout h3{font-size:12px!important;padding:1px 10px!important}
+  table{font-size:8.7px!important;border-spacing:1.5px!important}
+  th{padding:2px 1px!important}
+  td{height:4.8mm!important;padding:1px 2px!important}
+  .excol{width:50%!important}.srcol{width:12%!important}.loadcol{width:9.5%!important}
+}
+@media screen and (max-width:1280px) and (min-width:981px){
+  .app{grid-template-columns:315px minmax(0,1fr)}
+  .sheet{max-width:930px}
+  table{font-size:8px!important}
+  td{height:4.4mm!important}
+}
+
+
+/* V14 IA: aba/modo patologia exclusiva */
+.pathology-toggle{
+  margin:8px 0 4px;
+  border:1px solid #f1b9b9;
+  background:#fff5f5;
+  border-radius:12px;
+  padding:9px;
+}
+.checkline{
+  display:flex!important;
+  align-items:flex-start;
+  gap:8px;
+  margin:0!important;
+  cursor:pointer;
+  font-weight:500!important;
+}
+.checkline input{
+  width:auto!important;
+  margin-top:3px;
+  transform:scale(1.08);
+}
+.checkline span{display:block;font-size:12px;line-height:1.25}
+.checkline small{display:block;color:#687076;font-weight:500;margin-top:2px}
+body.patologia-exclusiva-on .pathology-toggle{
+  border-color:#e00000;
+  background:#ffecec;
+}
+body.patologia-exclusiva-on .pathology-toggle b{color:#e00000}
+
+.ia-status{margin-top:10px;border:1px solid #ffd0d0;background:#fff5f5;color:#111;padding:10px;border-radius:10px;font-size:12px;line-height:1.35}.ia-status.ok{border-color:#b7e4c7;background:#f0fff4}.ia-status.err{border-color:#ffb3b3;background:#fff0f0;color:#9b1111}
+</style>
+</head>
+<body>
+<header><div><h1>SoulFit+ Evolução de Treinos</h1><div class="tag">Ficha horizontal, histórico e progressão no padrão de montagem da Luna</div></div><div class="tag">V7 | evolução por restrição/patologia + PDF</div></header>
+<div class="wrap">
+<div class="app">
+<aside class="panel no-print">
+<h2>1. Dados do aluno</h2>
+<label>Aluno(a)</label><input id="aluno" placeholder="Nome do aluno">
+<div class="row"><div><label>Objetivo</label><select id="objetivo"><option>Hipertrofia</option><option>Emagrecimento</option><option>Hipertrofia + emagrecimento</option><option>Condicionamento</option><option>Força</option><option>Retorno/controle de dor</option></select></div><div><label>Nível</label><select id="nivel"><option>Iniciante</option><option>Intermediário</option><option>Avançado</option></select></div></div>
+<div class="row"><div><label>Sexo</label><select id="sexo"><option>Mulher</option><option>Homem</option></select></div><div><label>Preferência de ordem</label><select id="ordemPreferencia"><option>Automática pelo sexo</option><option>Começar por inferiores</option><option>Começar por superiores</option><option>Equilibrado</option></select></div></div>
+<div class="row"><div><label>Frequência semanal</label><select id="freq"><option>2x</option><option>3x</option><option selected>4x</option><option>5x</option><option>6x</option></select></div><div><label>Divisão</label><select id="divisao"><option>A/B</option><option selected>A/B/C</option><option>A/B/C/D</option><option>MI/MS</option></select></div></div>
+<div class="row"><div><label>Data da ficha</label><input id="dataFicha" type="date"></div><div><label>Treinador(a)</label><input id="treinador" placeholder="Luna / SoulFit+"></div></div>
+<label>Patologia do aluno (caso tenha)</label><textarea id="patologia" placeholder="Ex: condromalácia patelar, hérnia lombar, hipertensão, diabetes, obesidade, lesão de ombro..."></textarea>
+<div class="pathology-toggle">
+  <label class="checkline">
+    <input type="checkbox" id="modoPatologiaExclusiva">
+    <span><b>Prescrição exclusiva para patologia</b><small>Quando marcado, a evolução do treino prioriza a condição clínica acima do objetivo estético.</small></span>
+  </label>
+</div>
+<label>Restrições, dores ou prioridade</label><textarea id="restricoes" placeholder="Ex: priorizar glúteos, joelho sensível, evitar impacto..."></textarea>
+<label>Observação para imprimir</label><textarea id="obs" placeholder="Ex: progredir carga quando bater o topo das repetições com boa técnica."></textarea>
+<h2>2. Treino antigo do aluno</h2>
+<label>Cole/digite o treino antigo</label><textarea id="treinoAntigo" placeholder="Cole aqui o treino antigo do aluno.\n\nExemplo:\nTREINO A\n1️⃣ Hip thrust 4x10\n2️⃣ Stiff 3x12\n3️⃣ Búlgaro 3x10\nFINAL (3 voltas): agachamento 15 + step rápido 30s"></textarea>
+<div class="danger-note">Cole o treino antigo do aluno no campo abaixo. O sistema usará essas informações para sugerir uma nova ficha com progressão, mantendo o padrão SoulFit+.</div>
+<div class="btns"><button class="redbtn" onclick="gerarComIA()">Gerar com IA</button><button class="light" onclick="gerarEvolucao()">Gerar por regras</button><button onclick="salvarHistorico()">Salvar histórico</button><button class="light" onclick="baixarPDF()">Baixar PDF</button></div>
+<div id="iaStatus" class="ia-status" style="display:none"></div>
+<h2 style="margin-top:14px">Histórico local</h2><div id="historico"></div>
+</aside>
+<main class="panel">
+<div class="print-actions no-print"><button onclick="window.print()">Imprimir horizontal</button> <button class="light" onclick="baixarPDF()">Baixar PDF</button> <button class="light" onclick="limparFicha()">Limpar ficha</button> <button class="light" onclick="preencherExemplo()">Exemplo SoulFit+</button><div class="mini mobile-note">No celular a ficha pode aparecer empilhada, mas na impressão sai em A4 horizontal.</div></div>
+<h2 class="no-print">3. Editar ficha</h2>
+<div class="tabbar no-print"><button class="tab active" onclick="abrirTreino('A',this)">Treino A</button><button class="tab" onclick="abrirTreino('B',this)">Treino B</button><button class="tab" onclick="abrirTreino('C',this)">Treino C</button><button class="tab" onclick="abrirTreino('D',this)">Treino D</button></div>
+<div id="editor" class="no-print"></div>
+<section class="sheet" id="sheet">
+<div class="watermark"></div><div class="sheet-inner">
+
+<div class="top compact-top">
+  <div class="brand brand-text-only">
+    <div class="brand-text"><span class="soul">Soul</span><span class="fit">Fit+</span></div>
+  </div>
+  <div class="info compact-info">
+    <div><b>Aluno(a):</b> <span id="pAluno" class="pline long"></span> <b>Objetivo:</b> <span id="pObjetivo" class="pline"></span> <b>Data:</b> <span id="pData" class="pline small"></span></div>
+    <div><b>Treinador(a):</b> <span id="pTreinador" class="pline"></span> <b>Frequência:</b> <span id="pFreq" class="pline small"></span></div>
+    <div><b>Observações:</b> <span id="pObs" class="pline obsline"></span></div>
+  </div>
+</div>
+<div class="print-grid"><div class="leftcol"><div id="boxC"></div><div id="boxD"></div></div><div class="rightcol"><div id="boxA"></div><div id="boxB"></div></div></div>
+</div><div class="footer-note">SoulFit+ | ficha gerada para revisão profissional antes da aplicação</div>
+</section>
+</main>
+</div>
+</div>
+<script>
+const letras=['A','B','C','D']; let atual='A';
+let treinos={A:[],B:[],C:[],D:[]};
+function linhaVazia(){return {ex:'',sr:'',c1:'',c2:'',c3:'',c4:''}}
+letras.forEach(l=>{treinos[l]=Array.from({length:10},linhaVazia)})
+function $(id){return document.getElementById(id)}
+function init(){ $('dataFicha').value=new Date().toISOString().slice(0,10); renderEditor(); syncPrint(); carregarHistorico(); ['aluno','objetivo','obs','dataFicha','treinador'].forEach(id=>$(id).addEventListener('input',syncPrint)); ['objetivo','nivel','freq','divisao','restricoes','treinoAntigo'].forEach(id=>$(id).addEventListener('change',syncPrint)); $('foto').addEventListener('change',e=>{const f=e.target.files[0]; if(!f)return; const r=new FileReader(); r.onload=ev=>{preview.src=ev.target.result;preview.style.display='block'}; r.readAsDataURL(f)});}
+function abrirTreino(l,btn){atual=l; document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderEditor();}
+function renderEditor(){let html='<div class="section-title">TREINO '+atual+'</div>'; treinos[atual].forEach((r,i)=>{html+=`<div class="exercise-line"><input placeholder="${i+1}️⃣ Exercício" value="${esc(r.ex)}" oninput="treinos['${atual}'][${i}].ex=this.value;syncPrint()"><input placeholder="Série/Rep" value="${esc(r.sr)}" oninput="treinos['${atual}'][${i}].sr=this.value;syncPrint()"><input placeholder="Carga" value="${esc(r.c1)}" oninput="treinos['${atual}'][${i}].c1=this.value;syncPrint()"><input placeholder="Carga" value="${esc(r.c2)}" oninput="treinos['${atual}'][${i}].c2=this.value;syncPrint()"><input placeholder="Carga" value="${esc(r.c3)}" oninput="treinos['${atual}'][${i}].c3=this.value;syncPrint()"><input placeholder="Carga" value="${esc(r.c4)}" oninput="treinos['${atual}'][${i}].c4=this.value;syncPrint()"></div>`}); $('editor').innerHTML=html;}
+function esc(v){return String(v||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;')}
+function syncPrint(){ $('pAluno').textContent=$('aluno').value; $('pObjetivo').textContent=$('objetivo').value; $('pObs').textContent=$('obs').value; $('pData').textContent=($('dataFicha').value||'').split('-').reverse().join('/'); $('pTreinador').textContent=$('treinador').value; $('pFreq').textContent=$('freq').value + '/semana'; letras.forEach(l=>$("box"+l).innerHTML=workoutHTML(l));}
+function workoutHTML(l){let purple=''; let rows=treinos[l].map(r=>`<tr><td>${esc(r.ex)}</td><td class="soft">${esc(r.sr)}</td><td class="soft">${esc(r.c1)}</td><td class="soft">${esc(r.c2)}</td><td class="soft">${esc(r.c3)}</td><td class="soft">${esc(r.c4)}</td></tr>`).join(''); return `<div class="workout"><h3 class="${purple}">Treino ${l}</h3><table><thead><tr><th class="excol">Exercício</th><th class="srcol">Série<br>s/Rep</th><th class="loadcol">Carga</th><th class="loadcol">Carga</th><th class="loadcol">Carga</th><th class="loadcol">Carga</th></tr></thead><tbody>${rows}</tbody></table></div>`}
+function gerarEvolucao(){let obj=$('objetivo').value, nivel=$('nivel').value, div=$('divisao').value, restr=$('restricoes').value.toLowerCase(); letras.forEach(l=>treinos[l]=Array.from({length:10},linhaVazia)); let base;
+ if(div==='MI/MS') base=templates.MIMS; else if(div==='A/B') base=templates.AB; else if(div==='A/B/C/D') base=templates.ABCD; else base=templates.ABC;
+ Object.keys(base).forEach(l=>{treinos[l]=base[l].map(x=>({ex:x[0],sr:x[1],c1:'',c2:'',c3:'',c4:''})); while(treinos[l].length<8) treinos[l].push(linhaVazia())});
+ if(obj.includes('Emagrecimento')) addFinal();
+ if(restr.includes('joelho')) trocar(['Agachamento livre','Hack squat'],['Agachamento assistido','Leg press amplitude controlada']);
+ if(restr.includes('lombar')||restr.includes('coluna')) trocar(['Stiff','Levantamento terra romeno'],['Mesa flexora','Pull through na polia']);
+ if(nivel==='Avançado') intensificar(); renderEditor(); syncPrint();}
+const templates={
+ABC:{A:[['Hip thrust','4x8-10'],['Stiff','3x10-12'],['Búlgaro','3x10 cada'],['Abdutora','3x15-20'],['Glúteo polia','3x12-15'],['Panturrilha','4x12-15']],B:[['Supino máquina','3x10-12'],['Remada baixa','3x10-12'],['Desenvolvimento','3x10'],['Puxada frente','3x10-12'],['Rosca direta','3x12'],['Tríceps corda','3x12']],C:[['Agachamento livre','4x8-10'],['Leg press','4x10-12'],['Cadeira extensora','3x12-15'],['Mesa flexora','3x12'],['Adutora','3x15'],['Abdominal prancha','3x30s']],D:[['Puxada alta','3x10-12'],['Remada articulada','3x10-12'],['Elevação lateral','3x12-15'],['Crucifixo inverso','3x12'],['Rosca martelo','3x12'],['Tríceps testa','3x12']]},
+AB:{A:[['Agachamento','4x10'],['Leg press','3x12'],['Stiff','3x12'],['Hip thrust','4x10'],['Abdutora','3x20'],['Panturrilha','4x15']],B:[['Puxada frente','3x12'],['Remada baixa','3x12'],['Supino máquina','3x12'],['Desenvolvimento','3x10'],['Rosca direta','3x12'],['Tríceps corda','3x12'],['Abdominal','3x15']]},
+ABCD:{A:[['Hip thrust','4x8-10'],['Stiff','3x10'],['Búlgaro','3x10'],['Abdutora','3x20'],['Glúteo polia','3x15']],B:[['Supino inclinado','3x10'],['Puxada frente','3x10'],['Remada baixa','3x12'],['Desenvolvimento','3x10'],['Tríceps corda','3x12']],C:[['Agachamento livre','4x8'],['Leg press','4x10'],['Extensora','3x12'],['Passada','3x10'],['Panturrilha','4x15']],D:[['Puxada neutra','3x10'],['Remada articulada','3x10'],['Elevação lateral','3x15'],['Crucifixo inverso','3x15'],['Rosca alternada','3x12']]},
+MIMS:{A:[['Agachamento','4x10'],['Leg press','3x12'],['Cadeira extensora','3x15'],['Mesa flexora','3x12'],['Panturrilha','4x15']],B:[['Puxada frente','3x12'],['Remada baixa','3x12'],['Supino máquina','3x12'],['Desenvolvimento','3x10'],['Rosca direta','3x12'],['Tríceps corda','3x12']],C:[['Hip thrust','4x10'],['Stiff','3x12'],['Búlgaro','3x10'],['Abdutora','3x20'],['Glúteo polia','3x15']],D:[['Remada articulada','3x10'],['Puxada alta','3x10'],['Elevação lateral','3x15'],['Crucifixo inverso','3x15'],['Core prancha','3x30s']]}
+};
+function addFinal(){['A','C'].forEach(l=>{let idx=treinos[l].findIndex(r=>!r.ex); if(idx>=0){treinos[l][idx]={ex:'FINAL: 3 voltas | agachamento 15 + polichinelo 30s + step rápido 30s',sr:'3v',c1:'',c2:'',c3:'',c4:''}}})}
+function intensificar(){Object.values(treinos).forEach(arr=>arr.forEach(r=>{if(r.ex && /Abdutora|Extensora|Glúteo|Elevação/.test(r.ex)) r.sr+=' + controle'}))}
+function trocar(a,b){Object.values(treinos).forEach(arr=>arr.forEach(r=>{a.forEach((x,i)=>{if(r.ex===x) r.ex=b[i]||b[0]})}))}
+function gerarPrompt(){let txt=`Liora, evolua este treino no padrão de montagem da Luna/SoulFit+.\n\nRegras do meu padrão:\n- Entregar em TREINO A, B, C e D quando fizer sentido.\n- Exercícios numerados com 1️⃣ 2️⃣ 3️⃣.\n- Séries/repetições objetivas.\n- Quando o objetivo for emagrecimento/condicionamento, incluir FINAL em 3 voltas no estilo: exercício + cardio curto + step rápido.\n- Não trocar por trocar: aplicar sobrecarga progressiva, especificidade, controle de volume, recuperação e variação inteligente.\n- Manter linguagem prática para ficha de academia.\n- Considerar restrições e evitar exercícios incompatíveis.\n- Gerar ficha pronta para eu imprimir.\n\nDADOS DO ALUNO\nAluno: ${$('aluno').value||'não informado'}\nObjetivo: ${$('objetivo').value}\nNível: ${$('nivel').value}\nFrequência: ${$('freq').value}\nDivisão desejada: ${$('divisao').value}\nRestrições/prioridade: ${$('restricoes').value||'não informado'}\n\nTREINO ANTIGO\n${$('treinoAntigo').value||'Vou enviar a foto ou preencher depois.'}\n\nAgora gere o novo treino com evolução técnica e, ao final, explique em 5 linhas o raciocínio da progressão.`; $('promptText').textContent=txt; $('promptArea').style.display='block';}
+function copiarPrompt(){navigator.clipboard.writeText($('promptText').textContent); alert('Prompt copiado!')}
+function salvarHistorico(){const item={id:Date.now(),aluno:$('aluno').value,objetivo:$('objetivo').value,data:new Date().toLocaleDateString('pt-BR'),dataFicha:$('dataFicha').value,treinador:$('treinador').value,freq:$('freq').value,obs:$('obs').value,treinos}; let h=JSON.parse(localStorage.getItem('soulfit_hist')||'[]'); h.unshift(item); localStorage.setItem('soulfit_hist',JSON.stringify(h.slice(0,30))); carregarHistorico();}
+function carregarHistorico(){let h=JSON.parse(localStorage.getItem('soulfit_hist')||'[]'); $('historico').innerHTML=h.length?h.map((x,i)=>`<div class="history-item"><b>${esc(x.aluno||'Sem nome')}</b><br><span class="mini">${esc(x.objetivo)} | ${x.data}</span><div class="btns"><button class="light" onclick="restaurar(${i})">Abrir</button></div></div>`).join(''):'<div class="mini">Nada salvo ainda.</div>'}
+function restaurar(i){let h=JSON.parse(localStorage.getItem('soulfit_hist')||'[]'); let x=h[i]; if(!x)return; $('aluno').value=x.aluno||''; $('objetivo').value=x.objetivo||'Hipertrofia'; $('dataFicha').value=x.dataFicha||new Date().toISOString().slice(0,10); $('treinador').value=x.treinador||''; $('freq').value=x.freq||'4x'; $('obs').value=x.obs||''; treinos=x.treinos; renderEditor(); syncPrint();}
+function baixarBackup(){let blob=new Blob([localStorage.getItem('soulfit_hist')||'[]'],{type:'application/json'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='backup_soulfit_treinos.json'; a.click();}
+function limparFicha(){if(!confirm('Limpar ficha atual?'))return; letras.forEach(l=>treinos[l]=Array.from({length:10},linhaVazia)); renderEditor(); syncPrint();}
+function preencherExemplo(){$('aluno').value='Maria Exemplo'; $('objetivo').value='Hipertrofia + emagrecimento'; $('nivel').value='Intermediário'; $('freq').value='4x'; $('divisao').value='A/B/C'; $('restricoes').value='Priorizar glúteos e posterior'; $('obs').value='Progressão de carga com técnica limpa.'; $('treinador').value='Luna / SoulFit+'; gerarEvolucao();}
+init();
+</script>
+
+
+
+
+<script>
+(function(){
+  const letras = ['A','B','C','D'];
+
+  function val(id){
+    const el = document.getElementById(id);
+    return el ? (el.value || '') : '';
+  }
+
+  function divisaoAtual(){
+    return val('divisao') || 'A/B/C';
+  }
+
+  function treinosAtivos(){
+    const d = divisaoAtual().trim();
+    if(d === 'A/B') return ['A','B'];
+    if(d === 'A/B/C') return ['A','B','C'];
+    if(d === 'A/B/C/D') return ['A','B','C','D'];
+    if(d === 'MI/MS') return ['A','B']; // A = MI, B = MS/IMS
+    return ['A','B','C'];
+  }
+
+  function nomeTreino(letra){
+    if(divisaoAtual() === 'MI/MS'){
+      if(letra === 'A') return 'TREINO A - MI';
+      if(letra === 'B') return 'TREINO B - MS';
+    }
+    return 'TREINO ' + letra;
+  }
+
+  function setText(id, txt){
+    const el = document.getElementById(id);
+    if(el) el.textContent = txt || '';
+  }
+
+  function syncHeader(){
+    setText('pAluno', val('aluno'));
+    setText('pObjetivo', val('objetivo'));
+    setText('pTreinador', val('treinador'));
+    setText('pFreq', val('freq') ? val('freq') + '/semana' : '');
+    const data = val('dataFicha');
+    if(data){
+      const p = data.split('-');
+      setText('pData', p.length === 3 ? `${p[2]}/${p[1]}/${p[0]}` : data);
+    }
+    setText('pObs', val('obs'));
+  }
+
+  function findWorkoutBox(letra){
+    let box = document.getElementById('printTreino'+letra);
+    if(box) return box;
+
+    const hs = Array.from(document.querySelectorAll('.workout h3'));
+    const h = hs.find(x => (x.textContent || '').toUpperCase().includes('TREINO '+letra));
+    if(h){
+      box = h.closest('.workout');
+      if(box) box.id = 'printTreino'+letra;
+    }
+    return box;
+  }
+
+  function clearWorkout(letra){
+    const box = findWorkoutBox(letra);
+    if(!box) return;
+    box.classList.add('inactive');
+    const h = box.querySelector('h3');
+    if(h) h.textContent = 'TREINO ' + letra;
+    box.querySelectorAll('td').forEach(td => td.textContent = '');
+    box.querySelectorAll('input,textarea').forEach(el => el.value = '');
+  }
+
+  function activateWorkout(letra){
+    const box = findWorkoutBox(letra);
+    if(!box) return;
+    box.classList.remove('inactive');
+    const h = box.querySelector('h3');
+    if(h) h.textContent = nomeTreino(letra);
+  }
+
+  function limparInativos(){
+    const ativos = treinosAtivos();
+    letras.forEach(l => ativos.includes(l) ? activateWorkout(l) : clearWorkout(l));
+  }
+
+  function limparObjetoTreinosGlobal(){
+    // Tenta limpar estruturas globais comuns, se existirem no index.
+    const ativos = treinosAtivos();
+    ['treinos','workouts','ficha','dadosTreino'].forEach(nome => {
+      try{
+        const obj = window[nome];
+        if(obj && typeof obj === 'object'){
+          letras.forEach(l => {
+            if(!ativos.includes(l) && obj[l]) {
+              if(Array.isArray(obj[l])) obj[l] = [];
+              else obj[l] = {};
+            }
+          });
+        }
+      }catch(e){}
+    });
+  }
+
+  function limitarTextoTreinoAntigo(txt){
+    const ativos = treinosAtivos();
+    const linhas = (txt || '').split(/\n/);
+    const saida = [];
+    let atual = null;
+    for(const linha of linhas){
+      const m = linha.match(/treino\s*([abcd])/i);
+      if(m) atual = m[1].toUpperCase();
+      if(!atual || ativos.includes(atual)) saida.push(linha);
+    }
+    return saida.join('\n');
+  }
+
+  function montarPromptDivisao(){
+    const ativos = treinosAtivos();
+    const divisao = divisaoAtual();
+    let regra = '';
+    if(divisao === 'A/B'){
+      regra = 'Gere SOMENTE TREINO A e TREINO B. Não gere TREINO C e não gere TREINO D. C e D devem ficar em branco.';
+    } else if(divisao === 'A/B/C'){
+      regra = 'Gere SOMENTE TREINO A, TREINO B e TREINO C. Não gere TREINO D. O treino D deve ficar em branco.';
+    } else if(divisao === 'A/B/C/D'){
+      regra = 'Gere TREINO A, TREINO B, TREINO C e TREINO D.';
+    } else if(divisao === 'MI/MS'){
+      regra = 'Gere SOMENTE dois treinos: TREINO A - MI (membros inferiores) e TREINO B - MS (membros superiores). Não gere C nem D.';
+    }
+    return regra + '\nTreinos permitidos: ' + ativos.map(l => nomeTreino(l)).join(', ') + '.';
+  }
+
+  function reforcarPromptVisual(){
+    const area = document.getElementById('promptText');
+    if(area){
+      const regra = montarPromptDivisao();
+      const txt = area.textContent || '';
+      if(!txt.includes('REGRA OBRIGATÓRIA DA DIVISÃO')){
+        area.textContent = 'REGRA OBRIGATÓRIA DA DIVISÃO:\n' + regra + '\n\n' + txt;
+      }
+    }
+  }
+
+  function sincronizarTudo(){
+    syncHeader();
+    limparObjetoTreinosGlobal();
+    limparInativos();
+    reforcarPromptVisual();
+  }
+
+  // Intercepta geração: antes e depois, para impedir D indevido.
+  const oldGerar = window.gerarEvolucao;
+  if(typeof oldGerar === 'function'){
+    window.gerarEvolucao = function(){
+      const treinoAntigo = document.getElementById('treinoAntigo');
+      const backup = treinoAntigo ? treinoAntigo.value : '';
+      if(treinoAntigo) treinoAntigo.value = limitarTextoTreinoAntigo(backup);
+      const r = oldGerar.apply(this, arguments);
+      if(treinoAntigo) treinoAntigo.value = backup;
+      setTimeout(sincronizarTudo, 0);
+      setTimeout(sincronizarTudo, 80);
+      setTimeout(sincronizarTudo, 250);
+      return r;
+    }
+  }
+
+  const oldPrompt = window.gerarPrompt;
+  if(typeof oldPrompt === 'function'){
+    window.gerarPrompt = function(){
+      const r = oldPrompt.apply(this, arguments);
+      setTimeout(reforcarPromptVisual, 0);
+      setTimeout(sincronizarTudo, 80);
+      return r;
+    }
+  }
+
+  const oldExemplo = window.preencherExemplo;
+  if(typeof oldExemplo === 'function'){
+    window.preencherExemplo = function(){
+      const r = oldExemplo.apply(this, arguments);
+      setTimeout(sincronizarTudo, 0);
+      setTimeout(sincronizarTudo, 100);
+      return r;
+    }
+  }
+
+  const oldLimpar = window.limparFicha;
+  if(typeof oldLimpar === 'function'){
+    window.limparFicha = function(){
+      const r = oldLimpar.apply(this, arguments);
+      setTimeout(sincronizarTudo, 0);
+      return r;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', sincronizarTudo);
+  document.addEventListener('input', sincronizarTudo);
+  document.addEventListener('change', sincronizarTudo);
+  setInterval(limparInativos, 700);
+
+  window.aplicarDivisaoSoulFitV14 IA = sincronizarTudo;
+})();
+</script>
+
+
+<script>
+(function(){
+  const letras = ['A','B','C','D'];
+
+  function val(id){
+    const el = document.getElementById(id);
+    return el ? (el.value || '') : '';
+  }
+
+  function divisaoAtual(){
+    return val('divisao') || 'A/B/C';
+  }
+
+  function treinosAtivos(){
+    const d = divisaoAtual().trim();
+    if(d === 'A/B') return ['A','B'];
+    if(d === 'A/B/C') return ['A','B','C'];
+    if(d === 'A/B/C/D') return ['A','B','C','D'];
+    if(d === 'MI/MS') return ['A','B'];
+    return ['A','B','C'];
+  }
+
+  function nomeTreino(letra){
+    if(divisaoAtual() === 'MI/MS'){
+      if(letra === 'A') return 'TREINO A - MI';
+      if(letra === 'B') return 'TREINO B - MS';
+    }
+    return 'TREINO ' + letra;
+  }
+
+  function setText(id, txt){
+    const el = document.getElementById(id);
+    if(el) el.textContent = txt || '';
+  }
+
+  function syncHeader(){
+    setText('pAluno', val('aluno'));
+    setText('pObjetivo', val('objetivo'));
+    setText('pTreinador', val('treinador'));
+    setText('pFreq', val('freq') ? val('freq') + '/semana' : '');
+    const data = val('dataFicha');
+    if(data){
+      const p = data.split('-');
+      setText('pData', p.length === 3 ? `${p[2]}/${p[1]}/${p[0]}` : data);
+    }
+    // Observações voltam a aparecer na ficha
+    const obs = val('obs') || val('restricoes') || '';
+    setText('pObs', obs);
+  }
+
+  function findWorkoutBox(letra){
+    let box = document.getElementById('printTreino'+letra);
+    if(box) return box;
+    const hs = Array.from(document.querySelectorAll('.workout h3'));
+    const h = hs.find(x => (x.textContent || '').toUpperCase().includes('TREINO '+letra));
+    if(h){
+      box = h.closest('.workout');
+      if(box) box.id = 'printTreino'+letra;
+    }
+    return box;
+  }
+
+  function clearWorkout(letra){
+    const box = findWorkoutBox(letra);
+    if(!box) return;
+    box.classList.add('inactive');
+    const h = box.querySelector('h3');
+    if(h) h.textContent = 'TREINO ' + letra;
+    box.querySelectorAll('td').forEach(td => td.textContent = '');
+    box.querySelectorAll('input,textarea').forEach(el => el.value = '');
+  }
+
+  function activateWorkout(letra){
+    const box = findWorkoutBox(letra);
+    if(!box) return;
+    box.classList.remove('inactive');
+    const h = box.querySelector('h3');
+    if(h) h.textContent = nomeTreino(letra);
+  }
+
+  function limparInativos(){
+    const ativos = treinosAtivos();
+    letras.forEach(l => ativos.includes(l) ? activateWorkout(l) : clearWorkout(l));
+  }
+
+  function detectarRestricao(){
+    const r = (val('restricoes') || '').toLowerCase();
+    if(!r) return '';
+    const mapas = [
+      ['joelho', 'joelho: priorizar exercícios com controle de amplitude, estabilidade, cadeia cinética fechada tolerável, progressão gradual e evitar impacto/sobrecarga dolorosa.'],
+      ['lombar', 'lombar/coluna: priorizar estabilidade de core, padrões seguros de quadril, evitar flexão/rotação excessiva sob carga e controlar volume axial.'],
+      ['coluna', 'coluna/lombar: priorizar estabilidade de core, padrões seguros de quadril, evitar flexão/rotação excessiva sob carga e controlar volume axial.'],
+      ['ombro', 'ombro: priorizar estabilidade escapular, mobilidade controlada, puxadas/remadas bem executadas e evitar amplitudes dolorosas.'],
+      ['cervical', 'cervical: reduzir tensão em trapézio superior, priorizar postura, controle escapular e evitar cargas compressivas desconfortáveis.'],
+      ['quadril', 'quadril: priorizar mobilidade, estabilidade, fortalecimento de glúteos e progressão sem dor.'],
+      ['tornozelo', 'tornozelo: priorizar propriocepção, panturrilha, estabilidade e progressão de impacto.'],
+      ['hipertensão', 'hipertensão: evitar manobra de valsalva, controlar intensidade, pausas e priorizar respiração.'],
+      ['diabetes', 'diabetes: priorizar regularidade, força + aeróbico, controle de intensidade e atenção a sinais de hipoglicemia.'],
+      ['obesidade', 'obesidade: priorizar baixo impacto, grandes grupamentos, progressão gradual, aderência e gasto calórico sustentável.'],
+      ['idoso', 'idoso: priorizar força funcional, equilíbrio, mobilidade, segurança e autonomia.']
+    ];
+    for(const [chave, texto] of mapas){
+      if(r.includes(chave)) return texto;
+    }
+    return 'restrição/prioridade informada: montar o treino respeitando essa condição, evitando exercícios que agravem sintomas e priorizando segurança, controle técnico e progressão gradual.';
+  }
+
+  function limitarTextoTreinoAntigo(txt){
+    const ativos = treinosAtivos();
+    const linhas = (txt || '').split(/\n/);
+    const saida = [];
+    let atual = null;
+    for(const linha of linhas){
+      const m = linha.match(/treino\s*([abcd])/i);
+      if(m) atual = m[1].toUpperCase();
+      if(!atual || ativos.includes(atual)) saida.push(linha);
+    }
+    return saida.join('\n');
+  }
+
+  function gerarInstrucaoInterna(){
+    const ativos = treinosAtivos();
+    const div = divisaoAtual();
+    const restr = val('restricoes');
+    const regraRestricao = detectarRestricao();
+    let regraDiv = '';
+    if(div === 'A/B') regraDiv = 'Gerar SOMENTE TREINO A e TREINO B. Não gerar C nem D.';
+    else if(div === 'A/B/C') regraDiv = 'Gerar SOMENTE TREINO A, B e C. Não gerar D.';
+    else if(div === 'A/B/C/D') regraDiv = 'Gerar TREINO A, B, C e D.';
+    else if(div === 'MI/MS') regraDiv = 'Gerar SOMENTE TREINO A - MI e TREINO B - MS. Não gerar C nem D.';
+
+    return [
+      'REGRA DE DIVISÃO: ' + regraDiv,
+      'TREINOS PERMITIDOS: ' + ativos.map(nomeTreino).join(', '),
+      restr ? 'RESTRIÇÃO/PRIORIDADE DO ALUNO: ' + restr : '',
+      regraRestricao ? 'DIRETRIZ DE SEGURANÇA: ' + regraRestricao : '',
+      'Usar progressão baseada no treino antigo, respeitando objetivo, nível, frequência, restrições e padrão SoulFit+.'
+    ].filter(Boolean).join('\n');
+  }
+
+  // Injeta a restrição no treino antigo temporariamente para que a função atual gere mais coerente.
+  const oldGerar = window.gerarEvolucao;
+  if(typeof oldGerar === 'function'){
+    window.gerarEvolucao = function(){
+      const treinoAntigo = document.getElementById('treinoAntigo');
+      const backup = treinoAntigo ? treinoAntigo.value : '';
+      if(treinoAntigo){
+        treinoAntigo.value =
+          gerarInstrucaoInterna() +
+          '\n\nTREINO ANTIGO DO ALUNO:\n' +
+          limitarTextoTreinoAntigo(backup);
+      }
+      const r = oldGerar.apply(this, arguments);
+      if(treinoAntigo) treinoAntigo.value = backup;
+      setTimeout(sincronizarTudo, 0);
+      setTimeout(sincronizarTudo, 100);
+      setTimeout(sincronizarTudo, 300);
+      return r;
+    }
+  }
+
+  const oldExemplo = window.preencherExemplo;
+  if(typeof oldExemplo === 'function'){
+    window.preencherExemplo = function(){
+      const r = oldExemplo.apply(this, arguments);
+      setTimeout(sincronizarTudo, 0);
+      setTimeout(sincronizarTudo, 100);
+      return r;
+    }
+  }
+
+  const oldLimpar = window.limparFicha;
+  if(typeof oldLimpar === 'function'){
+    window.limparFicha = function(){
+      const r = oldLimpar.apply(this, arguments);
+      setTimeout(sincronizarTudo, 0);
+      return r;
+    }
+  }
+
+  window.baixarPDF = function(){
+    // O navegador permite salvar como PDF na tela de impressão.
+    window.print();
+  }
+
+  function sincronizarTudo(){
+    syncHeader();
+    limparInativos();
+  }
+
+  document.addEventListener('DOMContentLoaded', sincronizarTudo);
+  document.addEventListener('input', sincronizarTudo);
+  document.addEventListener('change', sincronizarTudo);
+  setInterval(limparInativos, 700);
+
+  window.aplicarDivisaoSoulFitV14 IA = sincronizarTudo;
+})();
+</script>
+
+
+<script>
+(function(){
+  const letras = ['A','B','C','D'];
+
+  function val(id){
+    const el = document.getElementById(id);
+    return el ? (el.value || '') : '';
+  }
+
+  function divisaoAtual(){
+    return val('divisao') || 'A/B/C';
+  }
+
+  function treinosAtivos(){
+    const d = divisaoAtual().trim();
+    if(d === 'A/B') return ['A','B'];
+    if(d === 'A/B/C') return ['A','B','C'];
+    if(d === 'A/B/C/D') return ['A','B','C','D'];
+    if(d === 'MI/MS') return ['A','B'];
+    return ['A','B','C'];
+  }
+
+  function nomeTreino(letra){
+    if(divisaoAtual() === 'MI/MS'){
+      if(letra === 'A') return 'TREINO A - MI';
+      if(letra === 'B') return 'TREINO B - MS';
+    }
+    return 'TREINO ' + letra;
+  }
+
+  function setText(id, txt){
+    const el = document.getElementById(id);
+    if(el) el.textContent = txt || '';
+  }
+
+  function syncHeader(){
+    setText('pAluno', val('aluno'));
+    setText('pObjetivo', val('objetivo'));
+    setText('pTreinador', val('treinador'));
+    setText('pFreq', val('freq') ? val('freq') + '/semana' : '');
+    const data = val('dataFicha');
+    if(data){
+      const p = data.split('-');
+      setText('pData', p.length === 3 ? `${p[2]}/${p[1]}/${p[0]}` : data);
+    }
+    const obsFinal = [val('obs'), val('patologia') ? 'Patologia: ' + val('patologia') : '', val('restricoes') ? 'Restrição/prioridade: ' + val('restricoes') : '']
+      .filter(Boolean).join(' | ');
+    setText('pObs', obsFinal);
+  }
+
+  function findWorkoutBox(letra){
+    let box = document.getElementById('printTreino'+letra);
+    if(box) return box;
+    const hs = Array.from(document.querySelectorAll('.workout h3'));
+    const h = hs.find(x => (x.textContent || '').toUpperCase().includes('TREINO '+letra));
+    if(h){
+      box = h.closest('.workout');
+      if(box) box.id = 'printTreino'+letra;
+    }
+    return box;
+  }
+
+  function clearWorkout(letra){
+    const box = findWorkoutBox(letra);
+    if(!box) return;
+    box.classList.add('inactive');
+    const h = box.querySelector('h3');
+    if(h) h.textContent = 'TREINO ' + letra;
+    box.querySelectorAll('td').forEach(td => td.textContent = '');
+    box.querySelectorAll('input,textarea').forEach(el => el.value = '');
+  }
+
+  function activateWorkout(letra){
+    const box = findWorkoutBox(letra);
+    if(!box) return;
+    box.classList.remove('inactive');
+    const h = box.querySelector('h3');
+    if(h) h.textContent = nomeTreino(letra);
+  }
+
+  function limparInativos(){
+    const ativos = treinosAtivos();
+    letras.forEach(l => ativos.includes(l) ? activateWorkout(l) : clearWorkout(l));
+  }
+
+  function detectarCondicao(){
+    const texto = ((val('patologia') + ' ' + val('restricoes')) || '').toLowerCase();
+    if(!texto.trim()) return '';
+    const mapas = [
+      ['condromalácia', 'joelho/condromalácia: evitar dor, impacto alto e excesso de flexão profunda; priorizar controle de joelho, glúteo médio, cadeia posterior e progressão gradual.'],
+      ['joelho', 'joelho: priorizar estabilidade, controle de amplitude, fortalecimento de quadríceps/glúteos/isquiotibiais e evitar movimentos dolorosos.'],
+      ['hérnia', 'coluna/hérnia: priorizar estabilidade de core, movimentos neutros, controle de carga axial e evitar flexão/rotação lombar sob carga.'],
+      ['lombar', 'lombar: priorizar core, glúteos, mobilidade de quadril, técnica limpa e evitar sobrecarga axial excessiva.'],
+      ['coluna', 'coluna: priorizar estabilidade, controle postural, exercícios seguros e progressão conservadora.'],
+      ['ombro', 'ombro: priorizar estabilidade escapular, manguito rotador, remadas controladas e evitar amplitudes dolorosas.'],
+      ['cervical', 'cervical: evitar cargas compressivas desconfortáveis, excesso de tensão em trapézio e priorizar postura/escápulas.'],
+      ['quadril', 'quadril: priorizar mobilidade, glúteos, estabilidade pélvica e amplitude sem dor.'],
+      ['tornozelo', 'tornozelo: priorizar propriocepção, panturrilha, equilíbrio e progressão de impacto.'],
+      ['hipertensão', 'hipertensão: evitar valsalva, controlar pausas, respirar bem, evitar picos extremos e usar intensidade moderada/progressiva.'],
+      ['diabetes', 'diabetes: combinar força e aeróbico, controlar intensidade, regularidade e observar sinais de hipoglicemia.'],
+      ['obesidade', 'obesidade: priorizar baixo impacto, grandes grupamentos, aderência, progressão gradual e gasto calórico sustentável.'],
+      ['idoso', 'idoso: priorizar força funcional, equilíbrio, mobilidade, segurança e autonomia.']
+    ];
+    for(const [chave, diretriz] of mapas){
+      if(texto.includes(chave)) return diretriz;
+    }
+    return 'patologia/restrição informada: adaptar exercícios para segurança, evitar dor, controlar carga, amplitude e progressão.';
+  }
+
+  function regraSexo(){
+    const sexo = val('sexo');
+    const ordem = val('ordemPreferencia');
+    if(ordem === 'Começar por inferiores') return 'Ordem preferida: começar por membros inferiores/pernas.';
+    if(ordem === 'Começar por superiores') return 'Ordem preferida: começar por membros superiores/braços.';
+    if(ordem === 'Equilibrado') return 'Ordem preferida: divisão equilibrada entre superiores e inferiores.';
+    if(sexo === 'Homem') return 'Preferência automática: para homem, priorizar início por membros superiores/braços, depois pernas, depois superiores novamente quando a divisão permitir.';
+    if(sexo === 'Mulher') return 'Preferência automática: para mulher, priorizar início por membros inferiores/pernas, depois superiores, depois inferiores novamente quando a divisão permitir.';
+    return '';
+  }
+
+  function limitarTextoTreinoAntigo(txt){
+    const ativos = treinosAtivos();
+    const linhas = (txt || '').split(/\n/);
+    const saida = [];
+    let atual = null;
+    for(const linha of linhas){
+      const m = linha.match(/treino\s*([abcd])/i);
+      if(m) atual = m[1].toUpperCase();
+      if(!atual || ativos.includes(atual)) saida.push(linha);
+    }
+    return saida.join('\n');
+  }
+
+  function instrucaoInterna(){
+    const div = divisaoAtual();
+    let regraDiv = '';
+    if(div === 'A/B') regraDiv = 'Gerar SOMENTE TREINO A e TREINO B. Não gerar C nem D.';
+    else if(div === 'A/B/C') regraDiv = 'Gerar SOMENTE TREINO A, B e C. Não gerar D.';
+    else if(div === 'A/B/C/D') regraDiv = 'Gerar TREINO A, B, C e D.';
+    else if(div === 'MI/MS') regraDiv = 'Gerar SOMENTE TREINO A - MI e TREINO B - MS. Não gerar C nem D.';
+
+    return [
+      'REGRA DE DIVISÃO: ' + regraDiv,
+      'SEXO: ' + (val('sexo') || 'não informado'),
+      regraSexo(),
+      val('patologia') ? 'PATOLOGIA DO ALUNO: ' + val('patologia') : '',
+      val('restricoes') ? 'RESTRIÇÕES/DORES/PRIORIDADE: ' + val('restricoes') : '',
+      detectarCondicao() ? 'DIRETRIZ PARA A CONDIÇÃO: ' + detectarCondicao() : '',
+      'Montar o treino respeitando objetivo, nível, frequência, treino antigo e padrão SoulFit+. Não prescrever exercícios que piorem a patologia citada.'
+    ].filter(Boolean).join('\n');
+  }
+
+  const oldGerar = window.gerarEvolucao;
+  if(typeof oldGerar === 'function'){
+    window.gerarEvolucao = function(){
+      const treinoAntigo = document.getElementById('treinoAntigo');
+      const backup = treinoAntigo ? treinoAntigo.value : '';
+      if(treinoAntigo){
+        treinoAntigo.value = instrucaoInterna() + '\n\nTREINO ANTIGO DO ALUNO:\n' + limitarTextoTreinoAntigo(backup);
+      }
+      const r = oldGerar.apply(this, arguments);
+      if(treinoAntigo) treinoAntigo.value = backup;
+      setTimeout(sincronizarTudo, 0);
+      setTimeout(sincronizarTudo, 100);
+      setTimeout(sincronizarTudo, 300);
+      return r;
+    }
+  }
+
+  const oldExemplo = window.preencherExemplo;
+  if(typeof oldExemplo === 'function'){
+    window.preencherExemplo = function(){
+      const r = oldExemplo.apply(this, arguments);
+      setTimeout(sincronizarTudo, 0);
+      setTimeout(sincronizarTudo, 100);
+      return r;
+    }
+  }
+
+  window.baixarPDF = function(){ window.print(); }
+
+  function sincronizarTudo(){
+    syncHeader();
+    limparInativos();
+  }
+
+  document.addEventListener('DOMContentLoaded', sincronizarTudo);
+  document.addEventListener('input', sincronizarTudo);
+  document.addEventListener('change', sincronizarTudo);
+  setInterval(limparInativos, 800);
+  window.aplicarDivisaoSoulFitV14 IA = sincronizarTudo;
+})();
+</script>
+
+
+<script>
+window.SOULFIT_PATOLOGIAS = {
+  "hipertensão": {
+    termos:["hipertensão","pressão alta","hipertenso","pa alta"],
+    cautela:"Moderado",
+    foco:"controle cardiovascular, respiração livre, pausas adequadas e intensidade leve a moderada",
+    aplicar:["máquinas guiadas","cardio leve/moderado","força leve/moderada","pausas maiores","progressão gradual"],
+    evitar:["HIIT intenso","cargas máximas","falha muscular","manobra de Valsalva","treino sem pausa"],
+    alerta:["dor no peito","tontura","falta de ar anormal","palpitação forte","mal-estar"]
+  },
+  "doença coronariana": {
+    termos:["doença coronariana","coronariana","angina","stent","cateterismo","cardiopata","pós-infarto","infarto"],
+    cautela:"Alto",
+    foco:"treino conservador com liberação médica, aquecimento gradual e controle rigoroso de sintomas",
+    aplicar:["cardio leve","máquinas estáveis","força leve","pausas longas","escala de esforço moderada"],
+    evitar:["picos bruscos","cargas máximas","falha","teste máximo","treino intenso sem liberação"],
+    alerta:["dor no peito","falta de ar anormal","tontura","desmaio","palpitação"]
+  },
+  "diabetes": {
+    termos:["diabetes","diabético","glicemia","glicose","insulina","hipoglicemia"],
+    cautela:"Moderado",
+    foco:"regularidade, combinação de força e cardio, controle de intensidade e sinais de hipoglicemia",
+    aplicar:["treino de corpo todo","máquinas","cardio confortável","baixo impacto","progressão gradual"],
+    evitar:["treino em jejum sem orientação","HIIT sem adaptação","sessão muito longa no início","falha muscular"],
+    alerta:["tontura","suor frio","tremor","fraqueza intensa","confusão"]
+  },
+  "obesidade": {
+    termos:["obesidade","obeso","sobrepeso","emagrecimento","excesso de peso"],
+    cautela:"Baixo a moderado",
+    foco:"baixo impacto, grandes grupamentos, aderência, gasto calórico sustentável e progressão articular segura",
+    aplicar:["máquinas","circuito leve/moderado","cardio baixo impacto","força global","pausas controladas"],
+    evitar:["impacto excessivo","volume punitivo","progressão brusca","exercícios que gerem dor articular"],
+    alerta:["dor articular crescente","falta de ar anormal","tontura","mal-estar"]
+  },
+  "asma": {
+    termos:["asma","asmático","bronquite","chiado","bombinha","falta de ar"],
+    cautela:"Moderado",
+    foco:"aquecimento prolongado, intensidade progressiva, controle respiratório e pausas",
+    aplicar:["aquecimento gradual","cardio leve","força leve/moderada","pausas","ambiente ventilado"],
+    evitar:["HIIT no primeiro contato","ambiente quente/empoeirado","treinar durante crise","treino sem aquecimento"],
+    alerta:["chiado forte","aperto no peito","falta de ar intensa","crise ativa"]
+  },
+  "oncologia": {
+    termos:["câncer","cancer","oncologia","quimioterapia","radioterapia","tumor","imunoterapia"],
+    cautela:"Alto",
+    foco:"sessão curta, intensidade baixa a moderada, adaptação ao estado do dia e liberação quando necessário",
+    aplicar:["caminhada leve","força leve","mobilidade","pausas frequentes","máquinas seguras"],
+    evitar:["exaustão","falha muscular","impacto se houver risco ósseo","progressão brusca","treinar com febre/infecção"],
+    alerta:["febre","infecção","dor óssea","sangramento","fadiga incapacitante","falta de ar"]
+  },
+  "câncer de mama": {
+    termos:["câncer de mama","cancer de mama","mastectomia","linfonodo","linfedema","quadrantectomia"],
+    cautela:"Moderado",
+    foco:"mobilidade de ombro, controle de braço, progressão lenta de carga e atenção a linfedema",
+    aplicar:["mobilidade escapular","rotação externa leve","remada leve","caminhada","força progressiva"],
+    evitar:["carga alta no braço acometido","dor no ombro","impacto sem liberação","progressão brusca"],
+    alerta:["inchaço no braço","dor intensa","vermelhidão","perda de movimento","febre"]
+  },
+  "metástase óssea": {
+    termos:["metástase óssea","metastase ossea","metástase no osso","dor óssea","risco de fratura"],
+    cautela:"Alto",
+    foco:"somente com orientação específica, evitando carga/impacto na região acometida",
+    aplicar:["mobilidade leve sem dor","exercícios sentados sem dor","caminhada leve se liberada"],
+    evitar:["impacto","torção","carga na região acometida","exercício doloroso","treino padrão"],
+    alerta:["dor óssea","dor nova forte","queda","fraqueza súbita"]
+  },
+  "joelho": {
+    termos:["joelho","patela","dor anterior","condromalácia","condro","menisco","lca","ligamento colateral","artrose de joelho","tendinite patelar"],
+    cautela:"Moderado",
+    foco:"controle de amplitude, estabilidade, fortalecimento de quadríceps, glúteos e posteriores sem dor acima de 3/10",
+    aplicar:["isometria","máquinas estáveis","baixa amplitude inicial","fortalecimento de glúteo médio","cardio sem impacto"],
+    evitar:["impacto","amplitude dolorosa","flexão profunda dolorosa","carga alta","movimentos rápidos/torção"],
+    alerta:["dor acima de 3/10","inchaço","travamento","falseio","piora durante o treino"]
+  },
+  "condromalácia": {
+    termos:["condromalácia","condro","cartilagem patelar","crepitação patelar"],
+    cautela:"Moderado",
+    foco:"redução de sobrecarga femoropatelar, controle de amplitude e fortalecimento progressivo de quadríceps/glúteos",
+    aplicar:["leg press curto sem dor","cadeira extensora com amplitude tolerada","abdução de quadril","ponte/hip thrust","isometrias"],
+    evitar:["agachamento profundo doloroso","saltos","corrida se dolorosa","extensora em amplitude irritativa","falha"],
+    alerta:["dor aumentando","crepitação dolorosa","inchaço","falseio"]
+  },
+  "menisco": {
+    termos:["menisco","lesão meniscal","joelho travando"],
+    cautela:"Alto",
+    foco:"evitar torções e flexão profunda; fortalecer sem travamento/dor",
+    aplicar:["máquinas estáveis","amplitude curta/moderada","isometria","cadeia posterior","glúteos"],
+    evitar:["pivô","torção","agachamento profundo","impacto","mudança rápida de direção"],
+    alerta:["travamento","falseio","inchaço","dor aguda"]
+  },
+  "coluna/lombar": {
+    termos:["lombar","coluna","hérnia","hernia","ciático","ciatalgia","lombalgia","dor nas costas"],
+    cautela:"Moderado a alto",
+    foco:"coluna apoiada, core leve, glúteos, estabilidade e evitar flexão/rotação com carga",
+    aplicar:["ponte","dead bug","bird dog","remada apoiada","máquinas com apoio","caminhada"],
+    evitar:["stiff pesado","agachamento pesado sem controle","rotação com carga","flexão lombar repetida com carga","abdominal tradicional se piorar"],
+    alerta:["dor irradiada","formigamento","perda de força","alteração urinária/intestinal","trauma recente"]
+  },
+  "ombro": {
+    termos:["ombro","manguito","bursite no ombro","tendinite no ombro","luxação","instabilidade de ombro"],
+    cautela:"Moderado",
+    foco:"estabilidade escapular, manguito rotador, remadas controladas e evitar arco doloroso",
+    aplicar:["rotação externa leve","remada baixa","face pull leve","mobilidade escapular","supino máquina leve se sem dor"],
+    evitar:["desenvolvimento doloroso","elevação acima da cabeça se irrita","amplitude extrema","carga instável","falha"],
+    alerta:["dor forte","sensação de sair do lugar","perda de força","formigamento"]
+  },
+  "quadril": {
+    termos:["quadril","bursite trocantérica","artrose de quadril","piriforme","pubalgia","virilha"],
+    cautela:"Moderado",
+    foco:"mobilidade, estabilidade pélvica, fortalecimento de glúteos e amplitude sem dor",
+    aplicar:["ponte","abdução de quadril","mobilidade leve","leg press confortável","caminhada/bike leve"],
+    evitar:["amplitude dolorosa","adutor pesado se pubalgia","impacto","carga alta sem controle"],
+    alerta:["dor na virilha intensa","dor irradiada","travamento","piora progressiva"]
+  },
+  "tornozelo/pé": {
+    termos:["tornozelo","entorse","torção","fascite plantar","aquiles","tendão de aquiles","pé"],
+    cautela:"Moderado",
+    foco:"propriocepção, panturrilha, estabilidade e progressão gradual de impacto",
+    aplicar:["bike","panturrilha controlada","equilíbrio com apoio","mobilidade de tornozelo","fortalecimento leve"],
+    evitar:["saltos","corrida se dolorosa","mudança rápida de direção","instabilidade sem apoio"],
+    alerta:["inchaço importante","dor aguda","falseio","incapacidade de apoiar"]
+  },
+  "osteoporose": {
+    termos:["osteoporose","osteopenia","densidade óssea","risco de fratura"],
+    cautela:"Alto",
+    foco:"força segura, prevenção de quedas e evitar flexão/torção brusca de coluna",
+    aplicar:["máquinas seguras","força progressiva","equilíbrio assistido","caminhada","postura"],
+    evitar:["flexão de coluna carregada","torções rápidas","impacto alto","risco de queda"],
+    alerta:["queda","dor óssea súbita","fratura prévia recente"]
+  },
+  "neurológico": {
+    termos:["avc","derrame","parkinson","esclerose múltipla","neuropatia","epilepsia","labirintite","vertigem"],
+    cautela:"Moderado a alto",
+    foco:"segurança, equilíbrio, força funcional, comandos simples e supervisão",
+    aplicar:["sentar e levantar","marcha assistida","equilíbrio com apoio","máquinas","mobilidade"],
+    evitar:["exercício instável sem apoio","movimentos rápidos","ambiente confuso","esteira sem segurança"],
+    alerta:["queda","tontura","confusão","piora neurológica","perda de força súbita"]
+  },
+  "gestante": {
+    termos:["gestante","grávida","gravidez","pré-natal"],
+    cautela:"Alto",
+    foco:"somente liberada, intensidade moderada, conforto, respiração e controle de sinais",
+    aplicar:["caminhada leve","máquinas confortáveis","mobilidade","força leve/moderada","pausas"],
+    evitar:["deitar prolongado de barriga para cima se desconfortável","impacto alto","falha","calor excessivo"],
+    alerta:["sangramento","dor abdominal","tontura","falta de ar anormal","contrações","perda de líquido"]
+  },
+  "idoso/sarcopenia": {
+    termos:["idoso","terceira idade","sarcopenia","fraqueza"],
+    cautela:"Moderado",
+    foco:"força funcional, equilíbrio, mobilidade, autonomia e prevenção de quedas",
+    aplicar:["sentar e levantar","leg press leve","remada","supino máquina","panturrilha com apoio","equilíbrio assistido"],
+    evitar:["instabilidade sem apoio","carga máxima","movimentos rápidos","ambiente com risco de queda"],
+    alerta:["queda","tontura","dor forte","falta de ar","confusão"]
+  },
+  "fibromialgia": {
+    termos:["fibromialgia","dor crônica","dor no corpo"],
+    cautela:"Moderado",
+    foco:"baixa dose inicial, progressão lenta, acolhimento e controle de fadiga/dor",
+    aplicar:["caminhada leve","máquinas leves","mobilidade","força global leve","pausas"],
+    evitar:["volume alto inicial","treino até falha","progressão brusca","treino punitivo"],
+    alerta:["dor incapacitante","fadiga extrema","piora importante pós-treino"]
+  }
+};
+
+window.buscarCondutaPatologiaSoulFit = function(texto){
+  const normalizar = (s) => String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+  const alvo = normalizar(texto);
+  const achadas = [];
+  Object.entries(window.SOULFIT_PATOLOGIAS).forEach(([nome, item])=>{
+    const termos = item.termos || [];
+    if(termos.some(t => alvo.includes(normalizar(t))) || alvo.includes(normalizar(nome))){
+      achadas.push({nome, ...item});
+    }
+  });
+  return achadas;
+};
+</script>
+
+
+<script>
+(function(){
+  const letras = ['A','B','C','D'];
+
+  function val(id){
+    const el = document.getElementById(id);
+    return el ? (el.value || '') : '';
+  }
+
+  function divisaoAtual(){ return val('divisao') || 'A/B/C'; }
+
+  function treinosAtivos(){
+    const d = divisaoAtual().trim();
+    if(d === 'A/B') return ['A','B'];
+    if(d === 'A/B/C') return ['A','B','C'];
+    if(d === 'A/B/C/D') return ['A','B','C','D'];
+    if(d === 'MI/MS') return ['A','B'];
+    return ['A','B','C'];
+  }
+
+  function nomeTreino(letra){
+    if(divisaoAtual() === 'MI/MS'){
+      if(letra === 'A') return 'TREINO A - MI';
+      if(letra === 'B') return 'TREINO B - MS';
+    }
+    return 'TREINO ' + letra;
+  }
+
+  function setText(id, txt){
+    const el = document.getElementById(id);
+    if(el) el.textContent = txt || '';
+  }
+
+  function condutasEncontradas(){
+    const texto = [val('patologia'), val('restricoes')].join(' ');
+    if(typeof window.buscarCondutaPatologiaSoulFit === 'function'){
+      return window.buscarCondutaPatologiaSoulFit(texto);
+    }
+    return [];
+  }
+
+  function resumoCondutas(){
+    const achadas = condutasEncontradas();
+    if(!achadas.length) return "";
+    return achadas.map(c => {
+      return [
+        `CONDIÇÃO IDENTIFICADA: ${c.nome}`,
+        `NÍVEL DE CAUTELA: ${c.cautela || "não informado"}`,
+        `FOCO DA PRESCRIÇÃO: ${c.foco || ""}`,
+        `APLICAR/PREFERIR: ${(c.aplicar || []).join("; ")}`,
+        `EVITAR: ${(c.evitar || []).join("; ")}`,
+        `SINAIS DE ALERTA: ${(c.alerta || []).join("; ")}`
+      ].join("\n");
+    }).join("\n\n");
+  }
+
+  function syncHeader(){
+    setText('pAluno', val('aluno'));
+    setText('pObjetivo', val('objetivo'));
+    setText('pTreinador', val('treinador'));
+    setText('pFreq', val('freq') ? val('freq') + '/semana' : '');
+    const data = val('dataFicha');
+    if(data){
+      const p = data.split('-');
+      setText('pData', p.length === 3 ? `${p[2]}/${p[1]}/${p[0]}` : data);
+    }
+    const condutas = condutasEncontradas().map(c => c.nome).join(", ");
+    const obsFinal = [
+      val('obs'),
+      val('patologia') ? 'Patologia: ' + val('patologia') : '',
+      val('restricoes') ? 'Restrição/prioridade: ' + val('restricoes') : '',
+      condutas ? 'Conduta usada: ' + condutas : ''
+    ].filter(Boolean).join(' | ');
+    setText('pObs', obsFinal);
+  }
+
+  function findWorkoutBox(letra){
+    let box = document.getElementById('printTreino'+letra);
+    if(box) return box;
+    const hs = Array.from(document.querySelectorAll('.workout h3'));
+    const h = hs.find(x => (x.textContent || '').toUpperCase().includes('TREINO '+letra));
+    if(h){
+      box = h.closest('.workout');
+      if(box) box.id = 'printTreino'+letra;
+    }
+    return box;
+  }
+
+  function clearWorkout(letra){
+    const box = findWorkoutBox(letra);
+    if(!box) return;
+    box.classList.add('inactive');
+    const h = box.querySelector('h3');
+    if(h) h.textContent = 'TREINO ' + letra;
+    box.querySelectorAll('td').forEach(td => td.textContent = '');
+    box.querySelectorAll('input,textarea').forEach(el => el.value = '');
+  }
+
+  function activateWorkout(letra){
+    const box = findWorkoutBox(letra);
+    if(!box) return;
+    box.classList.remove('inactive');
+    const h = box.querySelector('h3');
+    if(h) h.textContent = nomeTreino(letra);
+  }
+
+  function limparInativos(){
+    const ativos = treinosAtivos();
+    letras.forEach(l => ativos.includes(l) ? activateWorkout(l) : clearWorkout(l));
+  }
+
+  function regraSexo(){
+    const sexo = val('sexo');
+    const ordem = val('ordemPreferencia');
+    if(ordem === 'Começar por inferiores') return 'Ordem preferida: começar por membros inferiores/pernas.';
+    if(ordem === 'Começar por superiores') return 'Ordem preferida: começar por membros superiores/braços.';
+    if(ordem === 'Equilibrado') return 'Ordem preferida: divisão equilibrada entre superiores e inferiores.';
+    if(sexo === 'Homem') return 'Preferência automática: para homem, priorizar início por membros superiores/braços, depois pernas, depois superiores novamente quando a divisão permitir.';
+    if(sexo === 'Mulher') return 'Preferência automática: para mulher, priorizar início por membros inferiores/pernas, depois superiores, depois inferiores novamente quando a divisão permitir.';
+    return '';
+  }
+
+  function limitarTextoTreinoAntigo(txt){
+    const ativos = treinosAtivos();
+    const linhas = (txt || '').split(/\n/);
+    const saida = [];
+    let atual = null;
+    for(const linha of linhas){
+      const m = linha.match(/treino\s*([abcd])/i);
+      if(m) atual = m[1].toUpperCase();
+      if(!atual || ativos.includes(atual)) saida.push(linha);
+    }
+    return saida.join('\n');
+  }
+
+  function instrucaoInterna(){
+    const div = divisaoAtual();
+    let regraDiv = '';
+    if(div === 'A/B') regraDiv = 'Gerar SOMENTE TREINO A e TREINO B. Não gerar C nem D.';
+    else if(div === 'A/B/C') regraDiv = 'Gerar SOMENTE TREINO A, B e C. Não gerar D.';
+    else if(div === 'A/B/C/D') regraDiv = 'Gerar TREINO A, B, C e D.';
+    else if(div === 'MI/MS') regraDiv = 'Gerar SOMENTE TREINO A - MI e TREINO B - MS. Não gerar C nem D.';
+
+    const conduta = resumoCondutas();
+
+    return [
+      'REGRA DE DIVISÃO: ' + regraDiv,
+      'SEXO: ' + (val('sexo') || 'não informado'),
+      regraSexo(),
+      val('patologia') ? 'PATOLOGIA INFORMADA PELO PROFISSIONAL: ' + val('patologia') : '',
+      val('restricoes') ? 'RESTRIÇÕES/DORES/PRIORIDADE: ' + val('restricoes') : '',
+      conduta ? 'BIBLIOTECA SOULFIT+ DE CONDUTA SEGURA:\n' + conduta : 'Sem patologia reconhecida na biblioteca. Usar cautela geral e individualizar.',
+      'AO GERAR O TREINO: adapte exercícios, amplitude, carga, ordem e volume conforme a condição. Evite tudo que a biblioteca marcou como EVITAR. Não gere treino genérico quando houver patologia.',
+      'Se houver sinal de alerta, o treino deve ser conservador e sugerir avaliação/liberação.'
+    ].filter(Boolean).join('\n');
+  }
+
+  const oldGerar = window.gerarEvolucao;
+  if(typeof oldGerar === 'function'){
+    window.gerarEvolucao = function(){
+      const treinoAntigo = document.getElementById('treinoAntigo');
+      const backup = treinoAntigo ? treinoAntigo.value : '';
+      if(treinoAntigo){
+        treinoAntigo.value = instrucaoInterna() + '\n\nTREINO ANTIGO DO ALUNO:\n' + limitarTextoTreinoAntigo(backup);
+      }
+      const r = oldGerar.apply(this, arguments);
+      if(treinoAntigo) treinoAntigo.value = backup;
+      setTimeout(sincronizarTudo, 0);
+      setTimeout(sincronizarTudo, 100);
+      setTimeout(sincronizarTudo, 300);
+      return r;
+    }
+  }
+
+  const oldExemplo = window.preencherExemplo;
+  if(typeof oldExemplo === 'function'){
+    window.preencherExemplo = function(){
+      const r = oldExemplo.apply(this, arguments);
+      setTimeout(sincronizarTudo, 0);
+      setTimeout(sincronizarTudo, 100);
+      return r;
+    }
+  }
+
+  window.baixarPDF = function(){ window.print(); }
+
+  function sincronizarTudo(){
+    syncHeader();
+    limparInativos();
+  }
+
+  document.addEventListener('DOMContentLoaded', sincronizarTudo);
+  document.addEventListener('input', sincronizarTudo);
+  document.addEventListener('change', sincronizarTudo);
+  setInterval(limparInativos, 800);
+
+  window.aplicarDivisaoSoulFitV14 IA = sincronizarTudo;
+})();
+</script>
+
+
+<script>
+(function(){
+  const letras = ['A','B','C','D'];
+
+  function val(id){
+    const el = document.getElementById(id);
+    return el ? (el.value || '') : '';
+  }
+  function checked(id){
+    const el = document.getElementById(id);
+    return !!(el && el.checked);
+  }
+
+  function divisaoAtual(){ return val('divisao') || 'A/B/C'; }
+
+  function treinosAtivos(){
+    const d = divisaoAtual().trim();
+    if(d === 'A/B') return ['A','B'];
+    if(d === 'A/B/C') return ['A','B','C'];
+    if(d === 'A/B/C/D') return ['A','B','C','D'];
+    if(d === 'MI/MS') return ['A','B'];
+    return ['A','B','C'];
+  }
+
+  function nomeTreino(letra){
+    if(divisaoAtual() === 'MI/MS'){
+      if(letra === 'A') return 'TREINO A - MI';
+      if(letra === 'B') return 'TREINO B - MS';
+    }
+    return 'TREINO ' + letra;
+  }
+
+  function setText(id, txt){
+    const el = document.getElementById(id);
+    if(el) el.textContent = txt || '';
+  }
+
+  function condutasEncontradas(){
+    const texto = [val('patologia'), val('restricoes')].join(' ');
+    if(typeof window.buscarCondutaPatologiaSoulFit === 'function'){
+      return window.buscarCondutaPatologiaSoulFit(texto);
+    }
+    return [];
+  }
+
+  function resumoCondutas(){
+    const achadas = condutasEncontradas();
+    if(!achadas.length) return "";
+    return achadas.map(c => {
+      return [
+        `CONDIÇÃO IDENTIFICADA: ${c.nome}`,
+        `NÍVEL DE CAUTELA: ${c.cautela || "não informado"}`,
+        `FOCO DA PRESCRIÇÃO: ${c.foco || ""}`,
+        `APLICAR/PREFERIR: ${(c.aplicar || []).join("; ")}`,
+        `EVITAR: ${(c.evitar || []).join("; ")}`,
+        `SINAIS DE ALERTA: ${(c.alerta || []).join("; ")}`
+      ].join("\n");
+    }).join("\n\n");
+  }
+
+  function syncHeader(){
+    document.body.classList.toggle('patologia-exclusiva-on', checked('modoPatologiaExclusiva'));
+    setText('pAluno', val('aluno'));
+    setText('pObjetivo', val('objetivo'));
+    setText('pTreinador', val('treinador'));
+    setText('pFreq', val('freq') ? val('freq') + '/semana' : '');
+    const data = val('dataFicha');
+    if(data){
+      const p = data.split('-');
+      setText('pData', p.length === 3 ? `${p[2]}/${p[1]}/${p[0]}` : data);
+    }
+    const condutas = condutasEncontradas().map(c => c.nome).join(", ");
+    const modo = checked('modoPatologiaExclusiva') ? 'Modo patologia exclusiva ativado' : '';
+    const obsFinal = [
+      val('obs'),
+      val('patologia') ? 'Patologia: ' + val('patologia') : '',
+      val('restricoes') ? 'Restrição/prioridade: ' + val('restricoes') : '',
+      condutas ? 'Conduta usada: ' + condutas : '',
+      modo
+    ].filter(Boolean).join(' | ');
+    setText('pObs', obsFinal);
+  }
+
+  function findWorkoutBox(letra){
+    let box = document.getElementById('printTreino'+letra);
+    if(box) return box;
+    const hs = Array.from(document.querySelectorAll('.workout h3'));
+    const h = hs.find(x => (x.textContent || '').toUpperCase().includes('TREINO '+letra));
+    if(h){
+      box = h.closest('.workout');
+      if(box) box.id = 'printTreino'+letra;
+    }
+    return box;
+  }
+
+  function clearWorkout(letra){
+    const box = findWorkoutBox(letra);
+    if(!box) return;
+    box.classList.add('inactive');
+    const h = box.querySelector('h3');
+    if(h) h.textContent = 'TREINO ' + letra;
+    box.querySelectorAll('td').forEach(td => td.textContent = '');
+    box.querySelectorAll('input,textarea').forEach(el => el.value = '');
+  }
+
+  function activateWorkout(letra){
+    const box = findWorkoutBox(letra);
+    if(!box) return;
+    box.classList.remove('inactive');
+    const h = box.querySelector('h3');
+    if(h) h.textContent = nomeTreino(letra);
+  }
+
+  function limparInativos(){
+    const ativos = treinosAtivos();
+    letras.forEach(l => ativos.includes(l) ? activateWorkout(l) : clearWorkout(l));
+  }
+
+  function regraSexo(){
+    const sexo = val('sexo');
+    const ordem = val('ordemPreferencia');
+    if(checked('modoPatologiaExclusiva')){
+      return 'Sexo informado apenas para individualização básica. A prioridade absoluta é a patologia e a segurança clínica, não preferência estética.';
+    }
+    if(ordem === 'Começar por inferiores') return 'Ordem preferida: começar por membros inferiores/pernas.';
+    if(ordem === 'Começar por superiores') return 'Ordem preferida: começar por membros superiores/braços.';
+    if(ordem === 'Equilibrado') return 'Ordem preferida: divisão equilibrada entre superiores e inferiores.';
+    if(sexo === 'Homem') return 'Preferência automática: para homem, priorizar início por membros superiores/braços, depois pernas, depois superiores novamente quando a divisão permitir.';
+    if(sexo === 'Mulher') return 'Preferência automática: para mulher, priorizar início por membros inferiores/pernas, depois superiores, depois inferiores novamente quando a divisão permitir.';
+    return '';
+  }
+
+  function limitarTextoTreinoAntigo(txt){
+    const ativos = treinosAtivos();
+    const linhas = (txt || '').split(/\n/);
+    const saida = [];
+    let atual = null;
+    for(const linha of linhas){
+      const m = linha.match(/treino\s*([abcd])/i);
+      if(m) atual = m[1].toUpperCase();
+      if(!atual || ativos.includes(atual)) saida.push(linha);
+    }
+    return saida.join('\n');
+  }
+
+  function instrucaoInterna(){
+    const div = divisaoAtual();
+    const exclusivo = checked('modoPatologiaExclusiva');
+    let regraDiv = '';
+    if(div === 'A/B') regraDiv = 'Gerar SOMENTE TREINO A e TREINO B. Não gerar C nem D.';
+    else if(div === 'A/B/C') regraDiv = 'Gerar SOMENTE TREINO A, B e C. Não gerar D.';
+    else if(div === 'A/B/C/D') regraDiv = 'Gerar TREINO A, B, C e D.';
+    else if(div === 'MI/MS') regraDiv = 'Gerar SOMENTE TREINO A - MI e TREINO B - MS. Não gerar C nem D.';
+
+    const conduta = resumoCondutas();
+
+    const modoPatologia = exclusivo
+      ? [
+          'MODO PATOLOGIA EXCLUSIVA: ATIVADO.',
+          'A prescrição deve ser feita exclusivamente para a patologia/condição informada.',
+          'O objetivo estético, preferência por sexo e evolução do treino antigo ficam em segundo plano.',
+          'Priorizar: segurança, controle de dor, amplitude tolerada, estabilidade, baixo risco, progressão conservadora e exercícios indicados pela biblioteca.',
+          'Não usar técnicas intensificadoras, falha muscular, impacto, carga alta ou exercícios contraindicados para a condição.',
+          'Se o treino antigo tiver exercícios inadequados para a patologia, substitua por opções seguras.'
+        ].join('\n')
+      : [
+          'MODO PATOLOGIA EXCLUSIVA: DESATIVADO.',
+          'Usar a patologia como cuidado/adaptação dentro do objetivo principal do aluno.'
+        ].join('\n');
+
+    return [
+      'REGRA DE DIVISÃO: ' + regraDiv,
+      modoPatologia,
+      'SEXO: ' + (val('sexo') || 'não informado'),
+      regraSexo(),
+      val('patologia') ? 'PATOLOGIA INFORMADA PELO PROFISSIONAL: ' + val('patologia') : '',
+      val('restricoes') ? 'RESTRIÇÕES/DORES/PRIORIDADE: ' + val('restricoes') : '',
+      conduta ? 'BIBLIOTECA SOULFIT+ DE CONDUTA SEGURA:\n' + conduta : 'Sem patologia reconhecida na biblioteca. Usar cautela geral e individualizar.',
+      'AO GERAR O TREINO: adapte exercícios, amplitude, carga, ordem e volume conforme a condição. Evite tudo que a biblioteca marcou como EVITAR. Não gere treino genérico quando houver patologia.',
+      'Se houver sinal de alerta, o treino deve ser conservador e sugerir avaliação/liberação.'
+    ].filter(Boolean).join('\n');
+  }
+
+  const oldGerar = window.gerarEvolucao;
+  if(typeof oldGerar === 'function'){
+    window.gerarEvolucao = function(){
+      const treinoAntigo = document.getElementById('treinoAntigo');
+      const backup = treinoAntigo ? treinoAntigo.value : '';
+      if(treinoAntigo){
+        treinoAntigo.value = instrucaoInterna() + '\n\nTREINO ANTIGO DO ALUNO:\n' + limitarTextoTreinoAntigo(backup);
+      }
+      const r = oldGerar.apply(this, arguments);
+      if(treinoAntigo) treinoAntigo.value = backup;
+      setTimeout(sincronizarTudo, 0);
+      setTimeout(sincronizarTudo, 100);
+      setTimeout(sincronizarTudo, 300);
+      return r;
+    }
+  }
+
+  const oldExemplo = window.preencherExemplo;
+  if(typeof oldExemplo === 'function'){
+    window.preencherExemplo = function(){
+      const r = oldExemplo.apply(this, arguments);
+      setTimeout(sincronizarTudo, 0);
+      setTimeout(sincronizarTudo, 100);
+      return r;
+    }
+  }
+
+  window.baixarPDF = function(){ window.print(); }
+
+  function sincronizarTudo(){
+    syncHeader();
+    limparInativos();
+  }
+
+  document.addEventListener('DOMContentLoaded', sincronizarTudo);
+  document.addEventListener('input', sincronizarTudo);
+  document.addEventListener('change', sincronizarTudo);
+  setInterval(limparInativos, 800);
+
+  window.aplicarDivisaoSoulFitV14 IA = sincronizarTudo;
+})();
+</script>
+
+
+<script>
+(function(){
+function el(id){return document.getElementById(id)}
+function val(id){const x=el(id);return x?(x.value||""):""}
+function checked(id){const x=el(id);return !!(x&&x.checked)}
+function statusIA(msg,cls){const b=el("iaStatus");if(!b)return;b.style.display="block";b.className="ia-status "+(cls||"");b.textContent=msg}
+function dados(){return{aluno:val("aluno"),objetivo:val("objetivo"),nivel:val("nivel"),sexo:val("sexo"),ordemPreferencia:val("ordemPreferencia"),frequencia:val("freq"),divisao:val("divisao"),dataFicha:val("dataFicha"),treinador:val("treinador"),patologia:val("patologia"),modoPatologiaExclusiva:checked("modoPatologiaExclusiva"),restricoes:val("restricoes"),observacoes:val("obs"),treinoAntigo:val("treinoAntigo")}}
+function permitidas(d){if(d==="A/B")return["A","B"];if(d==="A/B/C")return["A","B","C"];if(d==="A/B/C/D")return["A","B","C","D"];if(d==="MI/MS")return["A","B"];return["A","B","C"]}
+function box(letra){return document.getElementById("printTreino"+letra)||[...document.querySelectorAll(".workout")].find(w=>(w.querySelector("h3")?.textContent||"").toUpperCase().includes("TREINO "+letra))}
+function limpar(letra){const b=box(letra);if(!b)return;b.querySelectorAll("td").forEach(td=>td.textContent="")}
+function linha(letra,i,ex,sr){const b=box(letra);if(!b)return;const tr=[...b.querySelectorAll("tbody tr")][i];if(!tr)return;const c=[...tr.querySelectorAll("td")];if(c[0])c[0].textContent=ex||"";if(c[1])c[1].textContent=sr||""}
+function parse(txt){const r={A:[],B:[],C:[],D:[]};let a=null;String(txt||"").split(/\r?\n/).map(x=>x.trim()).filter(Boolean).forEach(raw=>{let h=raw.match(/treino\s*([abcd])/i);if(h){a=h[1].toUpperCase();return}if(!a||!r[a])return;let s=raw.replace(/^[\-\•\*\d\.\)\s✅👉➡️🔥]+/g,"").replace(/^[1-9]️⃣\s*/g,"").trim();if(!s)return;let ex=s,sr="";let m=s.match(/(.+?)\s*[-–]\s*((?:\d+\s*x\s*[\d\-]+.*|[2345]x[\d\-]+.*|FINAL.*|.*voltas?.*))$/i)||s.match(/(.+?)\s+((?:\d+\s*x\s*[\d\-]+.*|[2345]x[\d\-]+.*))$/i);if(m){ex=m[1].trim();sr=m[2].trim()}r[a].push({ex,sr})});return r}
+function aplicar(txt){const d=dados();const p=parse(txt);["A","B","C","D"].forEach(limpar);permitidas(d.divisao).forEach(L=>(p[L]||[]).slice(0,10).forEach((it,i)=>linha(L,i,it.ex,it.sr)));["aplicarDivisaoSoulFitV13","aplicarDivisaoSoulFitV12"].forEach(fn=>{if(typeof window[fn]==="function")window[fn]()})}
+window.gerarComIA=async function(){const d=dados();if(!d.treinoAntigo.trim()){statusIA("Cole o treino antigo do aluno antes de gerar com IA.","err");return}statusIA("Gerando treino com IA... aguarde.","");try{const resp=await fetch("/.netlify/functions/gerar-treino",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(d)});const json=await resp.json().catch(()=>({}));if(!resp.ok)throw new Error(json.error||"Erro ao gerar treino.");if(!json.treino)throw new Error("A IA não retornou um treino válido.");aplicar(json.treino);statusIA("Treino gerado com IA e aplicado na ficha. Revise antes de imprimir.","ok")}catch(e){statusIA("Erro: "+e.message+" Confira a variável OPENAI_API_KEY no Netlify.","err")}}
+window.baixarPDF=function(){window.print()}
+})();
+</script>
+
+</body>
+</html>
