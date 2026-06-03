@@ -74,18 +74,18 @@
 }
 
 
-/* V15 IA: divisão respeitada na geração */
+/* V16 IA: divisão respeitada na geração */
 .workout.inactive tbody td{color:transparent!important;background:white!important}
 .workout.inactive tbody td *{display:none!important}
 .workout.inactive .generated-text{display:none!important}
 
 
-/* V15 IA: sem prompt, PDF e observações restauradas */
+/* V16 IA: sem prompt, PDF e observações restauradas */
 #promptArea{display:none!important}
 .obsline{display:inline-block!important}
 
 
-/* V15 IA: melhor enquadramento para computador */
+/* V16 IA: melhor enquadramento para computador */
 @media screen and (min-width:981px){
   .wrap{max-width:100vw;margin:10px auto;padding:0 8px}
   .app{grid-template-columns:340px minmax(0,1fr);gap:10px}
@@ -114,7 +114,7 @@
 }
 
 
-/* V15 IA: aba/modo patologia exclusiva */
+/* V16 IA: aba/modo patologia exclusiva */
 .pathology-toggle{
   margin:8px 0 4px;
   border:1px solid #f1b9b9;
@@ -153,7 +153,28 @@ body.patologia-exclusiva-on .pathology-toggle b{color:#e00000}
 <aside class="panel no-print">
 <h2>1. Dados do aluno</h2>
 <label>Aluno(a)</label><input id="aluno" placeholder="Nome do aluno">
-<div class="row"><div><label>Objetivo</label><select id="objetivo"><option>Hipertrofia</option><option>Emagrecimento</option><option>Hipertrofia + emagrecimento</option><option>Condicionamento</option><option>Força</option><option>Retorno/controle de dor</option></select></div><div><label>Nível</label><select id="nivel"><option>Iniciante</option><option>Intermediário</option><option>Avançado</option></select></div></div>
+<div class="row"><div>
+<div class="row">
+  <div><label>Idade</label><input id="idade" type="number" min="10" max="100" placeholder="Ex: 32"></div>
+  <div><label>Tipo de prescrição</label><select id="tipoPrescricao">
+    <option>Primeira prescrição</option>
+    <option>Evolução com treino anterior</option>
+    <option>Adaptação por lesão/patologia</option>
+  </select></div>
+</div>
+<div class="row">
+  <div><label>Modalidade</label><select id="modalidadeTreino">
+    <option>Musculação</option>
+    <option>Funcional</option>
+    <option>Musculação + funcional</option>
+  </select></div>
+  <div><label>Experiência prévia</label><select id="experienciaPrevia">
+    <option>Nunca treinou</option>
+    <option>Já treinou, mas está parado(a)</option>
+    <option>Treina atualmente</option>
+  </select></div>
+</div>
+<label>Objetivo</label><select id="objetivo"><option>Hipertrofia</option><option>Emagrecimento</option><option>Hipertrofia + emagrecimento</option><option>Condicionamento</option><option>Força</option><option>Retorno/controle de dor</option></select></div><div><label>Nível</label><select id="nivel"><option>Iniciante</option><option>Intermediário</option><option>Avançado</option></select></div></div>
 <div class="row"><div><label>Sexo</label><select id="sexo"><option>Mulher</option><option>Homem</option></select></div><div><label>Preferência de ordem</label><select id="ordemPreferencia"><option>Automática pelo sexo</option><option>Começar por inferiores</option><option>Começar por superiores</option><option>Equilibrado</option></select></div></div>
 <div class="row"><div><label>Frequência semanal</label><select id="freq"><option>2x</option><option>3x</option><option selected>4x</option><option>5x</option><option>6x</option></select></div><div><label>Divisão</label><select id="divisao"><option>A/B</option><option selected>A/B/C</option><option>A/B/C/D</option><option>MI/MS</option></select></div></div>
 <div class="row"><div><label>Data da ficha</label><input id="dataFicha" type="date"></div><div><label>Treinador(a)</label><input id="treinador" placeholder="Luna / SoulFit+"></div></div>
@@ -166,7 +187,7 @@ body.patologia-exclusiva-on .pathology-toggle b{color:#e00000}
 </div>
 <label>Restrições, dores ou prioridade</label><textarea id="restricoes" placeholder="Ex: priorizar glúteos, joelho sensível, evitar impacto..."></textarea>
 <label>Observação para imprimir</label><textarea id="obs" placeholder="Ex: progredir carga quando bater o topo das repetições com boa técnica."></textarea>
-<h2>2. Treino antigo do aluno</h2>
+<h2>2. Treino antigo do aluno (opcional)</h2>
 <label>Cole/digite o treino antigo</label><textarea id="treinoAntigo" placeholder="Cole aqui o treino antigo do aluno.\n\nExemplo:\nTREINO A\n1️⃣ Hip thrust 4x10\n2️⃣ Stiff 3x12\n3️⃣ Búlgaro 3x10\nFINAL (3 voltas): agachamento 15 + step rápido 30s"></textarea>
 <div class="danger-note">Cole o treino antigo do aluno no campo abaixo. O sistema usará essas informações para sugerir uma nova ficha com progressão, mantendo o padrão SoulFit+.</div>
 <div class="btns"><button class="redbtn" onclick="gerarComIA()">Gerar com IA</button><button class="light" onclick="gerarEvolucao()">Gerar por regras</button><button onclick="salvarHistorico()">Salvar histórico</button><button class="light" onclick="baixarPDF()">Baixar PDF</button></div>
@@ -242,23 +263,26 @@ init();
 
 
 
+
+
+
 <script>
 (function(){
 function el(id){return document.getElementById(id)}
 function val(id){const x=el(id);return x?(x.value||""):""}
 function checked(id){const x=el(id);return !!(x&&x.checked)}
 function statusIA(msg,cls){const b=el("iaStatus");if(!b)return;b.style.display="block";b.className="ia-status "+(cls||"");b.textContent=msg}
-function dados(){return{aluno:val("aluno"),objetivo:val("objetivo"),nivel:val("nivel"),sexo:val("sexo"),ordemPreferencia:val("ordemPreferencia"),frequencia:val("freq"),divisao:val("divisao"),dataFicha:val("dataFicha"),treinador:val("treinador"),patologia:val("patologia"),modoPatologiaExclusiva:checked("modoPatologiaExclusiva"),restricoes:val("restricoes"),observacoes:val("obs"),treinoAntigo:val("treinoAntigo")}}
+function dados(){return{aluno:val("aluno"),idade:val("idade"),objetivo:val("objetivo"),nivel:val("nivel"),sexo:val("sexo"),tipoPrescricao:val("tipoPrescricao"),modalidadeTreino:val("modalidadeTreino"),experienciaPrevia:val("experienciaPrevia"),ordemPreferencia:val("ordemPreferencia"),frequencia:val("freq"),divisao:val("divisao"),dataFicha:val("dataFicha"),treinador:val("treinador"),patologia:val("patologia"),modoPatologiaExclusiva:checked("modoPatologiaExclusiva"),restricoes:val("restricoes"),observacoes:val("obs"),treinoAntigo:val("treinoAntigo")}}
 function permitidas(d){if(d==="A/B")return["A","B"];if(d==="A/B/C")return["A","B","C"];if(d==="A/B/C/D")return["A","B","C","D"];if(d==="MI/MS")return["A","B"];return["A","B","C"]}
 function parse(txt){const r={A:[],B:[],C:[],D:[]};let a=null;String(txt||"").split(/\r?\n/).map(x=>x.trim()).filter(Boolean).forEach(raw=>{let h=raw.match(/treino\s*([abcd])/i);if(h){a=h[1].toUpperCase();return}if(!a||!r[a])return;let s=raw.replace(/^[\-\•\*\d\.\)\s✅👉➡️🔥]+/g,"").replace(/^[1-9]️⃣\s*/g,"").trim();if(!s)return;let ex=s,sr="";let m=s.match(/(.+?)\s*[-–]\s*((?:\d+\s*x\s*[\d\-]+.*|[2345]x[\d\-]+.*|FINAL.*|.*voltas?.*))$/i)||s.match(/(.+?)\s+((?:\d+\s*x\s*[\d\-]+.*|[2345]x[\d\-]+.*))$/i);if(m){ex=m[1].trim();sr=m[2].trim()}r[a].push({ex,sr})});return r}
 function printBox(L){return document.getElementById("printTreino"+L)||[...document.querySelectorAll(".workout")].find(w=>(w.querySelector("h3")?.textContent||"").toUpperCase().includes("TREINO "+L))}
 function limparPrint(L){const b=printBox(L);if(!b)return;b.querySelectorAll("td").forEach(td=>td.textContent="")}
 function linhaPrint(L,i,ex,sr){const b=printBox(L);if(!b)return;const tr=[...b.querySelectorAll("tbody tr")][i];if(!tr)return;const c=[...tr.querySelectorAll("td")];if(c[0])c[0].textContent=ex||"";if(c[1])c[1].textContent=sr||""}
-function clicarAba(L){const btn=[...document.querySelectorAll("button")].find(b=>(b.textContent||"").trim().toUpperCase()==="TREINO "+L); if(btn) btn.click()}
+function clicarAba(L){const btn=[...document.querySelectorAll("button")].find(b=>(b.textContent||"").trim().toUpperCase()==="TREINO "+L);if(btn)btn.click()}
 function inputsVisiveis(){return [...document.querySelectorAll("input")].filter(x=>{const r=x.getBoundingClientRect();const ph=(x.placeholder||"").toLowerCase();return r.width>20&&r.height>10&&(ph.includes("exerc")||ph.includes("série")||ph.includes("serie")||ph.includes("carga"))})}
-function preencherEditorAtual(itens){const ins=inputsVisiveis(); if(ins.length<20)return false; for(let i=0;i<10;i++){const base=i*6;if(ins[base])ins[base].value=itens[i]?.ex||"";if(ins[base+1])ins[base+1].value=itens[i]?.sr||"";for(let j=2;j<6;j++){if(ins[base+j])ins[base+j].value=""}}return true}
+function preencherEditorAtual(itens){const ins=inputsVisiveis();if(ins.length<20)return false;for(let i=0;i<10;i++){const base=i*6;if(ins[base])ins[base].value=itens[i]?.ex||"";if(ins[base+1])ins[base+1].value=itens[i]?.sr||"";for(let j=2;j<6;j++){if(ins[base+j])ins[base+j].value=""}}return true}
 function aplicar(txt){const d=dados();const p=parse(txt);["A","B","C","D"].forEach(limparPrint);permitidas(d.divisao).forEach(L=>{const itens=(p[L]||[]).slice(0,10);itens.forEach((it,i)=>linhaPrint(L,i,it.ex,it.sr));clicarAba(L);setTimeout(()=>preencherEditorAtual(itens),50)});setTimeout(()=>{clicarAba(permitidas(d.divisao)[0]||"A");["aplicarDivisaoSoulFitV13","aplicarDivisaoSoulFitV12"].forEach(fn=>{if(typeof window[fn]==="function")window[fn]()})},450)}
-window.gerarComIA=async function(){const d=dados();if(!d.treinoAntigo.trim()){statusIA("Cole o treino antigo do aluno antes de gerar com IA.","err");return}statusIA("Gerando treino com IA... aguarde.","");try{const resp=await fetch("/.netlify/functions/gerar-treino",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(d)});const json=await resp.json().catch(()=>({}));if(!resp.ok)throw new Error(json.error||"Erro ao gerar treino.");if(!json.treino)throw new Error("A IA não retornou um treino válido.");aplicar(json.treino);statusIA("Treino gerado com IA e preenchido nos campos editáveis e na ficha. Revise antes de imprimir.","ok")}catch(e){statusIA("Erro: "+e.message+" Confira a variável OPENAI_API_KEY no Netlify.","err")}}
+window.gerarComIA=async function(){const d=dados();const precisa=(d.tipoPrescricao||"").toLowerCase().includes("evolução");if(precisa&&!d.treinoAntigo.trim()){statusIA("Para evolução com treino anterior, cole a ficha antiga. Para aluno novo, escolha Primeira prescrição.","err");return}statusIA("Gerando treino com IA... aguarde.","");try{const resp=await fetch("/.netlify/functions/gerar-treino",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(d)});const json=await resp.json().catch(()=>({}));if(!resp.ok)throw new Error(json.error||"Erro ao gerar treino.");if(!json.treino)throw new Error("A IA não retornou um treino válido.");aplicar(json.treino);statusIA("Treino gerado com IA e preenchido nos campos editáveis e na ficha. Revise antes de imprimir.","ok")}catch(e){statusIA("Erro: "+e.message+" Confira a variável OPENAI_API_KEY no Netlify.","err")}}
 window.baixarPDF=function(){window.print()}
 })();
 </script>
