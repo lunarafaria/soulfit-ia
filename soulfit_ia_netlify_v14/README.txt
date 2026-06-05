@@ -1,3 +1,3 @@
-SoulFit+ IA V22 completa
+SoulFit+ IA V23
 
-Correções: ficha de impressão voltou, treinador removido, IA preenche editor e ficha, primeira prescrição, patologia, idade e funcional.
+Correções de impressão: ordem A/C/B/D na folha e fonte maior para impressão.

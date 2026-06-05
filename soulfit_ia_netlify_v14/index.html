@@ -114,12 +114,64 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
   main.panel,.panel,.wrap,.app{display:block!important;box-shadow:none!important;padding:0!important;margin:0!important;max-width:none!important;background:#fff!important}
   .footer-note{display:none!important}
 }
+
+/* V23: ordem dos treinos corrigida + fonte maior na impressão */
+@media print{
+  .sheet{
+    width:291mm!important;
+    height:204mm!important;
+    padding:3mm 4mm!important;
+  }
+  .sheet-head{
+    height:12mm!important;
+    margin-bottom:1.5mm!important;
+    grid-template-columns:34mm 1fr!important;
+  }
+  .logo{font-size:22px!important}
+  .sheet-info{font-size:9px!important;line-height:1.05!important}
+  .line{height:8px!important;min-height:8px!important}
+  .line.long{min-width:100px!important}
+  .line.obs{min-width:185px!important}
+  .print-grid{
+    height:186mm!important;
+    gap:2.2mm 3.2mm!important;
+  }
+  .workout{
+    height:91mm!important;
+    max-height:91mm!important;
+  }
+  .workout h3{
+    font-size:10.5px!important;
+    padding:2px 8px!important;
+    margin:0 0 1mm!important;
+  }
+  table{
+    font-size:8.6px!important;
+    border-spacing:.55mm!important;
+  }
+  th{
+    height:6.2mm!important;
+    font-size:8.2px!important;
+    padding:0!important;
+  }
+  td{
+    height:7.1mm!important;
+    max-height:7.1mm!important;
+    font-size:8.5px!important;
+    line-height:1.05!important;
+    padding:0 .8mm!important;
+  }
+  .excol{width:54%!important}
+  .srcol{width:11%!important}
+  .loadcol{width:8.75%!important}
+}
+
 </style>
 </head>
 <body>
 <header>
   <div><h1>SoulFit+ IA de Treinos</h1><div class="tag">Prescrição, evolução, patologias, funcional e ficha A4 horizontal</div></div>
-  <div class="tag">V22 completa</div>
+  <div class="tag">V23 impressão corrigida</div>
 </header>
 
 <div class="wrap">
@@ -229,8 +281,8 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
     </div>
   </div>
   <div class="print-grid">
-    <div class="col"><div id="boxC"></div><div id="boxD"></div></div>
     <div class="col"><div id="boxA"></div><div id="boxB"></div></div>
+    <div class="col"><div id="boxC"></div><div id="boxD"></div></div>
   </div>
   <div class="footer-note">SoulFit+ | ficha gerada para revisão profissional antes da aplicação</div>
 </section>
