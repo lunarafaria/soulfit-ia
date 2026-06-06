@@ -182,6 +182,7 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
 .sheet-info{display:grid;gap:4px;min-width:0}
 .info-row{display:grid;align-items:end;gap:6px;min-width:0}
 .info-row.two-fields{grid-template-columns:auto minmax(0,1fr) auto minmax(0,1fr)}
+.info-row.three-fields{grid-template-columns:auto minmax(0,.8fr) auto minmax(0,.7fr) auto minmax(0,.7fr)}
 .info-row.one-field{grid-template-columns:auto minmax(0,1fr)}
 .info-row .line{min-width:0!important;margin:0!important;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .workout td:first-child::before{content:""!important;display:none!important}
@@ -385,7 +386,7 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
 <body>
 <header>
   <div><h1>SoulFit+ IA de Treinos</h1><div class="tag">Prescrição, evolução, patologias, funcional e ficha A4 horizontal</div></div>
-  <div class="tag">V40 | cabeçalho 14px</div>
+  <div class="tag">V41 | volume controlado + horário</div>
 </header>
 
 <div class="wrap">
@@ -433,7 +434,7 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
 
 <div class="row">
   <div><label>Data da ficha</label><input id="dataFicha" type="date"></div>
-  <div></div>
+  <div><label>Horário do aluno</label><input id="horario" type="time"></div>
 </div>
 
 <label>Patologia do aluno (caso tenha)</label>
@@ -494,9 +495,10 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
         <b>Aluno(a):</b><span id="pAluno" class="line long"></span>
         <b>Objetivo:</b><span id="pObjetivo" class="line"></span>
       </div>
-      <div class="info-row two-fields">
+      <div class="info-row three-fields">
         <b>Data:</b><span id="pData" class="line"></span>
         <b>Frequência:</b><span id="pFreq" class="line"></span>
+        <b>Horário:</b><span id="pHorario" class="line"></span>
       </div>
       <div class="info-row one-field">
         <b>Observações:</b><span id="pObs" class="line obs"></span>
@@ -584,6 +586,7 @@ function syncPrint(){
   $('pObs').textContent=[valor('obs'),valor('patologia'),valor('restricoes')].filter(Boolean).join(' | ');
   $('pData').textContent=(valor('dataFicha')||'').split('-').reverse().join('/');
   $('pFreq').textContent=valor('freq') ? valor('freq') + '/semana' : '';
+  $('pHorario').textContent=valor('horario');
   letras.forEach(l=>$("box"+l).innerHTML=workoutHTML(l));
 }
 
@@ -645,7 +648,7 @@ function dadosIA(){
   return {
     aluno:valor('aluno'),idade:valor('idade'),objetivo:valor('objetivo'),nivel:valor('nivel'),sexo:valor('sexo'),
     tipoPrescricao:valor('tipoPrescricao'),modalidadeTreino:valor('modalidadeTreino'),experienciaPrevia:valor('experienciaPrevia'),
-    ordemPreferencia:valor('ordemPreferencia'),frequencia:valor('freq'),divisao:valor('divisao'),dataFicha:valor('dataFicha'),
+    ordemPreferencia:valor('ordemPreferencia'),frequencia:valor('freq'),divisao:valor('divisao'),dataFicha:valor('dataFicha'),horario:valor('horario'),
     patologia:valor('patologia'),modoPatologiaExclusiva:checked('modoPatologiaExclusiva'),restricoes:valor('restricoes'),observacoes:valor('obs'),
     treinoAntigo:valor('treinoAntigo')
   };
@@ -693,6 +696,7 @@ function gerarEvolucao(){
       return x?{ex:x[0],sr:x[1],c1:'',c2:'',c3:'',c4:''}:linhaVazia();
     });
   });
+  ajustarVolumePorNivel();
   if(valor('objetivo').includes('Emagrecimento'))addFinal();
   const restr=valor('restricoes').toLowerCase()+ ' ' + valor('patologia').toLowerCase();
   if(restr.includes('joelho'))trocar(['Agachamento livre','Hack squat'],['Agachamento assistido','Leg press amplitude controlada']);
@@ -706,6 +710,20 @@ AB:{A:[['Agachamento','4x10'],['Leg press','3x12'],['Stiff','3x12'],['Hip thrust
 ABCD:{A:[['Hip thrust','4x8-10'],['Stiff','3x10'],['Búlgaro','3x10'],['Abdutora','3x20'],['Glúteo polia','3x15']],B:[['Supino inclinado','3x10'],['Puxada frente','3x10'],['Remada baixa','3x12'],['Desenvolvimento','3x10'],['Tríceps corda','3x12']],C:[['Agachamento livre','4x8'],['Leg press','4x10'],['Extensora','3x12'],['Passada','3x10'],['Panturrilha','4x15']],D:[['Puxada neutra','3x10'],['Remada articulada','3x10'],['Elevação lateral','3x15'],['Crucifixo inverso','3x15'],['Rosca alternada','3x12']]},
 MIMS:{A:[['Agachamento','4x10'],['Leg press','3x12'],['Cadeira extensora','3x15'],['Mesa flexora','3x12'],['Panturrilha','4x15']],B:[['Puxada frente','3x12'],['Remada baixa','3x12'],['Supino máquina','3x12'],['Desenvolvimento','3x10'],['Rosca direta','3x12'],['Tríceps corda','3x12']],C:[],D:[]}
 };
+
+function ajustarVolumePorNivel(){
+  const nivel=valor('nivel');
+  const limite=nivel==='Iniciante'?5:nivel==='Intermediário'?6:7;
+  treinosAtivos().forEach(l=>{
+    treinos[l]=treinos[l].map((r,i)=>{
+      if(i>=limite)return linhaVazia();
+      if(!r.ex)return r;
+      if(nivel==='Iniciante')return {...r,sr:String(r.sr||'').replace(/^\d+(?:-\d+)?x/i,'2x')};
+      if(nivel==='Intermediário')return {...r,sr:String(r.sr||'').replace(/^4x/i,'3x')};
+      return r;
+    });
+  });
+}
 
 function addFinal(){['A','C'].forEach(l=>{let idx=treinos[l].findIndex(r=>!r.ex); if(idx>=0)treinos[l][idx]={ex:'FINAL: 3 voltas | agachamento 15 + polichinelo 30s + step rápido 30s',sr:'3v',c1:'',c2:'',c3:'',c4:''}})}
 function trocar(a,b){Object.values(treinos).forEach(arr=>arr.forEach(r=>{a.forEach((x,i)=>{if(r.ex===x)r.ex=b[i]||b[0]})}))}
@@ -726,7 +744,7 @@ function restaurar(i){
   let h=JSON.parse(localStorage.getItem('soulfit_hist')||'[]');
   let x=h[i]; if(!x)return;
   const d=x.dados||{};
-  ['aluno','idade','objetivo','nivel','sexo','tipoPrescricao','modalidadeTreino','experienciaPrevia','ordemPreferencia','freq','divisao','dataFicha','patologia','restricoes','obs','treinoAntigo'].forEach(id=>{if($(id)&&d[id]!==undefined)$(id).value=d[id]});
+  ['aluno','idade','objetivo','nivel','sexo','tipoPrescricao','modalidadeTreino','experienciaPrevia','ordemPreferencia','freq','divisao','dataFicha','horario','patologia','restricoes','obs','treinoAntigo'].forEach(id=>{if($(id)&&d[id]!==undefined)$(id).value=d[id]});
   treinos=x.treinos||treinos;
   renderEditor();syncPrint();
 }
@@ -745,6 +763,7 @@ function preencherExemplo(){
   $('sexo').value='Mulher';
   $('freq').value='4x';
   $('divisao').value='A/B/C';
+  $('horario').value='18:00';
   $('restricoes').value='Priorizar glúteos e posterior';
   $('obs').value='Progressão de carga com técnica limpa.';
   gerarEvolucao();
@@ -762,6 +781,7 @@ function estilosImpressao(){
     .sheet-info{grid-column:3;display:grid;grid-template-rows:repeat(3,1fr);gap:.8mm;width:100%;min-width:0;overflow:hidden;font-size:14px;font-weight:700;line-height:1}
     .info-row{display:grid;align-items:end;gap:.8mm;min-width:0;overflow:hidden;white-space:nowrap}
     .info-row.two-fields{grid-template-columns:auto minmax(0,1fr) auto minmax(0,1fr)}
+    .info-row.three-fields{grid-template-columns:auto minmax(0,.8fr) auto minmax(0,.7fr) auto minmax(0,.7fr)}
     .info-row.one-field{grid-template-columns:auto minmax(0,1fr)}
     .line{display:inline-block;height:5mm;min-width:0;margin:0;overflow:hidden;border-bottom:1px solid #111;white-space:nowrap;text-overflow:ellipsis}
     .print-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr;height:172.8mm;column-gap:14mm}

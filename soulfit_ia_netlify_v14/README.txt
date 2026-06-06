@@ -1,4 +1,4 @@
-SoulFit+ IA V40
+SoulFit+ IA V41
 
 Correcao de impressao:
 - ordem fixa em duas colunas: C | A e D | B;
@@ -16,4 +16,6 @@ Correcao de impressao:
 - impressao aberta em pagina isolada, sem conflito com o formulario;
 - emojis e marcadores removidos dos nomes dos exercicios;
 - fonte dos dados do cabecalho aumentada para 14px;
+- horario do aluno adicionado ao formulario e ao cabecalho;
+- volume de treino reduzido e ajustado por nivel;
 - pacote completo para GitHub/Netlify.

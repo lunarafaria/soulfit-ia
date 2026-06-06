@@ -1,0 +1,19 @@
+COMO PUBLICAR A V41
+
+1. Abra o repositorio no GitHub.
+2. Remova ou substitua o index.html antigo.
+3. Envie os ITENS que estao dentro desta pasta:
+   - index.html
+   - netlify.toml
+   - README.txt
+   - pasta netlify
+4. O arquivo index.html deve ficar na RAIZ do repositorio.
+   Nao envie apenas o ZIP e nao deixe tudo dentro de uma subpasta V38.
+5. No Netlify, use:
+   - Base directory: vazio
+   - Build command: vazio
+   - Publish directory: .
+6. Aguarde o novo deploy terminar e confirme na tela:
+   V41 | volume controlado + horario
+
+Se a tela ainda mostrar uma versao anterior, o site ainda esta usando o index.html antigo.
