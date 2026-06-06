@@ -114,12 +114,221 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
   main.panel,.panel,.wrap,.app{display:block!important;box-shadow:none!important;padding:0!important;margin:0!important;max-width:none!important;background:#fff!important}
   .footer-note{display:none!important}
 }
+
+/* V30: ordem dos treinos corrigida + fonte maior na impressão */
+@media print{
+  .sheet{
+    width:291mm!important;
+    height:204mm!important;
+    padding:3mm 4mm!important;
+  }
+  .sheet-head{
+    height:12mm!important;
+    margin-bottom:1.5mm!important;
+    grid-template-columns:34mm 1fr!important;
+  }
+  .logo{font-size:22px!important}
+  .sheet-info{font-size:9px!important;line-height:1.05!important}
+  .line{height:8px!important;min-height:8px!important}
+  .line.long{min-width:100px!important}
+  .line.obs{min-width:185px!important}
+  .print-grid{
+    height:186mm!important;
+    gap:2.2mm 3.2mm!important;
+  }
+  .workout{
+    height:91mm!important;
+    max-height:91mm!important;
+  }
+  .workout h3{
+    font-size:10.5px!important;
+    padding:2px 8px!important;
+    margin:0 0 1mm!important;
+  }
+  table{
+    font-size:8.6px!important;
+    border-spacing:.55mm!important;
+  }
+  th{
+    height:6.2mm!important;
+    font-size:8.2px!important;
+    padding:0!important;
+  }
+  td{
+    height:7.1mm!important;
+    max-height:7.1mm!important;
+    font-size:8.5px!important;
+    line-height:1.05!important;
+    padding:0 .8mm!important;
+  }
+  .excol{width:54%!important}
+  .srcol{width:11%!important}
+  .loadcol{width:8.75%!important}
+}
+
+
+/* V30 FINAL: dobrável C|A / D|B, cabeçalho no lado A/B, fonte 16, sem quadradinhos */
+.sheet-head{
+  width:100%!important;
+  margin-left:0!important;
+  grid-template-columns:minmax(0,1fr) 20px minmax(0,1fr)!important;
+  gap:0!important;
+  align-items:center!important;
+  margin-bottom:8px!important;
+}
+.sheet-head .logo{grid-column:1;font-size:28px!important}
+.sheet-head .sheet-info{grid-column:3}
+.sheet-head .sheet-info{font-size:12px!important;line-height:1.15!important}
+.sheet-info{display:grid;gap:4px;min-width:0}
+.info-row{display:grid;align-items:end;gap:6px;min-width:0}
+.info-row.two-fields{grid-template-columns:auto minmax(0,1fr) auto minmax(0,1fr)}
+.info-row.one-field{grid-template-columns:auto minmax(0,1fr)}
+.info-row .line{min-width:0!important;margin:0!important;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.workout td:first-child::before{content:""!important;display:none!important}
+
+@media print{
+  /* mantém a lógica da versão que imprimia, sem página branca */
+  .sheet{
+    width:291mm!important;
+    height:204mm!important;
+    padding:3mm 4mm!important;
+  }
+
+  /* cabeçalho só no lado A/B, normal no fluxo para não sobrepor os treinos */
+  .sheet-head{
+    width:100%!important;
+    margin-left:0!important;
+    grid-template-columns:minmax(0,1fr) 14mm minmax(0,1fr)!important;
+    gap:0!important;
+    height:20mm!important;
+    margin-bottom:1.2mm!important;
+    align-items:center!important;
+    overflow:hidden!important;
+  }
+
+  .logo{
+    grid-column:1!important;
+    justify-self:start!important;
+    font-size:20px!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+    align-self:center!important;
+    width:auto!important;
+    overflow:visible!important;
+    padding-left:2mm!important;
+  }
+
+  .sheet-info{
+    grid-column:3!important;
+    display:grid!important;
+    grid-template-rows:repeat(3,1fr)!important;
+    gap:.8mm!important;
+    font-size:7.2px!important;
+    line-height:1!important;
+    min-width:0!important;
+    width:100%!important;
+    overflow:hidden!important;
+  }
+
+  .info-row{
+    display:grid!important;
+    align-items:end!important;
+    gap:.8mm!important;
+    min-width:0!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+  }
+
+  .info-row.two-fields{
+    grid-template-columns:auto minmax(0,1fr) auto minmax(0,1fr)!important;
+  }
+
+  .info-row.one-field{
+    grid-template-columns:auto minmax(0,1fr)!important;
+  }
+
+  .line{
+    height:3.2mm!important;
+    min-height:3.2mm!important;
+    min-width:0!important;
+    margin:0!important;
+    overflow:hidden!important;
+    white-space:nowrap!important;
+    text-overflow:ellipsis!important;
+  }
+  .line.long,.line.obs{min-width:0!important}
+
+  .print-grid{
+    grid-template-columns:1fr 1fr!important;
+    grid-template-rows:1fr!important;
+    height:176.8mm!important;
+    column-gap:14mm!important;
+  }
+
+  /* Mantem C/D a esquerda e A/B a direita, com espaco central para a dobra. */
+  .col{
+    display:flex!important;
+    flex-direction:column!important;
+    gap:2mm!important;
+    min-width:0!important;
+  }
+
+  .workout{
+    height:87.4mm!important;
+    max-height:87.4mm!important;
+    min-height:0!important;
+    overflow:hidden!important;
+  }
+
+  .workout h3{
+    font-size:12px!important;
+    line-height:1!important;
+    padding:2px 8px!important;
+    margin:0 0 .8mm!important;
+    border-right:8px solid var(--red)!important;
+  }
+
+  table{
+    font-size:14px!important;
+    border-spacing:.48mm!important;
+  }
+
+  th{
+    height:6.4mm!important;
+    font-size:12px!important;
+    line-height:1!important;
+    padding:0!important;
+  }
+
+  td{
+    height:7mm!important;
+    max-height:7mm!important;
+    font-size:14px!important;
+    line-height:1!important;
+    padding:0 .7mm!important;
+  }
+
+  td:first-child{
+    font-size:14px!important;
+    padding-left:.7mm!important;
+  }
+
+  td:first-child::before{
+    content:""!important;
+    display:none!important;
+  }
+
+  .excol{width:54%!important}
+  .srcol{width:11%!important}
+  .loadcol{width:8.75%!important}
+}
+
 </style>
 </head>
 <body>
 <header>
   <div><h1>SoulFit+ IA de Treinos</h1><div class="tag">Prescrição, evolução, patologias, funcional e ficha A4 horizontal</div></div>
-  <div class="tag">V22 completa</div>
+  <div class="tag">V30 dobrável completa</div>
 </header>
 
 <div class="wrap">
@@ -224,8 +433,17 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
   <div class="sheet-head">
     <div class="logo"><span class="soul">Soul</span><span class="fit">Fit+</span></div>
     <div class="sheet-info">
-      <div><b>Aluno(a):</b><span id="pAluno" class="line long"></span> <b>Objetivo:</b><span id="pObjetivo" class="line"></span> <b>Data:</b><span id="pData" class="line"></span></div>
-      <div><b>Frequência:</b><span id="pFreq" class="line"></span> <b>Observações:</b><span id="pObs" class="line obs"></span></div>
+      <div class="info-row two-fields">
+        <b>Aluno(a):</b><span id="pAluno" class="line long"></span>
+        <b>Objetivo:</b><span id="pObjetivo" class="line"></span>
+      </div>
+      <div class="info-row two-fields">
+        <b>Data:</b><span id="pData" class="line"></span>
+        <b>Frequência:</b><span id="pFreq" class="line"></span>
+      </div>
+      <div class="info-row one-field">
+        <b>Observações:</b><span id="pObs" class="line obs"></span>
+      </div>
     </div>
   </div>
   <div class="print-grid">
@@ -312,10 +530,17 @@ function syncPrint(){
   letras.forEach(l=>$("box"+l).innerHTML=workoutHTML(l));
 }
 
+function cleanEx(v){
+  return String(v||'')
+    .replace(/^[\s☐☑☒□■▪▫▢▣⬜◻◼✓✔✅]+/g,'')
+    .replace(/^[1-9]️⃣\s*/g,'')
+    .replace(/^[\-\•\*\d\.\)\s👉➡️🔥]+/g,'')
+    .trim();
+}
 function workoutHTML(l){
   const ativo=treinosAtivos().includes(l);
   const rows=treinos[l].map(r=>`<tr>
-    <td>${ativo?esc(r.ex):''}</td>
+    <td>${ativo?esc(cleanEx(r.ex)):''}</td>
     <td>${ativo?esc(r.sr):''}</td>
     <td>${ativo?esc(r.c1):''}</td>
     <td>${ativo?esc(r.c2):''}</td>
@@ -333,7 +558,7 @@ function parseTreino(txt){
     const h=raw.match(/treino\s*([abcd])/i);
     if(h){atualLetra=h[1].toUpperCase();return}
     if(!atualLetra||!res[atualLetra])return;
-    let s=raw.replace(/^[\-\•\*\d\.\)\s✅👉➡️🔥]+/g,'').replace(/^[1-9]️⃣\s*/g,'').trim();
+    let s=raw.replace(/^[\s☐☑☒□■▪▫▢▣⬜◻◼✓✔✅]+/g,'').replace(/^[\-\•\*\d\.\)\s✅👉➡️🔥]+/g,'').replace(/^[1-9]️⃣\s*/g,'').trim();
     if(!s)return;
     let ex=s,sr='';
     let m=s.match(/(.+?)\s*[-–]\s*((?:\d+\s*x\s*[\d\-]+.*|[2345]x[\d\-]+.*|FINAL.*|.*voltas?.*|.*seg.*|.*s$))$/i)||s.match(/(.+?)\s+((?:\d+\s*x\s*[\d\-]+.*|[2345]x[\d\-]+.*))$/i);
@@ -466,5 +691,26 @@ function baixarPDF(){window.print()}
 
 init();
 </script>
+
+<script>
+(function(){
+  function limparQuadrados(){
+    document.querySelectorAll("#sheet td:first-child").forEach(td=>{
+      td.textContent = String(td.textContent||"")
+        .replace(/^[\s☐☑☒□■▪▫▢▣⬜◻◼✓✔✅]+/g,"")
+        .replace(/^[1-9]️⃣\s*/g,"")
+        .trim();
+    });
+  }
+  window.addEventListener("beforeprint", function(){
+    if(typeof syncPrint === "function") syncPrint();
+    limparQuadrados();
+  });
+  document.addEventListener("DOMContentLoaded", limparQuadrados);
+  document.addEventListener("input", limparQuadrados);
+  document.addEventListener("change", limparQuadrados);
+})();
+</script>
+
 </body>
 </html>
