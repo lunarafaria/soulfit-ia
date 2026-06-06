@@ -178,7 +178,7 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
 }
 .sheet-head .logo{grid-column:1;font-size:28px!important}
 .sheet-head .sheet-info{grid-column:3}
-.sheet-head .sheet-info{font-size:12px!important;line-height:1.15!important}
+.sheet-head .sheet-info{font-size:14px!important;line-height:1.1!important}
 .sheet-info{display:grid;gap:4px;min-width:0}
 .info-row{display:grid;align-items:end;gap:6px;min-width:0}
 .info-row.two-fields{grid-template-columns:auto minmax(0,1fr) auto minmax(0,1fr)}
@@ -223,7 +223,7 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
     display:grid!important;
     grid-template-rows:repeat(3,1fr)!important;
     gap:.8mm!important;
-    font-size:7.2px!important;
+    font-size:14px!important;
     line-height:1!important;
     min-width:0!important;
     width:100%!important;
@@ -385,7 +385,7 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
 <body>
 <header>
   <div><h1>SoulFit+ IA de Treinos</h1><div class="tag">Prescrição, evolução, patologias, funcional e ficha A4 horizontal</div></div>
-  <div class="tag">V39 | impressão isolada</div>
+  <div class="tag">V40 | cabeçalho 14px</div>
 </header>
 
 <div class="wrap">
@@ -756,17 +756,17 @@ function estilosImpressao(){
     *{box-sizing:border-box}
     html,body{width:291mm;height:204mm;margin:0;padding:0;overflow:hidden;background:#fff;font-family:Arial,Helvetica,sans-serif;color:#111}
     .sheet{display:block;width:291mm;height:204mm;margin:0;padding:3mm 4mm;overflow:hidden;background:#fff}
-    .sheet-head{display:grid;width:100%;height:20mm;margin:0 0 1.2mm;grid-template-columns:minmax(0,1fr) 14mm minmax(0,1fr);align-items:center;overflow:hidden}
+    .sheet-head{display:grid;width:100%;height:24mm;margin:0 0 1.2mm;grid-template-columns:minmax(0,1fr) 14mm minmax(0,1fr);align-items:center;overflow:hidden}
     .logo{grid-column:1;justify-self:start;padding-left:2mm;font-family:Arial Black,Impact,Arial,sans-serif;font-size:20px;font-weight:900;line-height:1;letter-spacing:-1px;white-space:nowrap}
     .logo .soul{color:#e00000}.logo .fit{color:#111}
-    .sheet-info{grid-column:3;display:grid;grid-template-rows:repeat(3,1fr);gap:.8mm;width:100%;min-width:0;overflow:hidden;font-size:7.2px;font-weight:700;line-height:1}
+    .sheet-info{grid-column:3;display:grid;grid-template-rows:repeat(3,1fr);gap:.8mm;width:100%;min-width:0;overflow:hidden;font-size:14px;font-weight:700;line-height:1}
     .info-row{display:grid;align-items:end;gap:.8mm;min-width:0;overflow:hidden;white-space:nowrap}
     .info-row.two-fields{grid-template-columns:auto minmax(0,1fr) auto minmax(0,1fr)}
     .info-row.one-field{grid-template-columns:auto minmax(0,1fr)}
-    .line{display:inline-block;height:3.2mm;min-width:0;margin:0;overflow:hidden;border-bottom:1px solid #111;white-space:nowrap;text-overflow:ellipsis}
-    .print-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr;height:176.8mm;column-gap:14mm}
+    .line{display:inline-block;height:5mm;min-width:0;margin:0;overflow:hidden;border-bottom:1px solid #111;white-space:nowrap;text-overflow:ellipsis}
+    .print-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr;height:172.8mm;column-gap:14mm}
     .col{display:flex;flex-direction:column;gap:2mm;min-width:0}
-    .workout{height:87.4mm;min-height:0;overflow:hidden}
+    .workout{height:85.4mm;min-height:0;overflow:hidden}
     .workout h3{display:inline-block;margin:0 0 .8mm;padding:2px 8px;border-right:8px solid #e00000;border-radius:2px;background:#171a1f;color:#fff;font-size:12px;line-height:1}
     table{width:100%;border-collapse:separate;border-spacing:.48mm;table-layout:fixed;font-size:14px}
     th{height:6.4mm;padding:0;border:1px solid #fff;background:#171a1f;color:#fff;text-align:center;font-size:12px;line-height:1}

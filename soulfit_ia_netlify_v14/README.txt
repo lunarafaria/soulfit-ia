@@ -1,4 +1,4 @@
-SoulFit+ IA V39
+SoulFit+ IA V40
 
 Correcao de impressao:
 - ordem fixa em duas colunas: C | A e D | B;
@@ -15,4 +15,5 @@ Correcao de impressao:
 - cache do index desativado para exibir atualizacoes imediatamente;
 - impressao aberta em pagina isolada, sem conflito com o formulario;
 - emojis e marcadores removidos dos nomes dos exercicios;
+- fonte dos dados do cabecalho aumentada para 14px;
 - pacote completo para GitHub/Netlify.
