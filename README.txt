@@ -386,7 +386,7 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
 <body>
 <header>
   <div><h1>SoulFit+ IA de Treinos</h1><div class="tag">Prescrição, evolução, patologias, funcional e ficha A4 horizontal</div></div>
-  <div class="tag">V49 | 10 linhas fixas visíveis</div>
+  <div class="tag">V50 | 10 linhas fixas + volume corrigido</div>
 </header>
 
 <div class="wrap">
@@ -776,13 +776,13 @@ function limiteExerciciosPorNivel(){
   const perfil=valor('perfilVolume')||'Conservador científico';
   const tempo=valor('tempoSessao')||'40-60 min';
 
-  // V47: a ficha sempre mantém 10 linhas visíveis.
+  // V50: a ficha sempre mantém 10 linhas visíveis.
   // A IA só preenche até o limite abaixo; as demais linhas ficam livres para ajuste manual/cardio.
   let limite;
   if(nivel==='Iniciante'){
-    limite = tempo==='30-40 min' ? 7 : 8; // padrão: 7 a 8 exercícios
-  }else if(nivel==='Intermediário'){
     limite = tempo==='30-40 min' ? 6 : 7; // padrão: 6 a 7 exercícios
+  }else if(nivel==='Intermediário'){
+    limite = tempo==='30-40 min' ? 7 : 8; // padrão: 7 a 8 exercícios
   }else{
     limite = 8; // avançado padrão
     if(tempo==='30-40 min') limite = 6;
