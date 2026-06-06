@@ -89,10 +89,22 @@ export default async function handler(req, res) {
     const perfilVolume = dados.perfilVolume || "Conservador científico";
     const tempoSessao = dados.tempoSessao || "40-60 min";
 
-    let limite = nivel === "Iniciante" ? 5 : nivel === "Intermediário" ? 6 : 7;
-    if (perfilVolume === "Hipertrofia avançada controlada" && nivel === "Avançado") limite = 8;
-    if (tempoSessao === "30-40 min") limite = Math.max(4, limite - 1);
-    if (tempoSessao === "60-75 min" && nivel !== "Iniciante") limite = Math.min(8, limite + 1);
+    let limiteMin = nivel === "Iniciante" ? 6 : nivel === "Intermediário" ? 7 : 6;
+    let limiteMax = nivel === "Iniciante" ? 7 : nivel === "Intermediário" ? 8 : 10;
+    let limite = limiteMax;
+
+    if (nivel === "Avançado") {
+      limite = 8; // avançado padrão
+      if (tempoSessao === "30-40 min") limite = 6;
+      if (tempoSessao === "60-75 min") limite = 10;
+      if (perfilVolume === "Hipertrofia avançada controlada") limite = 10;
+    } else {
+      if (tempoSessao === "30-40 min") limite = limiteMin;
+      if (tempoSessao === "40-60 min") limite = limiteMax;
+      if (tempoSessao === "60-75 min") limite = limiteMax;
+    }
+
+    limite = Math.min(10, Math.max(limiteMin, limite));
 
     const prompt = `
 Você é a IA assistente da Luna, profissional de Educação Física e CEO da SoulFit+.
@@ -105,12 +117,12 @@ DIVISÃO:
 ${regraDivisao}
 
 REGRA DE VOLUME CIENTÍFICO + PADRÃO SOULFIT+:
-- NÃO prescrever 10 exercícios por sessão.
+- A ficha visual sempre tem 10 linhas, mas a IA deve preencher somente a quantidade adequada.
 - Máximo absoluto nesta ficha: ${limite} exercícios por treino. Conte antes de responder.
-- Iniciante: 4 a 5 exercícios, geralmente 2 séries, técnica, segurança e adaptação.
-- Intermediário: 5 a 6 exercícios, geralmente 3 séries.
-- Avançado: 6 a 7 exercícios, 3 séries; 4 séries apenas no exercício prioritário.
-- Hipertrofia avançada controlada: até 8 exercícios só se avançado e sem restrição relevante.
+- Iniciante: 6 a 7 exercícios, geralmente 2 séries nos acessórios e 2-3 séries nos principais.
+- Intermediário: 7 a 8 exercícios, geralmente 3 séries.
+- Avançado: 6 a 10 exercícios, usando 10 apenas quando o tempo/perfil permitir e sem restrição relevante.
+- Hipertrofia avançada controlada: pode chegar até 10 exercícios, se fizer sentido.
 - Patologia/dor/retorno: reduzir volume, evitar redundância e priorizar segurança.
 - Finalizadores contam como exercício/bloco e só entram se couberem.
 - Emagrecimento não significa excesso de exercícios.
@@ -119,7 +131,7 @@ REGRA DE VOLUME CIENTÍFICO + PADRÃO SOULFIT+:
 
 PADRÃO LUNA/SOULFIT+:
 - Ficha objetiva, aplicável em academia real.
-- Normalmente 5 a 7 exercícios por treino.
+- Normalmente 6 a 8 exercícios por treino, podendo chegar a 10 em alunos avançados.
 - Multiarticulares no início; isoladores depois.
 - Mulheres: quando seguro, prioridade para inferiores/glúteos e um dia de superiores organizado.
 - Homens: quando seguro, prioridade inicial para superiores, sem negligenciar inferiores.
@@ -130,7 +142,7 @@ REGRAS:
 1. Não gerar treino genérico.
 2. Não ultrapassar ${limite} exercícios por treino. Se passar de ${limite}, refaça antes de responder.
 3. Não preencher linhas vazias e não completar a ficha até 10 linhas.
-4. Não gerar 10 exercícios por treino.
+4. Só gerar 10 exercícios quando o aluno for avançado e o limite calculado permitir.
 5. Primeira prescrição: progressão conservadora.
 6. Evolução com treino antigo: evoluir sem copiar tudo.
 7. Adaptação por lesão/patologia: substituir o que for inadequado.
@@ -149,7 +161,7 @@ TREINO A
 TREINO B
 1️⃣ Exercício - 3x10
 
-Antes de finalizar, faça uma autocorreção silenciosa: nenhum treino pode ter mais que ${limite} exercícios.
+Antes de finalizar, faça uma autocorreção silenciosa: nenhum treino pode ter mais que ${limite} exercícios, e a ficha não precisa preencher todas as 10 linhas.
 `;
 
     const response = await fetch("https://api.openai.com/v1/responses", {

@@ -386,7 +386,7 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
 <body>
 <header>
   <div><h1>SoulFit+ IA de Treinos</h1><div class="tag">Prescrição, evolução, patologias, funcional e ficha A4 horizontal</div></div>
-  <div class="tag">V46 | 10 linhas + IA limitada</div>
+  <div class="tag">V47 | 10 linhas + volume SoulFit+</div>
 </header>
 
 <div class="wrap">
@@ -773,11 +773,22 @@ function limiteExerciciosPorNivel(){
   const nivel=valor('nivel');
   const perfil=valor('perfilVolume')||'Conservador científico';
   const tempo=valor('tempoSessao')||'40-60 min';
-  let limite = nivel==='Iniciante' ? 5 : nivel==='Intermediário' ? 6 : 7;
-  if(perfil==='Hipertrofia avançada controlada' && nivel==='Avançado') limite=8;
-  if(tempo==='30-40 min') limite=Math.max(4, limite-1);
-  if(tempo==='60-75 min' && nivel!=='Iniciante') limite=Math.min(8, limite+1);
-  return limite;
+
+  // V47: a ficha sempre mantém 10 linhas visíveis.
+  // A IA só preenche até o limite abaixo; as demais linhas ficam livres para ajuste manual/cardio.
+  let limite;
+  if(nivel==='Iniciante'){
+    limite = tempo==='30-40 min' ? 7 : 8; // padrão: 7 a 8 exercícios
+  }else if(nivel==='Intermediário'){
+    limite = tempo==='30-40 min' ? 6 : 7; // padrão: 6 a 7 exercícios
+  }else{
+    limite = 8; // avançado padrão
+    if(tempo==='30-40 min') limite = 6;
+    if(tempo==='60-75 min') limite = 10;
+    if(perfil==='Hipertrofia avançada controlada') limite = 10; // avançado: 6 a 10 exercícios
+  }
+
+  return Math.min(10, Math.max(6, limite));
 }
 
 function seriesPadraoPorNivel(){
