@@ -323,12 +323,69 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
   .loadcol{width:8.75%!important}
 }
 
+/* V38: regra final de seguranca para GitHub Pages, Netlify e navegadores. */
+@media print{
+  html,body{
+    width:291mm!important;
+    height:204mm!important;
+    min-height:204mm!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+    background:#fff!important;
+  }
+
+  body *{visibility:visible!important}
+
+  header,aside,.no-print,.print-title,.print-actions,#editor,.tabbar,
+  h2.no-print,.footer-note{
+    display:none!important;
+  }
+
+  .wrap,.app,main.panel,.panel{
+    display:block!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:visible!important;
+    background:#fff!important;
+    border:0!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+  }
+
+  .sheet{
+    display:block!important;
+    visibility:visible!important;
+    position:absolute!important;
+    left:0!important;
+    top:0!important;
+    right:auto!important;
+    bottom:auto!important;
+    width:291mm!important;
+    height:204mm!important;
+    min-height:204mm!important;
+    max-height:204mm!important;
+    margin:0!important;
+    padding:3mm 4mm!important;
+    overflow:hidden!important;
+    background:#fff!important;
+    box-shadow:none!important;
+    border-radius:0!important;
+    break-inside:avoid!important;
+    page-break-inside:avoid!important;
+  }
+
+  .sheet *{visibility:visible!important}
+}
+
 </style>
 </head>
 <body>
 <header>
   <div><h1>SoulFit+ IA de Treinos</h1><div class="tag">Prescrição, evolução, patologias, funcional e ficha A4 horizontal</div></div>
-  <div class="tag">V30 dobrável completa</div>
+  <div class="tag">V38 | impressão corrigida</div>
 </header>
 
 <div class="wrap">

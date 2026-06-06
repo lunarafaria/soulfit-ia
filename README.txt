@@ -1,4 +1,4 @@
-SoulFit+ IA V37
+SoulFit+ IA V38
 
 Correcao de impressao:
 - ordem fixa em duas colunas: C | A e D | B;
@@ -10,4 +10,7 @@ Correcao de impressao:
 - cabecalho sozinho no lado direito, acima de A/B;
 - cabecalho em 3 linhas: aluno/objetivo, data/frequencia e observacoes;
 - fonte dos exercicios em 14px;
+- regra de impressao compativel com GitHub Pages e Netlify;
+- publicacao configurada explicitamente a partir da raiz do projeto;
+- cache do index desativado para exibir atualizacoes imediatamente;
 - pacote completo para GitHub/Netlify.
