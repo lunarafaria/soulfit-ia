@@ -115,55 +115,94 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
   .footer-note{display:none!important}
 }
 
-/* V23: ordem dos treinos corrigida + fonte maior na impressão */
+/* V24: impressão dobrável C|A / D|B, cabeçalho na frente, fonte maior, sem quadradinhos */
+.sheet{position:relative!important}
+.sheet-head-front{
+  display:grid!important;
+  grid-template-columns:150px 1fr!important;
+  gap:10px!important;
+  align-items:center!important;
+  width:calc(50% - 7px)!important;
+  margin-left:calc(50% + 7px)!important;
+  margin-bottom:8px!important;
+}
+.sheet-head-front .logo{
+  font-family:Arial Black,Impact,Arial,sans-serif!important;
+  font-size:30px!important;
+  font-weight:900!important;
+  letter-spacing:-1px!important;
+  white-space:nowrap!important;
+}
+.sheet-head-front .logo .soul{color:#e00000!important}
+.sheet-head-front .logo .fit{color:#111!important}
+.sheet-info{font-size:12px!important;line-height:1.25!important;font-weight:700!important}
+.line{display:inline-block;min-width:72px;border-bottom:1px solid #111;margin:0 7px 0 3px;min-height:12px;vertical-align:bottom}
+.line.long{min-width:115px}.line.obs{min-width:200px}
+.print-grid{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  grid-template-rows:1fr 1fr!important;
+  gap:14px!important;
+}
+.print-grid>div{min-width:0!important}
+.workout td:first-child::before{content:none!important}
+.workout td:first-child{padding-left:6px!important;list-style:none!important}
+.workout td{font-size:13px!important}.workout th{font-size:12px!important}.workout h3{font-size:14px!important}
+
 @media print{
   .sheet{
     width:291mm!important;
     height:204mm!important;
     padding:3mm 4mm!important;
+    overflow:hidden!important;
   }
-  .sheet-head{
-    height:12mm!important;
-    margin-bottom:1.5mm!important;
-    grid-template-columns:34mm 1fr!important;
+  .sheet-head-front{
+    position:absolute!important;
+    top:3mm!important;
+    left:calc(50% + 2mm)!important;
+    width:calc(50% - 5mm)!important;
+    height:14mm!important;
+    margin:0!important;
+    display:grid!important;
+    grid-template-columns:35mm 1fr!important;
+    gap:2mm!important;
+    align-items:start!important;
   }
-  .logo{font-size:22px!important}
-  .sheet-info{font-size:9px!important;line-height:1.05!important}
-  .line{height:8px!important;min-height:8px!important}
-  .line.long{min-width:100px!important}
-  .line.obs{min-width:185px!important}
+  .sheet-head-front .logo{font-size:21px!important;line-height:1!important}
+  .sheet-info{font-size:10.2px!important;line-height:1.05!important;white-space:nowrap!important}
+  .line{height:8px!important;min-height:8px!important;min-width:35px!important;margin-right:3px!important}
+  .line.long{min-width:72px!important}.line.obs{min-width:130px!important}
   .print-grid{
-    height:186mm!important;
-    gap:2.2mm 3.2mm!important;
+    position:absolute!important;
+    left:4mm!important;
+    right:4mm!important;
+    top:19mm!important;
+    bottom:4mm!important;
+    height:auto!important;
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    grid-template-rows:1fr 1fr!important;
+    gap:2.4mm 3.2mm!important;
   }
   .workout{
-    height:91mm!important;
-    max-height:91mm!important;
+    height:87mm!important;
+    max-height:87mm!important;
+    min-height:0!important;
+    overflow:hidden!important;
   }
   .workout h3{
-    font-size:10.5px!important;
+    font-size:12px!important;
     padding:2px 8px!important;
     margin:0 0 1mm!important;
+    line-height:1!important;
+    border-right:8px solid #e00000!important;
   }
-  table{
-    font-size:8.6px!important;
-    border-spacing:.55mm!important;
-  }
-  th{
-    height:6.2mm!important;
-    font-size:8.2px!important;
-    padding:0!important;
-  }
-  td{
-    height:7.1mm!important;
-    max-height:7.1mm!important;
-    font-size:8.5px!important;
-    line-height:1.05!important;
-    padding:0 .8mm!important;
-  }
-  .excol{width:54%!important}
-  .srcol{width:11%!important}
-  .loadcol{width:8.75%!important}
+  table{border-spacing:.6mm!important;font-size:16px!important}
+  th{height:7mm!important;font-size:12px!important;line-height:1!important;padding:0!important}
+  td{height:7.05mm!important;max-height:7.05mm!important;font-size:16px!important;line-height:1!important;padding:0 1mm!important}
+  td:first-child{font-size:16px!important;padding-left:1mm!important}
+  .excol{width:54%!important}.srcol{width:11%!important}.loadcol{width:8.75%!important}
+  .footer-note{display:none!important}
 }
 
 </style>
@@ -171,7 +210,7 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
 <body>
 <header>
   <div><h1>SoulFit+ IA de Treinos</h1><div class="tag">Prescrição, evolução, patologias, funcional e ficha A4 horizontal</div></div>
-  <div class="tag">V23 impressão corrigida</div>
+  <div class="tag">V24 impressão dobrável</div>
 </header>
 
 <div class="wrap">
@@ -273,7 +312,7 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
 
 <div class="print-title no-print">4. Ficha para impressão</div>
 <section class="sheet" id="sheet">
-  <div class="sheet-head">
+  <div class="sheet-head-front">
     <div class="logo"><span class="soul">Soul</span><span class="fit">Fit+</span></div>
     <div class="sheet-info">
       <div><b>Aluno(a):</b><span id="pAluno" class="line long"></span> <b>Objetivo:</b><span id="pObjetivo" class="line"></span> <b>Data:</b><span id="pData" class="line"></span></div>
@@ -281,8 +320,10 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
     </div>
   </div>
   <div class="print-grid">
-    <div class="col"><div id="boxA"></div><div id="boxB"></div></div>
-    <div class="col"><div id="boxC"></div><div id="boxD"></div></div>
+    <div id="boxC"></div>
+    <div id="boxA"></div>
+    <div id="boxD"></div>
+    <div id="boxB"></div>
   </div>
   <div class="footer-note">SoulFit+ | ficha gerada para revisão profissional antes da aplicação</div>
 </section>
@@ -367,7 +408,7 @@ function syncPrint(){
 function workoutHTML(l){
   const ativo=treinosAtivos().includes(l);
   const rows=treinos[l].map(r=>`<tr>
-    <td>${ativo?esc(r.ex):''}</td>
+    <td>${ativo?esc(String(r.ex||'').replace(/^[☐□▪▫■\s]+/,'')):''}</td>
     <td>${ativo?esc(r.sr):''}</td>
     <td>${ativo?esc(r.c1):''}</td>
     <td>${ativo?esc(r.c2):''}</td>

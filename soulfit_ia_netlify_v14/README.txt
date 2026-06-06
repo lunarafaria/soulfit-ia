@@ -1,3 +1,3 @@
-SoulFit+ IA V23
+SoulFit+ IA V24
 
-Correções de impressão: ordem A/C/B/D na folha e fonte maior para impressão.
+Impressão dobrável: C|A / D|B, cabeçalho e logo apenas no lado A/B, fonte 16 na impressão e remoção de quadradinhos.
