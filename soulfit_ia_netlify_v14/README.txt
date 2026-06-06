@@ -1,3 +1,3 @@
-SoulFit+ IA V24
+SoulFit+ IA V25
 
-Impressão dobrável: C|A / D|B, cabeçalho e logo apenas no lado A/B, fonte 16 na impressão e remoção de quadradinhos.
+Correção: ficha não fica mais branca na impressão e remove quadradinhos antes dos exercícios. Mantém layout C|A / D|B e fonte 16.
