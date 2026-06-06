@@ -532,7 +532,7 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
 const letras=['A','B','C','D']; 
 let atual='A';
 let treinos={A:[],B:[],C:[],D:[]};
-const MAX_LINHAS_FICHA = 8;
+const MAX_LINHAS_FICHA = 10;
 
 
 function linhaVazia(){return {ex:'',sr:'',c1:'',c2:'',c3:'',c4:''}}
@@ -832,7 +832,17 @@ function salvarHistorico(){
 
 function carregarHistorico(){
   let h=JSON.parse(localStorage.getItem('soulfit_hist')||'[]');
-  $('historico').innerHTML=h.length?h.map((x,i)=>`<div class="history-item"><b>${esc(x.aluno||'Sem nome')}</b><br><span class="mini">${esc(x.objetivo||'')} | ${x.data}</span><div class="btns"><button class="light" onclick="restaurar(${i})">Abrir</button></div></div>`).join(''):'<div class="mini">Nada salvo ainda.</div>';
+  $('historico').innerHTML=h.length?h.map((x,i)=>`<div class="history-item"><b>${esc(x.aluno||'Sem nome')}</b><br><span class="mini">${esc(x.objetivo||'')} | ${x.data}</span><div class="btns"><button class="light" onclick="restaurar(${i})">Abrir</button><button class="light" onclick="excluirHistorico(${i})">Excluir</button></div></div>`).join(''):'<div class="mini">Nada salvo ainda.</div>';
+}
+
+function excluirHistorico(i){
+  let h=JSON.parse(localStorage.getItem('soulfit_hist')||'[]');
+  const item=h[i];
+  const nome=item && item.aluno ? item.aluno : 'este histórico';
+  if(!confirm('Excluir o histórico de '+nome+'?')) return;
+  h.splice(i,1);
+  localStorage.setItem('soulfit_hist',JSON.stringify(h));
+  carregarHistorico();
 }
 
 function restaurar(i){
@@ -845,8 +855,29 @@ function restaurar(i){
 }
 
 function limparFicha(){
-  if(!confirm('Limpar ficha atual?'))return;
+  if(!confirm('Limpar ficha, dados do aluno e observações atuais?'))return;
   letras.forEach(l=>treinos[l]=Array.from({length:MAX_LINHAS_FICHA},linhaVazia));
+  const camposTexto=['aluno','idade','dataFicha','horario','patologia','restricoes','obs','treinoAntigo'];
+  camposTexto.forEach(id=>{ if($(id)) $(id).value=''; });
+  const defaults={
+    tipoPrescricao:'Primeira prescrição',
+    modalidadeTreino:'Musculação',
+    experienciaPrevia:'Nunca treinou',
+    objetivo:'Hipertrofia',
+    nivel:'Iniciante',
+    perfilVolume:'Conservador científico',
+    tempoSessao:'40-60 min',
+    sexo:'Mulher',
+    ordemPreferencia:'Automática pelo sexo',
+    freq:'4x',
+    divisao:'A/B/C'
+  };
+  Object.keys(defaults).forEach(id=>{ if($(id)) $(id).value=defaults[id]; });
+  if($('modoPatologiaExclusiva')) $('modoPatologiaExclusiva').checked=false;
+  if($('iaStatus')) $('iaStatus').style.display='none';
+  $('dataFicha').value=new Date().toISOString().slice(0,10);
+  atual='A';
+  abrirTreino('A');
   renderEditor();syncPrint();
 }
 

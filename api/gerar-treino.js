@@ -167,7 +167,7 @@ Antes de finalizar, faça uma autocorreção silenciosa: nenhum treino pode ter 
 
     const data = await response.json();
     if (!response.ok) {
-      return res.status(response.status).json({ error: data.error?.message || "Erro na API da OpenAI." });
+      return res.status(response.status).json({ error: "Erro na API da OpenAI. Verifique a chave, créditos e modelo configurado." });
     }
 
     const treinoBruto = data.output_text || (data.output || []).flatMap(i => i.content || []).map(c => c.text || "").join("\n").trim();
@@ -175,6 +175,6 @@ Antes de finalizar, faça uma autocorreção silenciosa: nenhum treino pode ter 
     return res.status(200).json({ treino });
 
   } catch (error) {
-    return res.status(500).json({ error: error.message || "Erro interno." });
+    return res.status(500).json({ error: "Erro interno ao gerar treino." });
   }
 }

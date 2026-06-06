@@ -1,33 +1,20 @@
-SoulFit+ IA V44 - Versão para Vercel
+SoulFit+ IA V45 - Versao Vercel
+
+Atualizacoes desta versao:
+- A ficha voltou a ter 10 espacos por treino para edicao manual.
+- A IA continua limitada pelo nivel do aluno: ela preenche apenas o limite permitido.
+- Os espacos 9 e 10 ficam livres para ajustes manuais, cardio, observacao ou exercicio avulso.
+- Historico local agora tem botao Excluir.
+- Limpar ficha agora limpa tambem os dados do aluno, observacoes, patologias e treino antigo.
+- Mensagens de erro da API foram protegidas para nao expor chave sensivel na tela.
 
 Arquivos principais:
 - index.html
 - api/gerar-treino.js
 - vercel.json
-- REFERENCIAS_VOLUME.txt
 
-O que mudou:
-- A rota da IA foi alterada de /.netlify/functions/gerar-treino para /api/gerar-treino.
-- A função foi convertida do padrão Netlify para o padrão Vercel.
-- O limite de volume continua travado no código.
-- A IA não deve preencher 10 exercícios por sessão.
-
-Como subir no GitHub:
-1. Substitua o index.html antigo por este index.html.
-2. Crie uma pasta chamada api na raiz do repositório.
-3. Coloque gerar-treino.js dentro da pasta api.
-4. Coloque vercel.json na raiz do repositório.
-5. Pode remover netlify.toml se não for mais usar Netlify.
-
-Configuração no Vercel:
-- Framework: Other
-- Root Directory: ./
-- Build Command: vazio
-- Output Directory: vazio ou .
-- Environment Variable obrigatória:
-  OPENAI_API_KEY = sua chave da OpenAI
+No Vercel, manter a variavel de ambiente:
+OPENAI_API_KEY
 
 Opcional:
-  OPENAI_MODEL = gpt-5.1
-
-Depois clique em Deploy/Implantar.
+OPENAI_MODEL
