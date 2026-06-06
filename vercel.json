@@ -1,14 +1,17 @@
-{
-  "version": 2,
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1" }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
-      ]
-    }
-  ]
-}
+REFERÊNCIAS E CRITÉRIO DE VOLUME - SOULFIT+ V48
+
+Critério prático configurado no aplicativo:
+- Iniciante: 6 a 7 exercícios por sessão.
+- Intermediário: 7 a 8 exercícios por sessão.
+- Avançado: 6 a 10 exercícios por sessão.
+
+Observação técnica:
+A ficha visual possui 10 linhas fixas para permitir ajustes manuais, cardio, observações ou exercícios avulsos.
+A IA, porém, deve preencher apenas o volume adequado ao nível, tempo e perfil selecionados.
+
+Referência geral OMS:
+A OMS recomenda fortalecimento dos grandes grupos musculares em 2 ou mais dias por semana, mas não define número obrigatório de exercícios por sessão.
+
+Links:
+https://www.who.int/publications/i/item/9789240014886
+https://www.who.int/europe/news-room/fact-sheets/item/physical-activity

@@ -1,17 +1,26 @@
-REFERÊNCIAS E CRITÉRIO DE VOLUME - SOULFIT+ V48
+SoulFit+ IA V49 - Versão Vercel
 
-Critério prático configurado no aplicativo:
-- Iniciante: 6 a 7 exercícios por sessão.
-- Intermediário: 7 a 8 exercícios por sessão.
-- Avançado: 6 a 10 exercícios por sessão.
+Ajustes desta versão:
+- A ficha fica com 10 linhas fixas por treino no painel e na impressão.
+- As 10 linhas ficam totalmente visíveis; nenhuma linha é cortada na impressão.
+- A IA continua limitada pelo nível/perfil/tempo do aluno: ela não preenche 10 por conta própria em todos os casos.
+- Padrão de volume corrigido:
+  * Iniciante: 6 a 7 exercícios.
+  * Intermediário: 7 a 8 exercícios.
+  * Avançado: 6 a 10 exercícios.
+- Linhas excedentes ficam disponíveis para uso manual, cardio, observação ou exercício avulso.
+- Históricos antigos com menos linhas são normalizados automaticamente para 10 ao abrir.
+- Histórico local mantém botão Excluir.
+- Limpar ficha limpa também dados do aluno, observações, patologias e treino antigo.
+- Mantém rota Vercel: /api/gerar-treino.
 
-Observação técnica:
-A ficha visual possui 10 linhas fixas para permitir ajustes manuais, cardio, observações ou exercícios avulsos.
-A IA, porém, deve preencher apenas o volume adequado ao nível, tempo e perfil selecionados.
+Arquivos principais:
+- index.html
+- api/gerar-treino.js
+- vercel.json
 
-Referência geral OMS:
-A OMS recomenda fortalecimento dos grandes grupos musculares em 2 ou mais dias por semana, mas não define número obrigatório de exercícios por sessão.
+No Vercel, manter a variável de ambiente:
+OPENAI_API_KEY
 
-Links:
-https://www.who.int/publications/i/item/9789240014886
-https://www.who.int/europe/news-room/fact-sheets/item/physical-activity
+Opcional:
+OPENAI_MODEL
