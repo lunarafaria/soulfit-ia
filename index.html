@@ -386,7 +386,7 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
 <body>
 <header>
   <div><h1>SoulFit+ IA de Treinos</h1><div class="tag">Prescrição, evolução, patologias, funcional e ficha A4 horizontal</div></div>
-  <div class="tag">V44 | Vercel + volume travado</div>
+  <div class="tag">V46 | 10 linhas + IA limitada</div>
 </header>
 
 <div class="wrap">
@@ -541,8 +541,16 @@ function esc(v){return String(v||'').replaceAll('&','&amp;').replaceAll('<','&lt
 function valor(id){return $(id)?$(id).value:''}
 function checked(id){return !!($(id)&&$(id).checked)}
 
+function normalizarTreinosParaDezLinhas(){
+  letras.forEach(l=>{
+    const atualArr = Array.isArray(treinos[l]) ? treinos[l] : [];
+    treinos[l] = Array.from({length:MAX_LINHAS_FICHA},(_,i)=>atualArr[i]||linhaVazia());
+  });
+}
+
+
 function init(){
-  letras.forEach(l=>{if(!treinos[l].length)treinos[l]=Array.from({length:MAX_LINHAS_FICHA},linhaVazia)})
+  normalizarTreinosParaDezLinhas()
   $('dataFicha').value=new Date().toISOString().slice(0,10);
   renderEditor();
   syncPrint();
@@ -851,6 +859,7 @@ function restaurar(i){
   const d=x.dados||{};
   ['aluno','idade','objetivo','nivel','sexo','tipoPrescricao','modalidadeTreino','experienciaPrevia','ordemPreferencia','perfilVolume','tempoSessao','freq','divisao','dataFicha','horario','patologia','restricoes','obs','treinoAntigo'].forEach(id=>{if($(id)&&d[id]!==undefined)$(id).value=d[id]});
   treinos=x.treinos||treinos;
+  normalizarTreinosParaDezLinhas();
   renderEditor();syncPrint();
 }
 

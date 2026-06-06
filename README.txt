@@ -1,19 +1,20 @@
-SoulFit+ IA V45 - Versao Vercel
+SoulFit+ IA V46 - Versão Vercel
 
-Atualizacoes desta versao:
-- A ficha voltou a ter 10 espacos por treino para edicao manual.
-- A IA continua limitada pelo nivel do aluno: ela preenche apenas o limite permitido.
-- Os espacos 9 e 10 ficam livres para ajustes manuais, cardio, observacao ou exercicio avulso.
-- Historico local agora tem botao Excluir.
-- Limpar ficha agora limpa tambem os dados do aluno, observacoes, patologias e treino antigo.
-- Mensagens de erro da API foram protegidas para nao expor chave sensivel na tela.
+Ajustes desta versão:
+- A ficha fica com 10 linhas fixas por treino no painel e na impressão.
+- A IA continua limitada pelo nível/perfil/tempo do aluno: ela não preenche 10 por conta própria.
+- Linhas 9 e 10 ficam disponíveis para uso manual, cardio, observação ou exercício avulso.
+- Históricos antigos com 8 linhas são normalizados automaticamente para 10 ao abrir.
+- Histórico local mantém botão Excluir.
+- Limpar ficha limpa também dados do aluno, observações, patologias e treino antigo.
+- Mantém rota Vercel: /api/gerar-treino.
 
 Arquivos principais:
 - index.html
 - api/gerar-treino.js
 - vercel.json
 
-No Vercel, manter a variavel de ambiente:
+No Vercel, manter a variável de ambiente:
 OPENAI_API_KEY
 
 Opcional:
