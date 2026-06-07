@@ -1,21 +1,1066 @@
-SoulFit+ IA V51 - Arquivos corrigidos
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoulFit+ | IA de Treinos</title>
+<style>
+:root{
+  --red:#e00000;
+  --ink:#171717;
+  --bg:#f4f5f7;
+  --muted:#687076;
+  --soft:#fff8d9;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:#111}
+header{background:#111;color:#fff;padding:14px 18px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+h1{margin:0;font-size:21px}.tag{font-size:12px;opacity:.82}
+.wrap{max-width:1440px;margin:14px auto;padding:0 12px}
+.app{display:grid;grid-template-columns:360px minmax(0,1fr);gap:12px}
+.panel{background:#fff;border-radius:16px;padding:14px;box-shadow:0 7px 22px rgba(0,0,0,.08)}
+aside.panel{max-height:calc(100vh - 86px);overflow:auto}
+main.panel{overflow:auto}
+h2{font-size:17px;margin:0 0 10px}
+label{font-size:12px;font-weight:800;display:block;margin:8px 0 4px}
+input,select,textarea{width:100%;border:1px solid #cfd3d7;border-radius:10px;padding:9px;font-size:14px;background:#fff}
+textarea{min-height:74px;resize:vertical}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+button{border:0;border-radius:10px;background:#111;color:#fff;font-weight:800;padding:10px 12px;cursor:pointer}
+button:hover{opacity:.92}.redbtn{background:var(--red)}.light{background:#eef0f2;color:#111;border:1px solid #cfd3d7}
+.btns,.tabbar{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.tab{background:#e9ebee;color:#111}.tab.active{background:#111;color:#fff}
+.exercise-line{display:grid;grid-template-columns:2.1fr .7fr .55fr .55fr .55fr .55fr;gap:5px;margin-bottom:5px}
+.exercise-line input{padding:7px;border-radius:7px}
+.section-title{font-weight:900;margin:10px 0 6px}
+.mini{font-size:12px;color:var(--muted);line-height:1.35}
+.danger-note{border-left:4px solid var(--red);padding:8px;background:#fff5f5;border-radius:8px;font-size:12px;line-height:1.35;margin-top:8px}
+.ia-status{margin-top:10px;border:1px solid #ffd0d0;background:#fff5f5;color:#111;padding:10px;border-radius:10px;font-size:12px;line-height:1.35}
+.ia-status.ok{border-color:#b7e4c7;background:#f0fff4}.ia-status.err{border-color:#ffb3b3;background:#fff0f0;color:#9b1111}
+.history-item{border:1px solid #ddd;background:#fafafa;border-radius:10px;padding:9px;margin:8px 0}
+.pathology-toggle{margin:8px 0 4px;border:1px solid #f1b9b9;background:#fff5f5;border-radius:12px;padding:9px}
+.checkline{display:flex!important;align-items:flex-start;gap:8px;margin:0!important;cursor:pointer;font-weight:500!important}
+.checkline input{width:auto!important;margin-top:3px;transform:scale(1.08)}
+.checkline span{display:block;font-size:12px;line-height:1.25}
+.checkline small{display:block;color:#687076;font-weight:500;margin-top:2px}
+.print-actions{position:sticky;top:0;background:#fff;padding-bottom:10px;z-index:5}
 
-Arquivos corretos para subir na raiz do GitHub:
-- index.html
-- vercel.json
-- pasta api/gerar-treino.js
-- README.txt
-- REFERENCIAS_VOLUME.txt
+/* ficha para tela */
+.print-title{margin:18px 0 8px;font-size:18px;font-weight:900}
+.sheet{
+  display:block;
+  width:1120px;
+  max-width:100%;
+  min-height:690px;
+  background:white;
+  margin:10px auto 40px;
+  border-radius:14px;
+  box-shadow:0 8px 28px rgba(0,0,0,.14);
+  padding:14px;
+  overflow:visible;
+}
+.sheet-head{display:grid;grid-template-columns:160px 1fr;gap:14px;align-items:center;margin-bottom:10px}
+.logo{font-family:Arial Black,Impact,Arial,sans-serif;font-size:30px;font-weight:900;letter-spacing:-1px;white-space:nowrap}
+.logo .soul{color:var(--red)}.logo .fit{color:#111}
+.sheet-info{font-size:12px;line-height:1.35;font-weight:700}
+.line{display:inline-block;min-width:86px;border-bottom:1px solid #111;margin:0 10px 0 4px;min-height:13px;vertical-align:bottom}
+.line.long{min-width:180px}.line.obs{min-width:360px}
+.print-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.col{display:flex;flex-direction:column;gap:14px}
+.workout{min-height:245px}
+.workout h3{display:inline-block;background:#171a1f;color:#fff;font-size:13px;padding:4px 16px;margin:0 0 5px;border-right:14px solid var(--red);border-radius:3px 8px 0 0}
+table{width:100%;border-collapse:separate;border-spacing:2px;table-layout:fixed;font-size:10px}
+th{background:#171a1f;color:#fff;height:28px;text-align:center;font-size:10px;padding:2px;border:1px solid #fff}
+td{border:1px solid #666;height:22px;padding:2px 4px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+td:nth-child(n+2){background:var(--soft);text-align:center}
+.excol{width:55%}.srcol{width:12%}.loadcol{width:8.25%}
+.workout.inactive td{color:transparent;background:#fff!important}
+.footer-note{text-align:center;font-size:10px;color:#777;margin-top:6px}
 
-Ajustes:
-- 10 linhas fixas no painel 3. Editar ficha.
-- 10 linhas fixas na seção 4. Ficha para impressão.
-- IA limitada por nível:
-  * Iniciante: 6 a 7 exercícios.
-  * Intermediário: 7 a 8 exercícios.
-  * Avançado: 6 a 10 exercícios.
-- Mantém rota Vercel: /api/gerar-treino.
-- Mantém histórico com excluir e limpar ficha completa.
+@media(max-width:980px){
+  .app{grid-template-columns:1fr}
+  aside.panel{max-height:none}
+  .exercise-line{grid-template-columns:1fr 70px 54px 54px 54px 54px}
+  .sheet{overflow:auto}
+  .print-grid{grid-template-columns:1fr}
+}
 
-Importante:
-O arquivo vercel.json precisa ser JSON válido. Não coloque referências ou textos dentro dele.
+/* impressão A4 horizontal em uma folha */
+@page{size:A4 landscape;margin:3mm}
+@media print{
+  html,body{width:297mm!important;height:210mm!important;margin:0!important;padding:0!important;overflow:hidden!important;background:#fff!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body *{visibility:hidden!important}
+  .sheet,.sheet *{visibility:visible!important}
+  .sheet{
+    position:absolute!important;left:0!important;top:0!important;
+    width:291mm!important;height:204mm!important;min-height:0!important;max-height:204mm!important;
+    margin:0!important;padding:2.5mm 3mm!important;box-shadow:none!important;border-radius:0!important;overflow:hidden!important;
+    page-break-inside:avoid!important;break-inside:avoid!important;
+  }
+  .sheet-head{grid-template-columns:32mm 1fr!important;gap:2mm!important;height:10mm!important;margin-bottom:1mm!important}
+  .logo{font-size:18px!important}
+  .sheet-info{font-size:7.2px!important;line-height:.95!important}
+  .line{min-width:38px!important;min-height:6px!important;height:7px!important;margin-right:4px!important}
+  .line.long{min-width:88px!important}.line.obs{min-width:168px!important}
+  .print-grid{grid-template-columns:1fr 1fr!important;grid-template-rows:1fr 1fr!important;gap:1.8mm 3mm!important;height:188mm!important}
+  .col{display:contents!important}
+  .workout{height:92mm!important;min-height:0!important;max-height:92mm!important;overflow:hidden!important;page-break-inside:avoid!important;break-inside:avoid!important}
+  .workout h3{font-size:8.2px!important;line-height:1!important;padding:1px 6px!important;margin:0 0 .8mm!important;border-right:8px solid var(--red)!important;border-radius:2px!important}
+  table{border-spacing:.55mm!important;font-size:6.8px!important}
+  th{height:5.5mm!important;font-size:6.5px!important;padding:0!important;line-height:1!important}
+  td{height:6.6mm!important;max-height:6.6mm!important;font-size:6.6px!important;line-height:1!important;padding:0 .8mm!important}
+  .excol{width:55%!important}.srcol{width:10%!important}.loadcol{width:8.75%!important}
+  .no-print,header,aside,.print-title,.print-actions,#editor,.tabbar,h2.no-print{display:none!important;visibility:hidden!important}
+  main.panel,.panel,.wrap,.app{display:block!important;box-shadow:none!important;padding:0!important;margin:0!important;max-width:none!important;background:#fff!important}
+  .footer-note{display:none!important}
+}
+
+/* V30: ordem dos treinos corrigida + fonte maior na impressão */
+@media print{
+  .sheet{
+    width:291mm!important;
+    height:204mm!important;
+    padding:3mm 4mm!important;
+  }
+  .sheet-head{
+    height:12mm!important;
+    margin-bottom:1.5mm!important;
+    grid-template-columns:34mm 1fr!important;
+  }
+  .logo{font-size:22px!important}
+  .sheet-info{font-size:9px!important;line-height:1.05!important}
+  .line{height:8px!important;min-height:8px!important}
+  .line.long{min-width:100px!important}
+  .line.obs{min-width:185px!important}
+  .print-grid{
+    height:186mm!important;
+    gap:2.2mm 3.2mm!important;
+  }
+  .workout{
+    height:91mm!important;
+    max-height:91mm!important;
+  }
+  .workout h3{
+    font-size:10.5px!important;
+    padding:2px 8px!important;
+    margin:0 0 1mm!important;
+  }
+  table{
+    font-size:8.6px!important;
+    border-spacing:.55mm!important;
+  }
+  th{
+    height:6.2mm!important;
+    font-size:8.2px!important;
+    padding:0!important;
+  }
+  td{
+    height:7.1mm!important;
+    max-height:7.1mm!important;
+    font-size:8.5px!important;
+    line-height:1.05!important;
+    padding:0 .8mm!important;
+  }
+  .excol{width:54%!important}
+  .srcol{width:11%!important}
+  .loadcol{width:8.75%!important}
+}
+
+
+/* V30 FINAL: dobrável C|A / D|B, cabeçalho no lado A/B, fonte 16, sem quadradinhos */
+.sheet-head{
+  width:100%!important;
+  margin-left:0!important;
+  grid-template-columns:minmax(0,1fr) 20px minmax(0,1fr)!important;
+  gap:0!important;
+  align-items:center!important;
+  margin-bottom:8px!important;
+}
+.sheet-head .logo{grid-column:1;font-size:28px!important}
+.sheet-head .sheet-info{grid-column:3}
+.sheet-head .sheet-info{font-size:14px!important;line-height:1.1!important}
+.sheet-info{display:grid;gap:4px;min-width:0}
+.info-row{display:grid;align-items:end;gap:6px;min-width:0}
+.info-row.two-fields{grid-template-columns:auto minmax(0,1fr) auto minmax(0,1fr)}
+.info-row.three-fields{grid-template-columns:auto minmax(0,.8fr) auto minmax(0,.7fr) auto minmax(0,.7fr)}
+.info-row.one-field{grid-template-columns:auto minmax(0,1fr)}
+.info-row .line{min-width:0!important;margin:0!important;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.workout td:first-child::before{content:""!important;display:none!important}
+
+@media print{
+  /* mantém a lógica da versão que imprimia, sem página branca */
+  .sheet{
+    width:291mm!important;
+    height:204mm!important;
+    padding:3mm 4mm!important;
+  }
+
+  /* cabeçalho só no lado A/B, normal no fluxo para não sobrepor os treinos */
+  .sheet-head{
+    width:100%!important;
+    margin-left:0!important;
+    grid-template-columns:minmax(0,1fr) 14mm minmax(0,1fr)!important;
+    gap:0!important;
+    height:20mm!important;
+    margin-bottom:1.2mm!important;
+    align-items:center!important;
+    overflow:hidden!important;
+  }
+
+  .logo{
+    grid-column:1!important;
+    justify-self:start!important;
+    font-size:20px!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+    align-self:center!important;
+    width:auto!important;
+    overflow:visible!important;
+    padding-left:2mm!important;
+  }
+
+  .sheet-info{
+    grid-column:3!important;
+    display:grid!important;
+    grid-template-rows:repeat(3,1fr)!important;
+    gap:.8mm!important;
+    font-size:14px!important;
+    line-height:1!important;
+    min-width:0!important;
+    width:100%!important;
+    overflow:hidden!important;
+  }
+
+  .info-row{
+    display:grid!important;
+    align-items:end!important;
+    gap:.8mm!important;
+    min-width:0!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+  }
+
+  .info-row.two-fields{
+    grid-template-columns:auto minmax(0,1fr) auto minmax(0,1fr)!important;
+  }
+
+  .info-row.one-field{
+    grid-template-columns:auto minmax(0,1fr)!important;
+  }
+
+  .line{
+    height:3.2mm!important;
+    min-height:3.2mm!important;
+    min-width:0!important;
+    margin:0!important;
+    overflow:hidden!important;
+    white-space:nowrap!important;
+    text-overflow:ellipsis!important;
+  }
+  .line.long,.line.obs{min-width:0!important}
+
+  .print-grid{
+    grid-template-columns:1fr 1fr!important;
+    grid-template-rows:1fr!important;
+    height:176.8mm!important;
+    column-gap:14mm!important;
+  }
+
+  /* Mantem C/D a esquerda e A/B a direita, com espaco central para a dobra. */
+  .col{
+    display:flex!important;
+    flex-direction:column!important;
+    gap:2mm!important;
+    min-width:0!important;
+  }
+
+  .workout{
+    height:87.4mm!important;
+    max-height:87.4mm!important;
+    min-height:0!important;
+    overflow:hidden!important;
+  }
+
+  .workout h3{
+    font-size:12px!important;
+    line-height:1!important;
+    padding:2px 8px!important;
+    margin:0 0 .8mm!important;
+    border-right:8px solid var(--red)!important;
+  }
+
+  table{
+    font-size:14px!important;
+    border-spacing:.35mm!important;
+  }
+
+  th{
+    height:5.8mm!important;
+    font-size:12px!important;
+    line-height:1!important;
+    padding:0!important;
+  }
+
+  td{
+    height:5.9mm!important;
+    max-height:5.9mm!important;
+    font-size:14px!important;
+    line-height:1!important;
+    padding:0 .7mm!important;
+  }
+
+  td:first-child{
+    font-size:14px!important;
+    padding-left:.7mm!important;
+  }
+
+  td:first-child::before{
+    content:""!important;
+    display:none!important;
+  }
+
+  .excol{width:54%!important}
+  .srcol{width:11%!important}
+  .loadcol{width:8.75%!important}
+}
+
+/* V38: regra final de seguranca para GitHub Pages, Netlify e navegadores. */
+@media print{
+  html,body{
+    width:291mm!important;
+    height:204mm!important;
+    min-height:204mm!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+    background:#fff!important;
+  }
+
+  body *{visibility:visible!important}
+
+  header,aside,.no-print,.print-title,.print-actions,#editor,.tabbar,
+  h2.no-print,.footer-note{
+    display:none!important;
+  }
+
+  .wrap,.app,main.panel,.panel{
+    display:block!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:visible!important;
+    background:#fff!important;
+    border:0!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+  }
+
+  .sheet{
+    display:block!important;
+    visibility:visible!important;
+    position:absolute!important;
+    left:0!important;
+    top:0!important;
+    right:auto!important;
+    bottom:auto!important;
+    width:291mm!important;
+    height:204mm!important;
+    min-height:204mm!important;
+    max-height:204mm!important;
+    margin:0!important;
+    padding:3mm 4mm!important;
+    overflow:hidden!important;
+    background:#fff!important;
+    box-shadow:none!important;
+    border-radius:0!important;
+    break-inside:avoid!important;
+    page-break-inside:avoid!important;
+  }
+
+  .sheet *{visibility:visible!important}
+}
+
+</style>
+</head>
+<body>
+<header>
+  <div><h1>SoulFit+ IA de Treinos</h1><div class="tag">Prescrição, evolução, patologias, funcional e ficha A4 horizontal</div></div>
+  <div class="tag">V52 | cardio opcional + 10 linhas fixas</div>
+</header>
+
+<div class="wrap">
+<div class="app">
+<aside class="panel no-print">
+<h2>1. Dados do aluno</h2>
+<label>Aluno(a)</label><input id="aluno" placeholder="Nome do aluno">
+
+<div class="row">
+  <div><label>Idade</label><input id="idade" type="number" min="10" max="100" placeholder="Ex: 32"></div>
+  <div><label>Tipo de prescrição</label><select id="tipoPrescricao">
+    <option>Primeira prescrição</option>
+    <option>Evolução com treino anterior</option>
+    <option>Adaptação por lesão/patologia</option>
+  </select></div>
+</div>
+
+<div class="row">
+  <div><label>Modalidade</label><select id="modalidadeTreino">
+    <option>Musculação</option>
+    <option>Funcional</option>
+    <option>Musculação + funcional</option>
+  </select></div>
+  <div><label>Experiência prévia</label><select id="experienciaPrevia">
+    <option>Nunca treinou</option>
+    <option>Já treinou, mas está parado(a)</option>
+    <option>Treina atualmente</option>
+  </select></div>
+</div>
+
+<div class="row">
+  <div><label>Objetivo</label><select id="objetivo"><option>Hipertrofia</option><option>Emagrecimento</option><option>Hipertrofia + emagrecimento</option><option>Condicionamento</option><option>Força</option><option>Retorno/controle de dor</option></select></div>
+  <div><label>Nível</label><select id="nivel"><option>Iniciante</option><option>Intermediário</option><option>Avançado</option></select></div>
+</div>
+
+<div class="pathology-toggle">
+  <label class="checkline">
+    <input type="checkbox" id="incluirCardio">
+    <span><b>Incluir cardio ao final do treino</b><small>Quando marcado, o cardio entra preferencialmente nas linhas 9 e 10.</small></span>
+  </label>
+  <div class="row" style="margin-top:8px">
+    <div><label>Tipo de cardio</label><select id="cardioTipo">
+      <option selected>Automático</option>
+      <option>Esteira</option>
+      <option>Bike</option>
+      <option>Elíptico</option>
+      <option>Escada</option>
+    </select></div>
+    <div><label>Tempo do cardio</label><select id="cardioTempo">
+      <option selected>Automático</option>
+      <option>10 min</option>
+      <option>15 min</option>
+      <option>20 min</option>
+      <option>30 min</option>
+    </select></div>
+  </div>
+</div>
+
+<div class="row">
+  <div><label>Perfil de volume</label><select id="perfilVolume">
+    <option selected>Conservador científico</option>
+    <option>Padrão SoulFit+</option>
+    <option>Hipertrofia avançada controlada</option>
+  </select></div>
+  <div><label>Tempo por sessão</label><select id="tempoSessao">
+    <option>30-40 min</option>
+    <option selected>40-60 min</option>
+    <option>60-75 min</option>
+  </select></div>
+</div>
+
+<div class="row">
+  <div><label>Sexo</label><select id="sexo"><option>Mulher</option><option>Homem</option></select></div>
+  <div><label>Preferência de ordem</label><select id="ordemPreferencia"><option>Automática pelo sexo</option><option>Começar por inferiores</option><option>Começar por superiores</option><option>Equilibrado</option></select></div>
+</div>
+
+<div class="row">
+  <div><label>Frequência semanal</label><select id="freq"><option>2x</option><option>3x</option><option selected>4x</option><option>5x</option><option>6x</option></select></div>
+  <div><label>Divisão</label><select id="divisao"><option>A/B</option><option selected>A/B/C</option><option>A/B/C/D</option><option>MI/MS</option></select></div>
+</div>
+
+<div class="row">
+  <div><label>Data da ficha</label><input id="dataFicha" type="date"></div>
+  <div><label>Horário do aluno</label><input id="horario" type="time"></div>
+</div>
+
+<label>Patologia do aluno (caso tenha)</label>
+<textarea id="patologia" placeholder="Ex: condromalácia patelar, hérnia lombar, hipertensão, diabetes, obesidade, lesão de ombro..."></textarea>
+
+<div class="pathology-toggle">
+  <label class="checkline">
+    <input type="checkbox" id="modoPatologiaExclusiva">
+    <span><b>Prescrição exclusiva para patologia</b><small>Quando marcado, a condição clínica fica acima do objetivo estético.</small></span>
+  </label>
+</div>
+
+<label>Restrições, dores ou prioridade</label>
+<textarea id="restricoes" placeholder="Ex: priorizar glúteos, joelho sensível, evitar impacto..."></textarea>
+
+<label>Observação para imprimir</label>
+<textarea id="obs" placeholder="Ex: progredir carga quando bater o topo das repetições com boa técnica."></textarea>
+
+<h2>2. Treino antigo do aluno (opcional)</h2>
+<label>Cole/digite o treino antigo</label>
+<textarea id="treinoAntigo" placeholder="Cole aqui o treino antigo se houver. Para primeira prescrição, pode deixar em branco."></textarea>
+<div class="danger-note">Para aluno novo, escolha <b>Primeira prescrição</b>. Para aluno lesionado ou com nova condição, escolha <b>Adaptação por lesão/patologia</b>.</div>
+
+<div class="btns">
+  <button class="redbtn" onclick="gerarComIA()">Gerar com IA</button>
+  <button class="light" onclick="gerarEvolucao()">Gerar por regras</button>
+  <button onclick="salvarHistorico()">Salvar histórico</button>
+  <button class="light" onclick="baixarPDF()">Baixar PDF</button>
+</div>
+
+<div id="iaStatus" class="ia-status" style="display:none"></div>
+<h2 style="margin-top:14px">Histórico local</h2><div id="historico"></div>
+</aside>
+
+<main class="panel">
+<div class="print-actions no-print">
+  <button onclick="imprimirFicha()">Imprimir horizontal</button>
+  <button class="light" onclick="baixarPDF()">Baixar PDF</button>
+  <button class="light" onclick="limparFicha()">Limpar ficha</button>
+  <button class="light" onclick="preencherExemplo()">Exemplo SoulFit+</button>
+</div>
+
+<h2 class="no-print">3. Editar ficha</h2>
+<div class="tabbar no-print">
+  <button class="tab active" onclick="abrirTreino('A',this)">Treino A</button>
+  <button class="tab" onclick="abrirTreino('B',this)">Treino B</button>
+  <button class="tab" onclick="abrirTreino('C',this)">Treino C</button>
+  <button class="tab" onclick="abrirTreino('D',this)">Treino D</button>
+</div>
+<div id="editor" class="no-print"></div>
+
+<div class="print-title no-print">4. Ficha para impressão</div>
+<section class="sheet" id="sheet">
+  <div class="sheet-head">
+    <div class="logo"><span class="soul">Soul</span><span class="fit">Fit+</span></div>
+    <div class="sheet-info">
+      <div class="info-row two-fields">
+        <b>Aluno(a):</b><span id="pAluno" class="line long"></span>
+        <b>Objetivo:</b><span id="pObjetivo" class="line"></span>
+      </div>
+      <div class="info-row three-fields">
+        <b>Data:</b><span id="pData" class="line"></span>
+        <b>Frequência:</b><span id="pFreq" class="line"></span>
+        <b>Horário:</b><span id="pHorario" class="line"></span>
+      </div>
+      <div class="info-row one-field">
+        <b>Observações:</b><span id="pObs" class="line obs"></span>
+      </div>
+    </div>
+  </div>
+  <div class="print-grid">
+    <div class="col"><div id="boxC"></div><div id="boxD"></div></div>
+    <div class="col"><div id="boxA"></div><div id="boxB"></div></div>
+  </div>
+  <div class="footer-note">SoulFit+ | ficha gerada para revisão profissional antes da aplicação</div>
+</section>
+</main>
+</div>
+</div>
+
+<script>
+const letras=['A','B','C','D']; 
+let atual='A';
+let treinos={A:[],B:[],C:[],D:[]};
+const MAX_LINHAS_FICHA = 10;
+
+
+function linhaVazia(){return {ex:'',sr:'',c1:'',c2:'',c3:'',c4:''}}
+function $(id){return document.getElementById(id)}
+function esc(v){return String(v||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;')}
+function valor(id){return $(id)?$(id).value:''}
+function checked(id){return !!($(id)&&$(id).checked)}
+
+function normalizarTreinosParaDezLinhas(){
+  letras.forEach(l=>{
+    const atualArr = Array.isArray(treinos[l]) ? treinos[l] : [];
+    treinos[l] = Array.from({length:MAX_LINHAS_FICHA},(_,i)=>atualArr[i]||linhaVazia());
+  });
+}
+
+
+function init(){
+  normalizarTreinosParaDezLinhas()
+  $('dataFicha').value=new Date().toISOString().slice(0,10);
+  renderEditor();
+  syncPrint();
+  carregarHistorico();
+  document.addEventListener('input', syncPrint);
+  document.addEventListener('change', syncPrint);
+}
+
+function divisaoAtual(){return valor('divisao')||'A/B/C'}
+function treinosAtivos(){
+  const d=divisaoAtual();
+  if(d==='A/B')return ['A','B'];
+  if(d==='A/B/C')return ['A','B','C'];
+  if(d==='A/B/C/D')return ['A','B','C','D'];
+  if(d==='MI/MS')return ['A','B'];
+  return ['A','B','C'];
+}
+function nomeTreino(l){
+  if(divisaoAtual()==='MI/MS'){
+    if(l==='A')return 'Treino A - MI';
+    if(l==='B')return 'Treino B - MS';
+  }
+  return 'Treino '+l;
+}
+
+function abrirTreino(l,btn){
+  atual=l;
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  else{
+    const b=[...document.querySelectorAll('.tab')].find(x=>x.textContent.includes('Treino '+l));
+    if(b)b.classList.add('active');
+  }
+  renderEditor();
+}
+
+function renderEditor(){
+  let html='<div class="section-title">TREINO '+atual+'</div>';
+  treinos[atual].forEach((r,i)=>{
+    html+=`<div class="exercise-line">
+      <input placeholder="${i+1}️⃣ Exercício" value="${esc(r.ex)}" oninput="treinos['${atual}'][${i}].ex=this.value;syncPrint()">
+      <input placeholder="Série/Rep" value="${esc(r.sr)}" oninput="treinos['${atual}'][${i}].sr=this.value;syncPrint()">
+      <input placeholder="Carga" value="${esc(r.c1)}" oninput="treinos['${atual}'][${i}].c1=this.value;syncPrint()">
+      <input placeholder="Carga" value="${esc(r.c2)}" oninput="treinos['${atual}'][${i}].c2=this.value;syncPrint()">
+      <input placeholder="Carga" value="${esc(r.c3)}" oninput="treinos['${atual}'][${i}].c3=this.value;syncPrint()">
+      <input placeholder="Carga" value="${esc(r.c4)}" oninput="treinos['${atual}'][${i}].c4=this.value;syncPrint()">
+    </div>`;
+  });
+  $('editor').innerHTML=html;
+}
+
+function syncPrint(){
+  if(!$('pAluno'))return;
+  normalizarTreinosParaDezLinhas();
+  $('pAluno').textContent=valor('aluno');
+  $('pObjetivo').textContent=valor('objetivo');
+  $('pObs').textContent=[valor('obs'),valor('patologia'),valor('restricoes')].filter(Boolean).join(' | ');
+  $('pData').textContent=(valor('dataFicha')||'').split('-').reverse().join('/');
+  $('pFreq').textContent=valor('freq') ? valor('freq') + '/semana' : '';
+  $('pHorario').textContent=valor('horario');
+  letras.forEach(l=>$("box"+l).innerHTML=workoutHTML(l));
+}
+
+function cleanEx(v){
+  let s=String(v||'').trim();
+  for(let i=0;i<4;i++){
+    s=s
+      .replace(/^\d{1,2}\uFE0F?\u20E3\s*/u,'')
+      .replace(/^[\p{Extended_Pictographic}\p{Emoji_Presentation}\uFE0F\u20E3]+/gu,'')
+      .replace(/^[☐☑☒□■▪▫▢▣◻◼✓✔•●○◆◇►▸→➡]+/gu,'')
+      .replace(/^\s*(?:\d{1,2}\s*[\.\)\-:]\s*|\d{1,2}\s+)/u,'')
+      .replace(/^[\s\-–—*]+/u,'')
+      .trim();
+  }
+  return s;
+}
+function workoutHTML(l){
+  const ativo=treinosAtivos().includes(l);
+  const linhas=Array.from({length:MAX_LINHAS_FICHA},(_,i)=>treinos[l][i]||linhaVazia());
+  const rows=linhas.map(r=>`<tr>
+    <td>${ativo?esc(cleanEx(r.ex)):''}</td>
+    <td>${ativo?esc(r.sr):''}</td>
+    <td>${ativo?esc(r.c1):''}</td>
+    <td>${ativo?esc(r.c2):''}</td>
+    <td>${ativo?esc(r.c3):''}</td>
+    <td>${ativo?esc(r.c4):''}</td>
+  </tr>`).join('');
+  return `<div class="workout ${ativo?'':'inactive'}"><h3>${nomeTreino(l)}</h3>
+    <table><thead><tr><th class="excol">Exercício</th><th class="srcol">Série<br>s/Rep</th><th class="loadcol">Carga</th><th class="loadcol">Carga</th><th class="loadcol">Carga</th><th class="loadcol">Carga</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+
+function parseTreino(txt){
+  const res={A:[],B:[],C:[],D:[]};
+  let atualLetra=null;
+  String(txt||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean).forEach(raw=>{
+    const h=raw.match(/treino\s*([abcd])/i);
+    if(h){atualLetra=h[1].toUpperCase();return}
+    if(!atualLetra||!res[atualLetra])return;
+    let s=cleanEx(raw);
+    if(!s)return;
+    let ex=s,sr='';
+    let m=s.match(/(.+?)\s*[-–]\s*((?:\d+\s*x\s*[\d\-]+.*|[2345]x[\d\-]+.*|FINAL.*|.*voltas?.*|.*seg.*|.*s$))$/i)||s.match(/(.+?)\s+((?:\d+\s*x\s*[\d\-]+.*|[2345]x[\d\-]+.*))$/i);
+    if(m){ex=m[1].trim();sr=m[2].trim()}
+    res[atualLetra].push({ex,sr,c1:'',c2:'',c3:'',c4:''});
+  });
+  return res;
+}
+
+
+function contarExerciciosPorTreinoTexto(txt){
+  const parsed=parseTreino(txt);
+  const ativos=treinosAtivos();
+  const contagem={};
+  ativos.forEach(l=>contagem[l]=(parsed[l]||[]).filter(r=>r.ex).length);
+  return contagem;
+}
+
+function limparExcessoTreinoTexto(txt){
+  const limite=limiteExerciciosPorNivel();
+  const parsed=parseTreino(txt);
+  const ativos=treinosAtivos();
+  const linhas=[];
+  ativos.forEach(l=>{
+    const itens=(parsed[l]||[]).filter(r=>r.ex).slice(0, limite);
+    linhas.push('TREINO '+l);
+    itens.forEach((r,i)=>{
+      const serie=normalizarSeriePorNivel(r.sr, i);
+      linhas.push(`${i+1}️⃣ ${cleanEx(r.ex)} - ${serie}`);
+    });
+    linhas.push('');
+  });
+  return linhas.join('\n').trim();
+}
+
+
+function cardioTipoFinal(){
+  const tipo=valor('cardioTipo')||'Automático';
+  const base=(valor('patologia')+' '+valor('restricoes')).toLowerCase();
+  if(tipo!=='Automático') return tipo;
+  if(base.includes('joelho') || base.includes('lombar') || base.includes('coluna') || base.includes('obes')) return 'Bike';
+  if(base.includes('hipertens') || base.includes('pressão')) return 'Esteira leve';
+  return 'Esteira inclinada';
+}
+
+function cardioTempoFinal(){
+  const tempo=valor('cardioTempo')||'Automático';
+  if(tempo!=='Automático') return tempo;
+  const nivel=valor('nivel');
+  if(nivel==='Iniciante') return '10-15 min';
+  if(nivel==='Intermediário') return '15-20 min';
+  return '20-30 min';
+}
+
+function aplicarCardioNasLinhasFinais(){
+  if(!checked('incluirCardio')) return;
+  const tipo=cardioTipoFinal();
+  const tempo=cardioTempoFinal();
+  treinosAtivos().forEach(l=>{
+    if(!Array.isArray(treinos[l])) treinos[l]=Array.from({length:MAX_LINHAS_FICHA},linhaVazia);
+    treinos[l]=Array.from({length:MAX_LINHAS_FICHA},(_,i)=>treinos[l][i]||linhaVazia());
+    const cardio={ex:'CARDIO: '+tipo,sr:tempo,c1:'',c2:'',c3:'',c4:''};
+    if(!treinos[l][8].ex) treinos[l][8]=cardio;
+    else if(!treinos[l][9].ex) treinos[l][9]=cardio;
+  });
+}
+
+function aplicarTreinoTexto(txt){
+  const parsed=parseTreino(txt);
+  letras.forEach(l=>{
+    treinos[l]=Array.from({length:MAX_LINHAS_FICHA},(_,i)=>parsed[l][i]||linhaVazia());
+  });
+  ajustarVolumePorNivel();
+  aplicarCardioNasLinhasFinais();
+  renderEditor();
+  syncPrint();
+  $('sheet').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function dadosIA(){
+  return {
+    aluno:valor('aluno'),idade:valor('idade'),objetivo:valor('objetivo'),nivel:valor('nivel'),sexo:valor('sexo'),
+    tipoPrescricao:valor('tipoPrescricao'),modalidadeTreino:valor('modalidadeTreino'),experienciaPrevia:valor('experienciaPrevia'),
+    ordemPreferencia:valor('ordemPreferencia'),perfilVolume:valor('perfilVolume'),tempoSessao:valor('tempoSessao'),frequencia:valor('freq'),divisao:valor('divisao'),dataFicha:valor('dataFicha'),horario:valor('horario'),
+    patologia:valor('patologia'),modoPatologiaExclusiva:checked('modoPatologiaExclusiva'),restricoes:valor('restricoes'),observacoes:valor('obs'),
+    incluirCardio:checked('incluirCardio'),cardioTipo:valor('cardioTipo'),cardioTempo:valor('cardioTempo'),
+    treinoAntigo:valor('treinoAntigo')
+  };
+}
+
+function statusIA(msg,cls){
+  const b=$('iaStatus');
+  b.style.display='block';
+  b.className='ia-status '+(cls||'');
+  b.textContent=msg;
+}
+
+async function gerarComIA(){
+  const dados=dadosIA();
+  const precisa=(dados.tipoPrescricao||'').toLowerCase().includes('evolução');
+  if(precisa && !dados.treinoAntigo.trim()){
+    statusIA('Para evolução com treino anterior, cole a ficha antiga. Para aluno novo, escolha Primeira prescrição.','err');
+    return;
+  }
+  statusIA('Gerando treino com IA... aguarde.','');
+  try{
+    const resp=await fetch('/api/gerar-treino',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(dados)
+    });
+    const json=await resp.json().catch(()=>({}));
+    if(!resp.ok)throw new Error(json.error||'Erro ao gerar treino.');
+    if(!json.treino)throw new Error('A IA não retornou um treino válido.');
+    const bruto=json.treino;
+    const contagem=contarExerciciosPorTreinoTexto(bruto);
+    const limite=limiteExerciciosPorNivel();
+    const passou=Object.values(contagem).some(q=>q>limite);
+    const treinoFinal=passou ? limparExcessoTreinoTexto(bruto) : bruto;
+    aplicarTreinoTexto(treinoFinal);
+    statusIA(passou
+      ? `Treino gerado com IA e corrigido automaticamente: limite de ${limite} exercícios por treino aplicado.`
+      : 'Treino gerado com IA, volume ajustado por nível e aplicado na área de edição e na ficha de impressão. Revise antes de imprimir.',
+      'ok');
+  }catch(e){
+    statusIA('Erro: '+e.message,'err');
+  }
+}
+
+function gerarEvolucao(){
+  letras.forEach(l=>treinos[l]=Array.from({length:MAX_LINHAS_FICHA},linhaVazia));
+  let base;
+  const div=valor('divisao');
+  if(div==='MI/MS')base=templates.MIMS; else if(div==='A/B')base=templates.AB; else if(div==='A/B/C/D')base=templates.ABCD; else base=templates.ABC;
+  Object.keys(base).forEach(l=>{
+    treinos[l]=Array.from({length:MAX_LINHAS_FICHA},(_,i)=>{
+      const x=base[l][i];
+      return x?{ex:x[0],sr:x[1],c1:'',c2:'',c3:'',c4:''}:linhaVazia();
+    });
+  });
+  ajustarVolumePorNivel();
+  if(valor('objetivo').includes('Emagrecimento'))addFinal();
+  aplicarCardioNasLinhasFinais();
+  const restr=valor('restricoes').toLowerCase()+ ' ' + valor('patologia').toLowerCase();
+  if(restr.includes('joelho'))trocar(['Agachamento livre','Hack squat'],['Agachamento assistido','Leg press amplitude controlada']);
+  if(restr.includes('lombar')||restr.includes('coluna'))trocar(['Stiff','Levantamento terra romeno'],['Mesa flexora','Pull through na polia']);
+  renderEditor();syncPrint();
+}
+
+const templates={
+ABC:{A:[['Hip thrust','4x8-10'],['Stiff','3x10-12'],['Búlgaro','3x10 cada'],['Abdutora','3x15-20'],['Glúteo polia','3x12-15'],['Panturrilha','4x12-15']],B:[['Supino máquina','3x10-12'],['Remada baixa','3x10-12'],['Desenvolvimento','3x10'],['Puxada frente','3x10-12'],['Rosca direta','3x12'],['Tríceps corda','3x12']],C:[['Agachamento livre','4x8-10'],['Leg press','4x10-12'],['Cadeira extensora','3x12-15'],['Mesa flexora','3x12'],['Adutora','3x15'],['Abdominal prancha','3x30s']],D:[]},
+AB:{A:[['Agachamento','4x10'],['Leg press','3x12'],['Stiff','3x12'],['Hip thrust','4x10'],['Abdutora','3x20'],['Panturrilha','4x15']],B:[['Puxada frente','3x12'],['Remada baixa','3x12'],['Supino máquina','3x12'],['Desenvolvimento','3x10'],['Rosca direta','3x12'],['Tríceps corda','3x12'],['Abdominal','3x15']],C:[],D:[]},
+ABCD:{A:[['Hip thrust','4x8-10'],['Stiff','3x10'],['Búlgaro','3x10'],['Abdutora','3x20'],['Glúteo polia','3x15']],B:[['Supino inclinado','3x10'],['Puxada frente','3x10'],['Remada baixa','3x12'],['Desenvolvimento','3x10'],['Tríceps corda','3x12']],C:[['Agachamento livre','4x8'],['Leg press','4x10'],['Extensora','3x12'],['Passada','3x10'],['Panturrilha','4x15']],D:[['Puxada neutra','3x10'],['Remada articulada','3x10'],['Elevação lateral','3x15'],['Crucifixo inverso','3x15'],['Rosca alternada','3x12']]},
+MIMS:{A:[['Agachamento','4x10'],['Leg press','3x12'],['Cadeira extensora','3x15'],['Mesa flexora','3x12'],['Panturrilha','4x15']],B:[['Puxada frente','3x12'],['Remada baixa','3x12'],['Supino máquina','3x12'],['Desenvolvimento','3x10'],['Rosca direta','3x12'],['Tríceps corda','3x12']],C:[],D:[]}
+};
+
+function limiteExerciciosPorNivel(){
+  const nivel=valor('nivel');
+  const perfil=valor('perfilVolume')||'Conservador científico';
+  const tempo=valor('tempoSessao')||'40-60 min';
+
+  // V50: a ficha sempre mantém 10 linhas visíveis.
+  // A IA só preenche até o limite abaixo; as demais linhas ficam livres para ajuste manual/cardio.
+  let limite;
+  if(nivel==='Iniciante'){
+    limite = tempo==='30-40 min' ? 6 : 7; // padrão: 6 a 7 exercícios
+  }else if(nivel==='Intermediário'){
+    limite = tempo==='30-40 min' ? 7 : 8; // padrão: 7 a 8 exercícios
+  }else{
+    limite = 8; // avançado padrão
+    if(tempo==='30-40 min') limite = 6;
+    if(tempo==='60-75 min') limite = 10;
+    if(perfil==='Hipertrofia avançada controlada') limite = 10; // avançado: 6 a 10 exercícios
+  }
+
+  return Math.min(10, Math.max(6, limite));
+}
+
+function seriesPadraoPorNivel(){
+  const nivel=valor('nivel');
+  if(nivel==='Iniciante') return '2x10-12';
+  if(nivel==='Intermediário') return '3x8-12';
+  return '3x8-10';
+}
+
+function normalizarSeriePorNivel(sr, indice){
+  const nivel=valor('nivel');
+  let s=String(sr||'').trim() || seriesPadraoPorNivel();
+  if(nivel==='Iniciante'){
+    s=s.replace(/^\s*[345]\s*x/i,'2x');
+    s=s.replace(/^\s*\d+\s*x\s*6-8/i,'2x10-12');
+  }else if(nivel==='Intermediário'){
+    s=s.replace(/^\s*4\s*x/i,'3x');
+  }else{
+    if(indice>0) s=s.replace(/^\s*4\s*x/i,'3x');
+  }
+  return s;
+}
+
+function ajustarVolumePorNivel(){
+  const limite=limiteExerciciosPorNivel();
+  treinosAtivos().forEach(l=>{
+    let usados=0;
+    treinos[l]=treinos[l].map((r,i)=>{
+      if(!r.ex) return linhaVazia();
+      usados++;
+      if(usados>limite) return linhaVazia();
+      return {...r, ex:cleanEx(r.ex), sr:normalizarSeriePorNivel(r.sr, usados-1)};
+    });
+  });
+}
+
+function addFinal(){
+  if(checked('modoPatologiaExclusiva')) return;
+  const objetivo=valor('objetivo');
+  if(!objetivo.includes('Emagrecimento') && !objetivo.includes('Condicionamento')) return;
+  ['A','C'].forEach(l=>{
+    if(!treinosAtivos().includes(l)) return;
+    const limite=limiteExerciciosPorNivel();
+    const ocupados=treinos[l].filter(r=>r.ex).length;
+    if(ocupados>=limite) return;
+    let idx=treinos[l].findIndex(r=>!r.ex);
+    if(idx>=0 && idx<limite){
+      treinos[l][idx]={ex:'FINAL: circuito curto técnico',sr:'2-3 voltas',c1:'',c2:'',c3:'',c4:''};
+    }
+  });
+}
+function trocar(a,b){Object.values(treinos).forEach(arr=>arr.forEach(r=>{a.forEach((x,i)=>{if(r.ex===x)r.ex=b[i]||b[0]})}))}
+
+function salvarHistorico(){
+  const item={id:Date.now(),aluno:valor('aluno'),objetivo:valor('objetivo'),data:new Date().toLocaleDateString('pt-BR'),dados:dadosIA(),treinos};
+  let h=JSON.parse(localStorage.getItem('soulfit_hist')||'[]');
+  h.unshift(item); localStorage.setItem('soulfit_hist',JSON.stringify(h.slice(0,30)));
+  carregarHistorico();
+}
+
+function carregarHistorico(){
+  let h=JSON.parse(localStorage.getItem('soulfit_hist')||'[]');
+  $('historico').innerHTML=h.length?h.map((x,i)=>`<div class="history-item"><b>${esc(x.aluno||'Sem nome')}</b><br><span class="mini">${esc(x.objetivo||'')} | ${x.data}</span><div class="btns"><button class="light" onclick="restaurar(${i})">Abrir</button><button class="light" onclick="excluirHistorico(${i})">Excluir</button></div></div>`).join(''):'<div class="mini">Nada salvo ainda.</div>';
+}
+
+function excluirHistorico(i){
+  let h=JSON.parse(localStorage.getItem('soulfit_hist')||'[]');
+  const item=h[i];
+  const nome=item && item.aluno ? item.aluno : 'este histórico';
+  if(!confirm('Excluir o histórico de '+nome+'?')) return;
+  h.splice(i,1);
+  localStorage.setItem('soulfit_hist',JSON.stringify(h));
+  carregarHistorico();
+}
+
+function restaurar(i){
+  let h=JSON.parse(localStorage.getItem('soulfit_hist')||'[]');
+  let x=h[i]; if(!x)return;
+  const d=x.dados||{};
+  ['aluno','idade','objetivo','nivel','sexo','tipoPrescricao','modalidadeTreino','experienciaPrevia','ordemPreferencia','perfilVolume','tempoSessao','freq','divisao','dataFicha','horario','patologia','restricoes','obs','cardioTipo','cardioTempo','treinoAntigo'].forEach(id=>{if($(id)&&d[id]!==undefined)$(id).value=d[id]});
+  if($('incluirCardio')) $('incluirCardio').checked=!!d.incluirCardio;
+  treinos=x.treinos||treinos;
+  normalizarTreinosParaDezLinhas();
+  renderEditor();syncPrint();
+}
+
+function limparFicha(){
+  if(!confirm('Limpar ficha, dados do aluno e observações atuais?'))return;
+  letras.forEach(l=>treinos[l]=Array.from({length:MAX_LINHAS_FICHA},linhaVazia));
+  const camposTexto=['aluno','idade','dataFicha','horario','patologia','restricoes','obs','treinoAntigo'];
+  camposTexto.forEach(id=>{ if($(id)) $(id).value=''; });
+  const defaults={
+    tipoPrescricao:'Primeira prescrição',
+    modalidadeTreino:'Musculação',
+    experienciaPrevia:'Nunca treinou',
+    objetivo:'Hipertrofia',
+    nivel:'Iniciante',
+    perfilVolume:'Conservador científico',
+    tempoSessao:'40-60 min',
+    sexo:'Mulher',
+    ordemPreferencia:'Automática pelo sexo',
+    freq:'4x',
+    divisao:'A/B/C',
+    cardioTipo:'Automático',
+    cardioTempo:'Automático'
+  };
+  Object.keys(defaults).forEach(id=>{ if($(id)) $(id).value=defaults[id]; });
+  if($('modoPatologiaExclusiva')) $('modoPatologiaExclusiva').checked=false;
+  if($('incluirCardio')) $('incluirCardio').checked=false;
+  if($('iaStatus')) $('iaStatus').style.display='none';
+  $('dataFicha').value=new Date().toISOString().slice(0,10);
+  atual='A';
+  abrirTreino('A');
+  renderEditor();syncPrint();
+}
+
+function preencherExemplo(){
+  $('aluno').value='Maria Exemplo';
+  $('idade').value='32';
+  $('objetivo').value='Hipertrofia + emagrecimento';
+  $('nivel').value='Intermediário';
+  $('sexo').value='Mulher';
+  $('freq').value='4x';
+  $('divisao').value='A/B/C';
+  $('horario').value='18:00';
+  $('restricoes').value='Priorizar glúteos e posterior';
+  $('obs').value='Progressão de carga com técnica limpa.';
+  gerarEvolucao();
+}
+
+function estilosImpressao(){
+  return `
+    @page{size:A4 landscape;margin:3mm}
+    *{box-sizing:border-box}
+    html,body{width:291mm;height:204mm;margin:0;padding:0;overflow:hidden;background:#fff;font-family:Arial,Helvetica,sans-serif;color:#111}
+    .sheet{display:block;width:291mm;height:204mm;margin:0;padding:3mm 4mm;overflow:hidden;background:#fff}
+    .sheet-head{display:grid;width:100%;height:24mm;margin:0 0 1.2mm;grid-template-columns:minmax(0,1fr) 14mm minmax(0,1fr);align-items:center;overflow:hidden}
+    .logo{grid-column:1;justify-self:start;padding-left:2mm;font-family:Arial Black,Impact,Arial,sans-serif;font-size:20px;font-weight:900;line-height:1;letter-spacing:-1px;white-space:nowrap}
+    .logo .soul{color:#e00000}.logo .fit{color:#111}
+    .sheet-info{grid-column:3;display:grid;grid-template-rows:repeat(3,1fr);gap:.8mm;width:100%;min-width:0;overflow:hidden;font-size:14px;font-weight:700;line-height:1}
+    .info-row{display:grid;align-items:end;gap:.8mm;min-width:0;overflow:hidden;white-space:nowrap}
+    .info-row.two-fields{grid-template-columns:auto minmax(0,1fr) auto minmax(0,1fr)}
+    .info-row.three-fields{grid-template-columns:auto minmax(0,.8fr) auto minmax(0,.7fr) auto minmax(0,.7fr)}
+    .info-row.one-field{grid-template-columns:auto minmax(0,1fr)}
+    .line{display:inline-block;height:5mm;min-width:0;margin:0;overflow:hidden;border-bottom:1px solid #111;white-space:nowrap;text-overflow:ellipsis}
+    .print-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr;height:172.8mm;column-gap:14mm}
+    .col{display:flex;flex-direction:column;gap:2mm;min-width:0}
+    .workout{height:85.4mm;min-height:0;overflow:hidden}
+    .workout h3{display:inline-block;margin:0 0 .8mm;padding:2px 8px;border-right:8px solid #e00000;border-radius:2px;background:#171a1f;color:#fff;font-size:12px;line-height:1}
+    table{width:100%;border-collapse:separate;border-spacing:.35mm;table-layout:fixed;font-size:14px}
+    th{height:5.8mm;padding:0;border:1px solid #fff;background:#171a1f;color:#fff;text-align:center;font-size:12px;line-height:1}
+    td{height:5.9mm;max-height:5.9mm;padding:0 .7mm;border:1px solid #666;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:14px;line-height:1}
+    td:nth-child(n+2){background:#fff8d9;text-align:center}
+    .workout.inactive td{color:transparent;background:#fff!important}
+    .excol{width:54%}.srcol{width:11%}.loadcol{width:8.75%}
+    .footer-note{display:none}
+  `;
+}
+
+function imprimirFicha(){
+  syncPrint();
+  const ficha=$('sheet').cloneNode(true);
+  ficha.querySelectorAll('td:first-child').forEach(td=>td.textContent=cleanEx(td.textContent));
+  const janela=window.open('','_blank','width=1200,height=850');
+  if(!janela){
+    alert('O navegador bloqueou a janela de impressão. Permita pop-ups para este site e tente novamente.');
+    return;
+  }
+  janela.document.open();
+  janela.document.write(documentoImpressao(ficha));
+  janela.document.close();
+  janela.focus();
+  setTimeout(()=>janela.print(),500);
+}
+
+function documentoImpressao(ficha){
+  return `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Ficha SoulFit+</title><style>${estilosImpressao()}</style></head><body>${ficha.outerHTML}</body></html>`;
+}
+
+function abrirPreviaTecnica(){
+  if(new URLSearchParams(location.search).get('print-preview')!=='1')return;
+  syncPrint();
+  const ficha=$('sheet').cloneNode(true);
+  ficha.querySelectorAll('td:first-child').forEach(td=>td.textContent=cleanEx(td.textContent));
+  const html=documentoImpressao(ficha);
+  document.open();
+  document.write(html);
+  document.close();
+}
+
+function baixarPDF(){imprimirFicha()}
+
+init();
+setTimeout(abrirPreviaTecnica,0);
+</script>
+
+<script>
+(function(){
+  function limparQuadrados(){
+    document.querySelectorAll("#sheet td:first-child").forEach(td=>{
+      td.textContent = cleanEx(td.textContent);
+    });
+  }
+  window.addEventListener("beforeprint", function(){
+    if(typeof syncPrint === "function") syncPrint();
+    limparQuadrados();
+  });
+  document.addEventListener("DOMContentLoaded", limparQuadrados);
+  document.addEventListener("input", limparQuadrados);
+  document.addEventListener("change", limparQuadrados);
+})();
+</script>
+
+</body>
+</html>

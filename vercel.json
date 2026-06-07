@@ -1,20 +1,23 @@
-{
-  "version": 2,
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate"
-        }
-      ]
-    }
-  ]
-}
+REFERÊNCIAS E CRITÉRIO DE VOLUME - SOULFIT+ V52
+
+Critério prático configurado no aplicativo:
+- Iniciante: 6 a 7 exercícios por sessão.
+- Intermediário: 7 a 8 exercícios por sessão.
+- Avançado: 6 a 10 exercícios por sessão.
+
+Cardio:
+- O cardio é opcional e só entra automaticamente quando o campo "Incluir cardio ao final do treino" estiver marcado.
+- Preferencialmente ocupa as linhas 9 e 10 da ficha.
+- Pode ser prescrito como Esteira, Bike, Elíptico, Escada ou modo Automático.
+
+Observação técnica:
+A ficha visual possui 10 linhas fixas para permitir ajustes manuais, cardio, observações ou exercícios avulsos.
+A IA deve preencher apenas o volume adequado ao nível, tempo e perfil selecionados.
+
+Referência geral OMS:
+A OMS recomenda fortalecimento dos grandes grupos musculares em 2 ou mais dias por semana, mas não define número obrigatório de exercícios por sessão.
+A atividade aeróbica pode ser usada como estratégia complementar, conforme objetivo, condição clínica e tolerância do aluno.
+
+Links:
+https://www.who.int/publications/i/item/9789240014886
+https://www.who.int/europe/news-room/fact-sheets/item/physical-activity
