@@ -1,4 +1,11 @@
-SoulFit+ IA V50 - 10 linhas fixas + volume corrigido
+SoulFit+ IA V51 - Arquivos corrigidos
+
+Arquivos corretos para subir na raiz do GitHub:
+- index.html
+- vercel.json
+- pasta api/gerar-treino.js
+- README.txt
+- REFERENCIAS_VOLUME.txt
 
 Ajustes:
 - 10 linhas fixas no painel 3. Editar ficha.
@@ -10,7 +17,5 @@ Ajustes:
 - Mantém rota Vercel: /api/gerar-treino.
 - Mantém histórico com excluir e limpar ficha completa.
 
-Arquivos para subir na raiz do GitHub:
-- index.html
-- vercel.json
-- pasta api/gerar-treino.js
+Importante:
+O arquivo vercel.json precisa ser JSON válido. Não coloque referências ou textos dentro dele.
