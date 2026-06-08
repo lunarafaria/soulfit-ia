@@ -1,4 +1,4 @@
-SoulFit+ IA V52 - Cardio opcional
+SoulFit+ IA V55 - Cardio opcional corrigido
 
 Arquivos corretos para subir na raiz do GitHub:
 - index.html
@@ -10,11 +10,11 @@ Arquivos corretos para subir na raiz do GitHub:
 Ajustes:
 - Mantém 10 linhas fixas no painel 3. Editar ficha.
 - Mantém 10 linhas fixas na seção 4. Ficha para impressão.
-- Adiciona checkbox: Incluir cardio ao final do treino.
-- Adiciona seleção de tipo de cardio: Automático, Esteira, Bike, Elíptico, Escada.
-- Adiciona seleção de tempo: Automático, 10 min, 15 min, 20 min, 30 min.
-- Quando solicitado, o cardio entra preferencialmente nas linhas 9 e 10.
-- Mantém IA limitada por nível:
+- Cardio opcional com checkbox.
+- Tipo de cardio: Automático, Esteira, Bike, Elíptico ou Escada.
+- Tempo do cardio: Automático, 10 min, 15 min, 20 min ou 30 min.
+- Cardio entra preferencialmente nas linhas 9 e 10, quando houver espaço.
+- IA limitada por nível:
   * Iniciante: 6 a 7 exercícios.
   * Intermediário: 7 a 8 exercícios.
   * Avançado: 6 a 10 exercícios.
@@ -22,4 +22,4 @@ Ajustes:
 - Mantém histórico com excluir e limpar ficha completa.
 
 Importante:
-O arquivo vercel.json precisa ser JSON válido. Não coloque referências ou textos dentro dele.
+Suba estes arquivos na raiz do GitHub. Não suba dentro da pasta soulfit_ia_netlify_v14.

@@ -118,8 +118,6 @@ ${regraDivisao}
 
 REGRA DE VOLUME CIENTÍFICO + PADRÃO SOULFIT+:
 - A ficha visual sempre tem 10 linhas, mas a IA deve preencher somente a quantidade adequada.
-- Se incluirCardio=true nos dados do aluno, considerar que o app colocará o cardio preferencialmente nas linhas 9 e 10. Não precisa transformar todos os exercícios em cardio.
-- Quando incluirCardio=true, preservar espaço para cardio quando possível, principalmente em emagrecimento e condicionamento.
 - Máximo absoluto nesta ficha: ${limite} exercícios por treino. Conte antes de responder.
 - Iniciante: 6 a 7 exercícios, geralmente 2 séries nos acessórios e 2-3 séries nos principais.
 - Intermediário: 7 a 8 exercícios, geralmente 3 séries.
@@ -130,6 +128,16 @@ REGRA DE VOLUME CIENTÍFICO + PADRÃO SOULFIT+:
 - Emagrecimento não significa excesso de exercícios.
 - A OMS recomenda fortalecimento dos grandes grupos musculares em 2 ou mais dias por semana, mas não exige 10 exercícios por sessão.
 - Referência prática: iniciante 6-10 séries semanais por grande grupo; intermediário 8-12; avançado 10-16, sempre individualizando.
+
+
+CARDIO OPCIONAL:
+- Se incluirCardio=true, inclua UM bloco de cardio ao final do treino quando houver espaço.
+- Preferir linhas finais da ficha, especialmente 9 ou 10, sem apagar exercícios principais.
+- Se cardioTipo for diferente de Automático, use o tipo solicitado.
+- Se cardioTempo for diferente de Automático, use o tempo solicitado.
+- Se houver joelho, coluna, lombar, obesidade importante, hipertensão ou dor relevante, escolha cardio de menor impacto.
+- Exemplos: CARDIO: Esteira inclinada - 15-20 min; CARDIO: Bike leve - 10-15 min; CARDIO: Elíptico - 15 min.
+- O cardio não autoriza ultrapassar o máximo absoluto de 10 linhas.
 
 PADRÃO LUNA/SOULFIT+:
 - Ficha objetiva, aplicável em academia real.
@@ -164,7 +172,6 @@ TREINO B
 1️⃣ Exercício - 3x10
 
 Antes de finalizar, faça uma autocorreção silenciosa: nenhum treino pode ter mais que ${limite} exercícios, e a ficha não precisa preencher todas as 10 linhas.
-Se incluirCardio=true, mantenha a prescrição de musculação objetiva para permitir o cardio nas linhas finais.
 `;
 
     const response = await fetch("https://api.openai.com/v1/responses", {

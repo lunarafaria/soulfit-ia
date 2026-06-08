@@ -386,7 +386,7 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
 <body>
 <header>
   <div><h1>SoulFit+ IA de Treinos</h1><div class="tag">Prescrição, evolução, patologias, funcional e ficha A4 horizontal</div></div>
-  <div class="tag">V52 | cardio opcional + 10 linhas fixas</div>
+  <div class="tag">V55 | cardio opcional + arquivos corrigidos</div>
 </header>
 
 <div class="wrap">
@@ -425,9 +425,9 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
 <div class="pathology-toggle">
   <label class="checkline">
     <input type="checkbox" id="incluirCardio">
-    <span><b>Incluir cardio ao final do treino</b><small>Quando marcado, o cardio entra preferencialmente nas linhas 9 e 10.</small></span>
+    <span><b>Incluir cardio ao final do treino</b><small>Quando marcado, o cardio entra preferencialmente nas linhas 9 ou 10.</small></span>
   </label>
-  <div class="row" style="margin-top:8px">
+  <div class="row">
     <div><label>Tipo de cardio</label><select id="cardioTipo">
       <option selected>Automático</option>
       <option>Esteira</option>
@@ -708,38 +708,6 @@ function limparExcessoTreinoTexto(txt){
   return linhas.join('\n').trim();
 }
 
-
-function cardioTipoFinal(){
-  const tipo=valor('cardioTipo')||'Automático';
-  const base=(valor('patologia')+' '+valor('restricoes')).toLowerCase();
-  if(tipo!=='Automático') return tipo;
-  if(base.includes('joelho') || base.includes('lombar') || base.includes('coluna') || base.includes('obes')) return 'Bike';
-  if(base.includes('hipertens') || base.includes('pressão')) return 'Esteira leve';
-  return 'Esteira inclinada';
-}
-
-function cardioTempoFinal(){
-  const tempo=valor('cardioTempo')||'Automático';
-  if(tempo!=='Automático') return tempo;
-  const nivel=valor('nivel');
-  if(nivel==='Iniciante') return '10-15 min';
-  if(nivel==='Intermediário') return '15-20 min';
-  return '20-30 min';
-}
-
-function aplicarCardioNasLinhasFinais(){
-  if(!checked('incluirCardio')) return;
-  const tipo=cardioTipoFinal();
-  const tempo=cardioTempoFinal();
-  treinosAtivos().forEach(l=>{
-    if(!Array.isArray(treinos[l])) treinos[l]=Array.from({length:MAX_LINHAS_FICHA},linhaVazia);
-    treinos[l]=Array.from({length:MAX_LINHAS_FICHA},(_,i)=>treinos[l][i]||linhaVazia());
-    const cardio={ex:'CARDIO: '+tipo,sr:tempo,c1:'',c2:'',c3:'',c4:''};
-    if(!treinos[l][8].ex) treinos[l][8]=cardio;
-    else if(!treinos[l][9].ex) treinos[l][9]=cardio;
-  });
-}
-
 function aplicarTreinoTexto(txt){
   const parsed=parseTreino(txt);
   letras.forEach(l=>{
@@ -885,6 +853,40 @@ function ajustarVolumePorNivel(){
   });
 }
 
+
+function cardioTipoFinal(){
+  const tipo=valor('cardioTipo')||'Automático';
+  const base=(valor('patologia')+' '+valor('restricoes')).toLowerCase();
+  if(tipo!=='Automático') return tipo;
+  if(base.includes('joelho') || base.includes('lombar') || base.includes('coluna') || base.includes('obes')) return 'Bike leve';
+  if(base.includes('hipertens') || base.includes('pressão')) return 'Caminhada controlada';
+  return 'Esteira inclinada';
+}
+
+function cardioTempoFinal(){
+  const tempo=valor('cardioTempo')||'Automático';
+  if(tempo!=='Automático') return tempo;
+  const nivel=valor('nivel');
+  if(nivel==='Iniciante') return '10-15 min';
+  if(nivel==='Intermediário') return '15-20 min';
+  return '15-25 min';
+}
+
+function aplicarCardioNasLinhasFinais(){
+  if(!checked('incluirCardio')) return;
+  const ativos=treinosAtivos();
+  ativos.forEach(l=>{
+    const jaTem=treinos[l].some(r=>String(r.ex||'').toLowerCase().includes('cardio'));
+    if(jaTem) return;
+    const item={ex:'CARDIO: '+cardioTipoFinal(), sr:cardioTempoFinal(), c1:'', c2:'', c3:'', c4:''};
+    let idx=-1;
+    if(treinos[l][8] && !treinos[l][8].ex) idx=8;
+    else if(treinos[l][9] && !treinos[l][9].ex) idx=9;
+    else idx=treinos[l].findIndex(r=>!r.ex);
+    if(idx>=0 && idx<MAX_LINHAS_FICHA) treinos[l][idx]=item;
+  });
+}
+
 function addFinal(){
   if(checked('modoPatologiaExclusiva')) return;
   const objetivo=valor('objetivo');
@@ -951,13 +953,13 @@ function limparFicha(){
     sexo:'Mulher',
     ordemPreferencia:'Automática pelo sexo',
     freq:'4x',
-    divisao:'A/B/C',
-    cardioTipo:'Automático',
-    cardioTempo:'Automático'
+    divisao:'A/B/C'
   };
   Object.keys(defaults).forEach(id=>{ if($(id)) $(id).value=defaults[id]; });
   if($('modoPatologiaExclusiva')) $('modoPatologiaExclusiva').checked=false;
   if($('incluirCardio')) $('incluirCardio').checked=false;
+  if($('cardioTipo')) $('cardioTipo').value='Automático';
+  if($('cardioTempo')) $('cardioTempo').value='Automático';
   if($('iaStatus')) $('iaStatus').style.display='none';
   $('dataFicha').value=new Date().toISOString().slice(0,10);
   atual='A';
