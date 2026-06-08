@@ -88,6 +88,8 @@ export default async function handler(req, res) {
     const nivel = dados.nivel || "Iniciante";
     const perfilVolume = dados.perfilVolume || "Conservador científico";
     const tempoSessao = dados.tempoSessao || "40-60 min";
+    const usarQuantidadeIA = dados.usarQuantidadeIA === true;
+    const quantidadeExerciciosIA = String(dados.quantidadeExerciciosIA || "");
 
     let limiteMin = nivel === "Iniciante" ? 6 : nivel === "Intermediário" ? 7 : 6;
     let limiteMax = nivel === "Iniciante" ? 7 : nivel === "Intermediário" ? 8 : 10;
@@ -102,6 +104,19 @@ export default async function handler(req, res) {
       if (tempoSessao === "30-40 min") limite = limiteMin;
       if (tempoSessao === "40-60 min") limite = limiteMax;
       if (tempoSessao === "60-75 min") limite = limiteMax;
+    }
+
+    if (usarQuantidadeIA) {
+      if (quantidadeExerciciosIA === "6 a 7") {
+        limiteMin = 6;
+        limite = 7;
+      } else if (quantidadeExerciciosIA === "7 a 8") {
+        limiteMin = 7;
+        limite = 8;
+      } else if (quantidadeExerciciosIA === "8 a 10") {
+        limiteMin = 8;
+        limite = 10;
+      }
     }
 
     limite = Math.min(10, Math.max(limiteMin, limite));
@@ -119,6 +134,7 @@ ${regraDivisao}
 REGRA DE VOLUME CIENTÍFICO + PADRÃO SOULFIT+:
 - A ficha visual sempre tem 10 linhas, mas a IA deve preencher somente a quantidade adequada.
 - Máximo absoluto nesta ficha: ${limite} exercícios por treino. Conte antes de responder.
+- Se usarQuantidadeIA=true, respeite a faixa solicitada em quantidadeExerciciosIA (${quantidadeExerciciosIA || "não marcada"}) e monte cada treino dentro dessa faixa, sem passar de ${limite}.
 - Iniciante: 6 a 7 exercícios, geralmente 2 séries nos acessórios e 2-3 séries nos principais.
 - Intermediário: 7 a 8 exercícios, geralmente 3 séries.
 - Avançado: 6 a 10 exercícios, usando 10 apenas quando o tempo/perfil permitir e sem restrição relevante.
@@ -128,6 +144,16 @@ REGRA DE VOLUME CIENTÍFICO + PADRÃO SOULFIT+:
 - Emagrecimento não significa excesso de exercícios.
 - A OMS recomenda fortalecimento dos grandes grupos musculares em 2 ou mais dias por semana, mas não exige 10 exercícios por sessão.
 - Referência prática: iniciante 6-10 séries semanais por grande grupo; intermediário 8-12; avançado 10-16, sempre individualizando.
+
+
+CARDIO OPCIONAL:
+- Se incluirCardio=true, inclua UM bloco de cardio ao final do treino quando houver espaço.
+- Preferir linhas finais da ficha, especialmente 9 ou 10, sem apagar exercícios principais.
+- Se cardioTipo for diferente de Automático, use o tipo solicitado.
+- Se cardioTempo for diferente de Automático, use o tempo solicitado.
+- Se houver joelho, coluna, lombar, obesidade importante, hipertensão ou dor relevante, escolha cardio de menor impacto.
+- Exemplos: CARDIO: Esteira inclinada - 15-20 min; CARDIO: Bike leve - 10-15 min; CARDIO: Elíptico - 15 min.
+- O cardio não autoriza ultrapassar o máximo absoluto de 10 linhas.
 
 PADRÃO LUNA/SOULFIT+:
 - Ficha objetiva, aplicável em academia real.

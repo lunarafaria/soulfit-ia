@@ -1,25 +1,22 @@
-SoulFit+ IA V55 - Cardio opcional corrigido
+REFERÊNCIAS E CRITÉRIO DE VOLUME - SOULFIT+ V55
 
-Arquivos corretos para subir na raiz do GitHub:
-- index.html
-- vercel.json
-- pasta api/gerar-treino.js
-- README.txt
-- REFERENCIAS_VOLUME.txt
+Critério prático configurado no aplicativo:
+- Iniciante: 6 a 7 exercícios por sessão.
+- Intermediário: 7 a 8 exercícios por sessão.
+- Avançado: 6 a 10 exercícios por sessão.
 
-Ajustes:
-- Mantém 10 linhas fixas no painel 3. Editar ficha.
-- Mantém 10 linhas fixas na seção 4. Ficha para impressão.
-- Cardio opcional com checkbox.
-- Tipo de cardio: Automático, Esteira, Bike, Elíptico ou Escada.
-- Tempo do cardio: Automático, 10 min, 15 min, 20 min ou 30 min.
-- Cardio entra preferencialmente nas linhas 9 e 10, quando houver espaço.
-- IA limitada por nível:
-  * Iniciante: 6 a 7 exercícios.
-  * Intermediário: 7 a 8 exercícios.
-  * Avançado: 6 a 10 exercícios.
-- Mantém rota Vercel: /api/gerar-treino.
-- Mantém histórico com excluir e limpar ficha completa.
+Cardio:
+- O cardio é opcional.
+- Quando marcado, entra preferencialmente nas linhas 9 e 10.
+- A escolha automática prioriza menor impacto quando há dor, obesidade importante, joelho sensível, coluna/lombar sensível ou hipertensão.
 
-Importante:
-Suba estes arquivos na raiz do GitHub. Não suba dentro da pasta soulfit_ia_netlify_v14.
+Observação técnica:
+A ficha visual possui 10 linhas fixas para permitir ajustes manuais, cardio, observações ou exercícios avulsos.
+A IA deve preencher apenas o volume adequado ao nível, tempo e perfil selecionados.
+
+Referência geral OMS:
+A OMS recomenda fortalecimento dos grandes grupos musculares em 2 ou mais dias por semana, mas não define número obrigatório de exercícios por sessão.
+
+Links:
+https://www.who.int/publications/i/item/9789240014886
+https://www.who.int/europe/news-room/fact-sheets/item/physical-activity
