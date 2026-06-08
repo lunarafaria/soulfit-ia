@@ -291,19 +291,19 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
 
   table{
     font-size:14px!important;
-    border-spacing:.48mm!important;
+    border-spacing:.35mm!important;
   }
 
   th{
-    height:6.4mm!important;
+    height:5.8mm!important;
     font-size:12px!important;
     line-height:1!important;
     padding:0!important;
   }
 
   td{
-    height:7mm!important;
-    max-height:7mm!important;
+    height:5.9mm!important;
+    max-height:5.9mm!important;
     font-size:14px!important;
     line-height:1!important;
     padding:0 .7mm!important;
@@ -386,7 +386,7 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
 <body>
 <header>
   <div><h1>SoulFit+ IA de Treinos</h1><div class="tag">Prescrição, evolução, patologias, funcional e ficha A4 horizontal</div></div>
-  <div class="tag">V43 | volume travado no código</div>
+  <div class="tag">V53 | cardio opcional corrigido + 10 linhas fixas</div>
 </header>
 
 <div class="wrap">
@@ -420,6 +420,29 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
 <div class="row">
   <div><label>Objetivo</label><select id="objetivo"><option>Hipertrofia</option><option>Emagrecimento</option><option>Hipertrofia + emagrecimento</option><option>Condicionamento</option><option>Força</option><option>Retorno/controle de dor</option></select></div>
   <div><label>Nível</label><select id="nivel"><option>Iniciante</option><option>Intermediário</option><option>Avançado</option></select></div>
+</div>
+
+<div class="pathology-toggle">
+  <label class="checkline">
+    <input type="checkbox" id="incluirCardio">
+    <span><b>Incluir cardio ao final do treino</b><small>Quando marcado, o cardio entra preferencialmente nas linhas 9 e 10.</small></span>
+  </label>
+  <div class="row" style="margin-top:8px">
+    <div><label>Tipo de cardio</label><select id="cardioTipo">
+      <option selected>Automático</option>
+      <option>Esteira</option>
+      <option>Bike</option>
+      <option>Elíptico</option>
+      <option>Escada</option>
+    </select></div>
+    <div><label>Tempo do cardio</label><select id="cardioTempo">
+      <option selected>Automático</option>
+      <option>10 min</option>
+      <option>15 min</option>
+      <option>20 min</option>
+      <option>30 min</option>
+    </select></div>
+  </div>
 </div>
 
 <div class="row">
@@ -532,7 +555,7 @@ td:nth-child(n+2){background:var(--soft);text-align:center}
 const letras=['A','B','C','D']; 
 let atual='A';
 let treinos={A:[],B:[],C:[],D:[]};
-const MAX_LINHAS_FICHA = 8;
+const MAX_LINHAS_FICHA = 10;
 
 
 function linhaVazia(){return {ex:'',sr:'',c1:'',c2:'',c3:'',c4:''}}
@@ -541,8 +564,16 @@ function esc(v){return String(v||'').replaceAll('&','&amp;').replaceAll('<','&lt
 function valor(id){return $(id)?$(id).value:''}
 function checked(id){return !!($(id)&&$(id).checked)}
 
+function normalizarTreinosParaDezLinhas(){
+  letras.forEach(l=>{
+    const atualArr = Array.isArray(treinos[l]) ? treinos[l] : [];
+    treinos[l] = Array.from({length:MAX_LINHAS_FICHA},(_,i)=>atualArr[i]||linhaVazia());
+  });
+}
+
+
 function init(){
-  letras.forEach(l=>{if(!treinos[l].length)treinos[l]=Array.from({length:MAX_LINHAS_FICHA},linhaVazia)})
+  normalizarTreinosParaDezLinhas()
   $('dataFicha').value=new Date().toISOString().slice(0,10);
   renderEditor();
   syncPrint();
@@ -596,6 +627,7 @@ function renderEditor(){
 
 function syncPrint(){
   if(!$('pAluno'))return;
+  normalizarTreinosParaDezLinhas();
   $('pAluno').textContent=valor('aluno');
   $('pObjetivo').textContent=valor('objetivo');
   $('pObs').textContent=[valor('obs'),valor('patologia'),valor('restricoes')].filter(Boolean).join(' | ');
@@ -620,7 +652,8 @@ function cleanEx(v){
 }
 function workoutHTML(l){
   const ativo=treinosAtivos().includes(l);
-  const rows=treinos[l].map(r=>`<tr>
+  const linhas=Array.from({length:MAX_LINHAS_FICHA},(_,i)=>treinos[l][i]||linhaVazia());
+  const rows=linhas.map(r=>`<tr>
     <td>${ativo?esc(cleanEx(r.ex)):''}</td>
     <td>${ativo?esc(r.sr):''}</td>
     <td>${ativo?esc(r.c1):''}</td>
@@ -675,12 +708,45 @@ function limparExcessoTreinoTexto(txt){
   return linhas.join('\n').trim();
 }
 
+
+function cardioTipoFinal(){
+  const tipo=valor('cardioTipo')||'Automático';
+  const base=(valor('patologia')+' '+valor('restricoes')).toLowerCase();
+  if(tipo!=='Automático') return tipo;
+  if(base.includes('joelho') || base.includes('lombar') || base.includes('coluna') || base.includes('obes')) return 'Bike';
+  if(base.includes('hipertens') || base.includes('pressão')) return 'Esteira leve';
+  return 'Esteira inclinada';
+}
+
+function cardioTempoFinal(){
+  const tempo=valor('cardioTempo')||'Automático';
+  if(tempo!=='Automático') return tempo;
+  const nivel=valor('nivel');
+  if(nivel==='Iniciante') return '10-15 min';
+  if(nivel==='Intermediário') return '15-20 min';
+  return '20-30 min';
+}
+
+function aplicarCardioNasLinhasFinais(){
+  if(!checked('incluirCardio')) return;
+  const tipo=cardioTipoFinal();
+  const tempo=cardioTempoFinal();
+  treinosAtivos().forEach(l=>{
+    if(!Array.isArray(treinos[l])) treinos[l]=Array.from({length:MAX_LINHAS_FICHA},linhaVazia);
+    treinos[l]=Array.from({length:MAX_LINHAS_FICHA},(_,i)=>treinos[l][i]||linhaVazia());
+    const cardio={ex:'CARDIO: '+tipo,sr:tempo,c1:'',c2:'',c3:'',c4:''};
+    if(!treinos[l][8].ex) treinos[l][8]=cardio;
+    else if(!treinos[l][9].ex) treinos[l][9]=cardio;
+  });
+}
+
 function aplicarTreinoTexto(txt){
   const parsed=parseTreino(txt);
   letras.forEach(l=>{
     treinos[l]=Array.from({length:MAX_LINHAS_FICHA},(_,i)=>parsed[l][i]||linhaVazia());
   });
   ajustarVolumePorNivel();
+  aplicarCardioNasLinhasFinais();
   renderEditor();
   syncPrint();
   $('sheet').scrollIntoView({behavior:'smooth',block:'start'});
@@ -692,6 +758,7 @@ function dadosIA(){
     tipoPrescricao:valor('tipoPrescricao'),modalidadeTreino:valor('modalidadeTreino'),experienciaPrevia:valor('experienciaPrevia'),
     ordemPreferencia:valor('ordemPreferencia'),perfilVolume:valor('perfilVolume'),tempoSessao:valor('tempoSessao'),frequencia:valor('freq'),divisao:valor('divisao'),dataFicha:valor('dataFicha'),horario:valor('horario'),
     patologia:valor('patologia'),modoPatologiaExclusiva:checked('modoPatologiaExclusiva'),restricoes:valor('restricoes'),observacoes:valor('obs'),
+    incluirCardio:checked('incluirCardio'),cardioTipo:valor('cardioTipo'),cardioTempo:valor('cardioTempo'),
     treinoAntigo:valor('treinoAntigo')
   };
 }
@@ -712,7 +779,7 @@ async function gerarComIA(){
   }
   statusIA('Gerando treino com IA... aguarde.','');
   try{
-    const resp=await fetch('/.netlify/functions/gerar-treino',{
+    const resp=await fetch('/api/gerar-treino',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify(dados)
@@ -748,6 +815,7 @@ function gerarEvolucao(){
   });
   ajustarVolumePorNivel();
   if(valor('objetivo').includes('Emagrecimento'))addFinal();
+  aplicarCardioNasLinhasFinais();
   const restr=valor('restricoes').toLowerCase()+ ' ' + valor('patologia').toLowerCase();
   if(restr.includes('joelho'))trocar(['Agachamento livre','Hack squat'],['Agachamento assistido','Leg press amplitude controlada']);
   if(restr.includes('lombar')||restr.includes('coluna'))trocar(['Stiff','Levantamento terra romeno'],['Mesa flexora','Pull through na polia']);
@@ -765,11 +833,22 @@ function limiteExerciciosPorNivel(){
   const nivel=valor('nivel');
   const perfil=valor('perfilVolume')||'Conservador científico';
   const tempo=valor('tempoSessao')||'40-60 min';
-  let limite = nivel==='Iniciante' ? 5 : nivel==='Intermediário' ? 6 : 7;
-  if(perfil==='Hipertrofia avançada controlada' && nivel==='Avançado') limite=8;
-  if(tempo==='30-40 min') limite=Math.max(4, limite-1);
-  if(tempo==='60-75 min' && nivel!=='Iniciante') limite=Math.min(8, limite+1);
-  return limite;
+
+  // V50: a ficha sempre mantém 10 linhas visíveis.
+  // A IA só preenche até o limite abaixo; as demais linhas ficam livres para ajuste manual/cardio.
+  let limite;
+  if(nivel==='Iniciante'){
+    limite = tempo==='30-40 min' ? 6 : 7; // padrão: 6 a 7 exercícios
+  }else if(nivel==='Intermediário'){
+    limite = tempo==='30-40 min' ? 7 : 8; // padrão: 7 a 8 exercícios
+  }else{
+    limite = 8; // avançado padrão
+    if(tempo==='30-40 min') limite = 6;
+    if(tempo==='60-75 min') limite = 10;
+    if(perfil==='Hipertrofia avançada controlada') limite = 10; // avançado: 6 a 10 exercícios
+  }
+
+  return Math.min(10, Math.max(6, limite));
 }
 
 function seriesPadraoPorNivel(){
@@ -832,21 +911,60 @@ function salvarHistorico(){
 
 function carregarHistorico(){
   let h=JSON.parse(localStorage.getItem('soulfit_hist')||'[]');
-  $('historico').innerHTML=h.length?h.map((x,i)=>`<div class="history-item"><b>${esc(x.aluno||'Sem nome')}</b><br><span class="mini">${esc(x.objetivo||'')} | ${x.data}</span><div class="btns"><button class="light" onclick="restaurar(${i})">Abrir</button></div></div>`).join(''):'<div class="mini">Nada salvo ainda.</div>';
+  $('historico').innerHTML=h.length?h.map((x,i)=>`<div class="history-item"><b>${esc(x.aluno||'Sem nome')}</b><br><span class="mini">${esc(x.objetivo||'')} | ${x.data}</span><div class="btns"><button class="light" onclick="restaurar(${i})">Abrir</button><button class="light" onclick="excluirHistorico(${i})">Excluir</button></div></div>`).join(''):'<div class="mini">Nada salvo ainda.</div>';
+}
+
+function excluirHistorico(i){
+  let h=JSON.parse(localStorage.getItem('soulfit_hist')||'[]');
+  const item=h[i];
+  const nome=item && item.aluno ? item.aluno : 'este histórico';
+  if(!confirm('Excluir o histórico de '+nome+'?')) return;
+  h.splice(i,1);
+  localStorage.setItem('soulfit_hist',JSON.stringify(h));
+  carregarHistorico();
 }
 
 function restaurar(i){
   let h=JSON.parse(localStorage.getItem('soulfit_hist')||'[]');
   let x=h[i]; if(!x)return;
   const d=x.dados||{};
-  ['aluno','idade','objetivo','nivel','sexo','tipoPrescricao','modalidadeTreino','experienciaPrevia','ordemPreferencia','perfilVolume','tempoSessao','freq','divisao','dataFicha','horario','patologia','restricoes','obs','treinoAntigo'].forEach(id=>{if($(id)&&d[id]!==undefined)$(id).value=d[id]});
+  ['aluno','idade','objetivo','nivel','sexo','tipoPrescricao','modalidadeTreino','experienciaPrevia','ordemPreferencia','perfilVolume','tempoSessao','freq','divisao','dataFicha','horario','patologia','restricoes','obs','cardioTipo','cardioTempo','treinoAntigo'].forEach(id=>{if($(id)&&d[id]!==undefined)$(id).value=d[id]});
+  if($('incluirCardio')) $('incluirCardio').checked=!!d.incluirCardio;
   treinos=x.treinos||treinos;
+  normalizarTreinosParaDezLinhas();
   renderEditor();syncPrint();
 }
 
 function limparFicha(){
-  if(!confirm('Limpar ficha atual?'))return;
+  if(!confirm('Limpar ficha, dados do aluno e observações atuais?'))return;
   letras.forEach(l=>treinos[l]=Array.from({length:MAX_LINHAS_FICHA},linhaVazia));
+  const camposTexto=['aluno','idade','dataFicha','horario','patologia','restricoes','obs','treinoAntigo'];
+  camposTexto.forEach(id=>{ if($(id)) $(id).value=''; });
+  const defaults={
+    tipoPrescricao:'Primeira prescrição',
+    modalidadeTreino:'Musculação',
+    experienciaPrevia:'Nunca treinou',
+    objetivo:'Hipertrofia',
+    nivel:'Iniciante',
+    perfilVolume:'Conservador científico',
+    tempoSessao:'40-60 min',
+    sexo:'Mulher',
+    ordemPreferencia:'Automática pelo sexo',
+    freq:'4x',
+    divisao:'A/B/C',
+    cardioTipo:'Automático',
+    cardioTempo:'Automático'
+  };
+  Object.keys(defaults).forEach(id=>{ if($(id)) $(id).value=defaults[id]; });
+  if($('modoPatologiaExclusiva')) $('modoPatologiaExclusiva').checked=false;
+  if($('incluirCardio')) $('incluirCardio').checked=false;
+  if($('cardioTipo')) $('cardioTipo').value='Automático';
+  if($('cardioTempo')) $('cardioTempo').value='Automático';
+  if($('incluirCardio')) $('incluirCardio').checked=false;
+  if($('iaStatus')) $('iaStatus').style.display='none';
+  $('dataFicha').value=new Date().toISOString().slice(0,10);
+  atual='A';
+  abrirTreino('A');
   renderEditor();syncPrint();
 }
 
@@ -883,9 +1001,9 @@ function estilosImpressao(){
     .col{display:flex;flex-direction:column;gap:2mm;min-width:0}
     .workout{height:85.4mm;min-height:0;overflow:hidden}
     .workout h3{display:inline-block;margin:0 0 .8mm;padding:2px 8px;border-right:8px solid #e00000;border-radius:2px;background:#171a1f;color:#fff;font-size:12px;line-height:1}
-    table{width:100%;border-collapse:separate;border-spacing:.48mm;table-layout:fixed;font-size:14px}
-    th{height:6.4mm;padding:0;border:1px solid #fff;background:#171a1f;color:#fff;text-align:center;font-size:12px;line-height:1}
-    td{height:7mm;max-height:7mm;padding:0 .7mm;border:1px solid #666;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:14px;line-height:1}
+    table{width:100%;border-collapse:separate;border-spacing:.35mm;table-layout:fixed;font-size:14px}
+    th{height:5.8mm;padding:0;border:1px solid #fff;background:#171a1f;color:#fff;text-align:center;font-size:12px;line-height:1}
+    td{height:5.9mm;max-height:5.9mm;padding:0 .7mm;border:1px solid #666;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:14px;line-height:1}
     td:nth-child(n+2){background:#fff8d9;text-align:center}
     .workout.inactive td{color:transparent;background:#fff!important}
     .excol{width:54%}.srcol{width:11%}.loadcol{width:8.75%}

@@ -1,16 +1,23 @@
-[build]
-  publish = "."
-  functions = "netlify/functions"
+SoulFit+ IA V53 - Cardio opcional corrigido
 
-[functions]
-  node_bundler = "esbuild"
+Arquivos corretos para subir na raiz do GitHub:
+- index.html
+- vercel.json
+- pasta api/gerar-treino.js
+- README.txt
+- REFERENCIAS_VOLUME.txt
 
-[[headers]]
-  for = "/"
-  [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate"
+Ajustes:
+- Mantém 10 linhas fixas no painel 3. Editar ficha.
+- Mantém 10 linhas fixas na seção 4. Ficha para impressão.
+- Cardio opcional com checkbox: Incluir cardio ao final do treino.
+- Tipo de cardio: Automático, Esteira, Bike, Elíptico ou Escada.
+- Tempo do cardio: Automático, 10 min, 15 min, 20 min ou 30 min.
+- Cardio entra preferencialmente nas linhas 9 e 10, quando houver espaço.
+- Gerar por regras também respeita o cardio marcado.
+- Histórico restaura os campos de cardio.
+- Limpar ficha limpa também os campos de cardio.
+- Vercel.json corrigido e válido.
 
-[[headers]]
-  for = "/index.html"
-  [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate"
+Importante:
+O arquivo vercel.json precisa ser JSON válido. Não coloque referências ou textos dentro dele.
