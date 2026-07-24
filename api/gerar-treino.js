@@ -68,151 +68,175 @@ function limitarTreinoTexto(txt,{limite,nivel,divisao}){
   return linhas.join('\n').trim();
 }
 
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Use POST." });
+export function calcularLimites(dados){
+  const nivel=dados.nivel||'Iniciante';
+  const tempo=dados.tempoSessao||'40-60 min';
+  const perfil=dados.perfilVolume||'Conservador científico';
+  let minimo=nivel==='Iniciante'?6:nivel==='Intermediário'?7:6;
+  let maximo=nivel==='Iniciante'?7:nivel==='Intermediário'?8:10;
+  let limite=maximo;
+
+  if(nivel==='Avançado'){
+    limite=tempo==='30-40 min'?6:tempo==='60-75 min'?10:8;
+    if(perfil==='Hipertrofia avançada controlada')limite=10;
+  }else if(tempo==='30-40 min'){
+    limite=minimo;
   }
 
-  try {
-    const dados = typeof req.body === "string" ? JSON.parse(req.body || "{}") : (req.body || {});
-    if (!process.env.OPENAI_API_KEY) {
-      return res.status(500).json({ error: "OPENAI_API_KEY não configurada na Vercel." });
-    }
+  if(dados.usarQuantidadeIA===true){
+    const faixa=String(dados.quantidadeExerciciosIA||'');
+    if(faixa==='6 a 7'){minimo=6;limite=7}
+    if(faixa==='7 a 8'){minimo=7;limite=8}
+    if(faixa==='8 a 10'){minimo=8;limite=10}
+  }
 
-    const divisao = dados.divisao || "A/B/C";
-    let regraDivisao = "Gere SOMENTE TREINO A, TREINO B e TREINO C. Não gere D.";
-    if (divisao === "A/B") regraDivisao = "Gere SOMENTE TREINO A e TREINO B. Não gere C nem D.";
-    if (divisao === "A/B/C/D") regraDivisao = "Gere TREINO A, TREINO B, TREINO C e TREINO D.";
-    if (divisao === "MI/MS") regraDivisao = "Gere SOMENTE TREINO A - MI e TREINO B - MS. Não gere C nem D.";
+  return {minimo,limite:Math.min(10,Math.max(minimo,limite))};
+}
 
-    const nivel = dados.nivel || "Iniciante";
-    const perfilVolume = dados.perfilVolume || "Conservador científico";
-    const tempoSessao = dados.tempoSessao || "40-60 min";
-    const usarQuantidadeIA = dados.usarQuantidadeIA === true;
-    const quantidadeExerciciosIA = String(dados.quantidadeExerciciosIA || "");
+function regraDaDivisao(divisao){
+  if(divisao==='A/B')return 'Gere somente os treinos A e B.';
+  if(divisao==='A/B/C/D')return 'Gere os treinos A, B, C e D.';
+  if(divisao==='MI/MS')return 'Gere A para membros inferiores e B para membros superiores.';
+  return 'Gere somente os treinos A, B e C.';
+}
 
-    let limiteMin = nivel === "Iniciante" ? 6 : nivel === "Intermediário" ? 7 : 6;
-    let limiteMax = nivel === "Iniciante" ? 7 : nivel === "Intermediário" ? 8 : 10;
-    let limite = limiteMax;
+function textoDaResposta(data){
+  return String(data.output_text||(data.output||[]).flatMap(i=>i.content||[]).map(c=>c.text||'').join('\n')).trim();
+}
 
-    if (nivel === "Avançado") {
-      limite = 8; // avançado padrão
-      if (tempoSessao === "30-40 min") limite = 6;
-      if (tempoSessao === "60-75 min") limite = 10;
-      if (perfilVolume === "Hipertrofia avançada controlada") limite = 10;
-    } else {
-      if (tempoSessao === "30-40 min") limite = limiteMin;
-      if (tempoSessao === "40-60 min") limite = limiteMax;
-      if (tempoSessao === "60-75 min") limite = limiteMax;
-    }
+function dadosAnonimizados(dados){
+  const copia={...dados};
+  delete copia.aluno;
+  delete copia.nascimento;
+  delete copia.horario;
+  delete copia.dataFicha;
+  delete copia.dataAvaliacao;
+  delete copia.historicoChat;
+  delete copia.mensagemProfessor;
+  return copia;
+}
 
-    if (usarQuantidadeIA) {
-      if (quantidadeExerciciosIA === "6 a 7") {
-        limiteMin = 6;
-        limite = 7;
-      } else if (quantidadeExerciciosIA === "7 a 8") {
-        limiteMin = 7;
-        limite = 8;
-      } else if (quantidadeExerciciosIA === "8 a 10") {
-        limiteMin = 8;
-        limite = 10;
-      }
-    }
+async function consultarOpenAI(prompt,maxOutputTokens=3000){
+  const response=await fetch('https://api.openai.com/v1/responses',{
+    method:'POST',
+    headers:{
+      'Authorization':`Bearer ${process.env.OPENAI_API_KEY}`,
+      'Content-Type':'application/json'
+    },
+    body:JSON.stringify({
+      model:process.env.OPENAI_MODEL||'gpt-5.6-sol',
+      input:prompt,
+      reasoning:{effort:process.env.OPENAI_REASONING_EFFORT||'low'},
+      text:{verbosity:'medium'},
+      max_output_tokens:maxOutputTokens
+    })
+  });
+  const data=await response.json();
+  if(!response.ok){
+    const detalhe=data&&data.error&&data.error.message;
+    const erro=new Error(detalhe||'Falha ao consultar a OpenAI.');
+    erro.status=response.status;
+    throw erro;
+  }
+  return textoDaResposta(data);
+}
 
-    limite = Math.min(10, Math.max(limiteMin, limite));
+function separarFicha(texto,marcador){
+  const indice=texto.toUpperCase().indexOf(marcador.toUpperCase());
+  if(indice<0)return {mensagem:texto,ficha:''};
+  return {
+    mensagem:texto.slice(0,indice).replace(/^RESPOSTA\s*:\s*/i,'').trim(),
+    ficha:texto.slice(indice+marcador.length).trim()
+  };
+}
 
-    const prompt = `
-Você é a IA assistente da Luna, profissional de Educação Física e CEO da SoulFit+.
-Monte uma ficha com base em ciência do treinamento, segurança e padrão SoulFit+.
+export async function responderChat(dados,limites){
+  const prompt=`
+Você é o assistente técnico SoulFit+ para um profissional de Educação Física.
+Responda em português do Brasil, com objetividade e raciocínio aplicável à prescrição.
+Não diagnostique, não invente referências e sinalize quando sintomas ou sinais exigirem avaliação de saúde.
 
-DADOS DO ALUNO:
-${JSON.stringify(dados, null, 2)}
+DADOS ANONIMIZADOS:
+${JSON.stringify(dadosAnonimizados(dados),null,2)}
 
-DIVISÃO:
-${regraDivisao}
+HISTÓRICO RECENTE DA CONVERSA:
+${JSON.stringify((dados.historicoChat||[]).slice(-10),null,2)}
 
-REGRA DE VOLUME CIENTÍFICO + PADRÃO SOULFIT+:
-- A ficha visual sempre tem 10 linhas, mas a IA deve preencher somente a quantidade adequada.
-- Máximo absoluto nesta ficha: ${limite} exercícios por treino. Conte antes de responder.
-- Se usarQuantidadeIA=true, respeite a faixa solicitada em quantidadeExerciciosIA (${quantidadeExerciciosIA || "não marcada"}) e monte cada treino dentro dessa faixa, sem passar de ${limite}.
-- Iniciante: 6 a 7 exercícios, geralmente 2 séries nos acessórios e 2-3 séries nos principais.
-- Intermediário: 7 a 8 exercícios, geralmente 3 séries.
-- Avançado: 6 a 10 exercícios, usando 10 apenas quando o tempo/perfil permitir e sem restrição relevante.
-- Hipertrofia avançada controlada: pode chegar até 10 exercícios, se fizer sentido.
-- Patologia/dor/retorno: reduzir volume, evitar redundância e priorizar segurança.
-- Finalizadores contam como exercício/bloco e só entram se couberem.
-- Emagrecimento não significa excesso de exercícios.
-- A OMS recomenda fortalecimento dos grandes grupos musculares em 2 ou mais dias por semana, mas não exige 10 exercícios por sessão.
-- Referência prática: iniciante 6-10 séries semanais por grande grupo; intermediário 8-12; avançado 10-16, sempre individualizando.
-
-
-CARDIO OPCIONAL:
-- Se incluirCardio=true, inclua UM bloco de cardio ao final do treino quando houver espaço.
-- Preferir linhas finais da ficha, especialmente 9 ou 10, sem apagar exercícios principais.
-- Se cardioTipo for diferente de Automático, use o tipo solicitado.
-- Se cardioTempo for diferente de Automático, use o tempo solicitado.
-- Se houver joelho, coluna, lombar, obesidade importante, hipertensão ou dor relevante, escolha cardio de menor impacto.
-- Exemplos: CARDIO: Esteira inclinada - 15-20 min; CARDIO: Bike leve - 10-15 min; CARDIO: Elíptico - 15 min.
-- O cardio não autoriza ultrapassar o máximo absoluto de 10 linhas.
-
-PADRÃO LUNA/SOULFIT+:
-- Ficha objetiva, aplicável em academia real.
-- Normalmente 6 a 8 exercícios por treino, podendo chegar a 10 em alunos avançados.
-- Multiarticulares no início; isoladores depois.
-- Mulheres: quando seguro, prioridade para inferiores/glúteos e um dia de superiores organizado.
-- Homens: quando seguro, prioridade inicial para superiores, sem negligenciar inferiores.
-- Patologia manda mais que estética.
-- Não repetir padrões desnecessários na mesma sessão.
+PEDIDO DO PROFISSIONAL:
+${String(dados.mensagemProfessor||'')}
 
 REGRAS:
-1. Não gerar treino genérico.
-2. Não ultrapassar ${limite} exercícios por treino. Se passar de ${limite}, refaça antes de responder.
-3. Não preencher linhas vazias e não completar a ficha até 10 linhas.
-4. Só gerar 10 exercícios quando o aluno for avançado e o limite calculado permitir.
-5. Primeira prescrição: progressão conservadora.
-6. Evolução com treino antigo: evoluir sem copiar tudo.
-7. Adaptação por lesão/patologia: substituir o que for inadequado.
-8. Se modoPatologiaExclusiva=true, a patologia manda mais que objetivo estético.
-9. Considerar idade, sexo, objetivo, nível, experiência, frequência, restrições, patologia, tempo e perfil de volume.
-10. Treino funcional: blocos simples, seguros, mobilidade, estabilidade, core e condicionamento sem excesso.
-11. Não inventar diagnóstico.
+- Considere cadastro, avaliação, equipamentos, condição clínica, dor, treino anterior e treino atual.
+- Se o pedido for apenas explicação, responda começando por "RESPOSTA:" e não gere ficha.
+- Se o pedido alterar exercícios, volume, ordem, divisão ou séries, explique brevemente e depois escreva "FICHA ATUALIZADA:".
+- Após "FICHA ATUALIZADA:", devolva a ficha completa, não apenas o exercício alterado.
+- Use no máximo ${limites.limite} exercícios em cada treino.
+- Cada linha da ficha deve ter "Exercício - séries x repetições".
+- A ficha precisa usar apenas as divisões solicitadas pelo prontuário.
+`;
+  const bruto=await consultarOpenAI(prompt,3200);
+  let partes=separarFicha(bruto,'FICHA ATUALIZADA:');
+  if(!partes.ficha&&/\bTREINO\s+A\b/i.test(bruto)){
+    const inicio=bruto.search(/\bTREINO\s+A\b/i);
+    partes={mensagem:bruto.slice(0,inicio).replace(/^RESPOSTA\s*:\s*/i,'').trim(),ficha:bruto.slice(inicio)};
+  }
+  const treino=partes.ficha?limitarTreinoTexto(partes.ficha,{limite:limites.limite,nivel:dados.nivel||'Iniciante',divisao:dados.divisao||'A/B/C'}):'';
+  return {mensagem:partes.mensagem||'Ajuste preparado para revisão profissional.',treino};
+}
+
+async function gerarFicha(dados,limites){
+  const divisao=dados.divisao||'A/B/C';
+  const faixa=dados.usarQuantidadeIA===true?`${dados.quantidadeExerciciosIA} exercícios`:`${limites.minimo} a ${limites.limite} exercícios`;
+  const prompt=`
+Você é o assistente de prescrição SoulFit+ para um profissional de Educação Física.
+Monte uma ficha individualizada, aplicável aos equipamentos disponíveis e baseada em princípios de treinamento resistido.
+Não diagnostique. Se os dados indicarem condição que exija liberação ou avaliação, seja conservador e registre isso na justificativa.
+
+PRONTUÁRIO ANONIMIZADO:
+${JSON.stringify(dadosAnonimizados(dados),null,2)}
+
+REGRAS DA FICHA:
+- ${regraDaDivisao(divisao)}
+- Use ${faixa} por treino e nunca ultrapasse ${limites.limite}.
+- Cardio conta como um bloco dentro do limite e só entra quando incluirCardio=true.
+- Quando incluirIntervalado=true, inclua um único bloco ${dados.intervaladoTipo||"intervalado"} no treino ${dados.intervaladoDestino||"indicado"}, usando ${dados.intervaladoProtocolo||"protocolo adequado"} e ${dados.intervaladoExercicio||"modalidade compatível"}. Esse bloco também conta no limite.
+- Organize padrões multiarticulares antes dos acessórios quando forem adequados.
+- Ajuste séries, repetições, impacto, amplitude e complexidade ao nível, dor, histórico, patologias e tempo.
+- Em evolução, preserve exercícios que ainda fazem sentido e altere somente o que tiver justificativa.
+- Não invente diagnóstico, teste, carga usada ou resposta clínica.
 
 FORMATO OBRIGATÓRIO:
-Responda apenas com a ficha.
-
+FICHA
 TREINO A
-1️⃣ Exercício - 3x10
-2️⃣ Exercício - 3x12
+1. Exercício - 3x10
+2. Exercício - 3x12
 
 TREINO B
-1️⃣ Exercício - 3x10
+1. Exercício - 3x10
 
-Antes de finalizar, faça uma autocorreção silenciosa: nenhum treino pode ter mais que ${limite} exercícios, e a ficha não precisa preencher todas as 10 linhas.
+JUSTIFICATIVA TÉCNICA:
+- Escreva de 3 a 6 pontos curtos sobre divisão, volume, escolhas, progressão e cuidados.
 `;
+  const bruto=await consultarOpenAI(prompt,3600);
+  const partes=separarFicha(bruto,'JUSTIFICATIVA TÉCNICA:');
+  const ficha=partes.mensagem.replace(/^FICHA\s*/i,'').trim();
+  const treino=limitarTreinoTexto(ficha,{limite:limites.limite,nivel:dados.nivel||'Iniciante',divisao});
+  if(!treino||!/\bTREINO\s+A\b/i.test(treino))throw new Error('A IA não retornou uma ficha válida.');
+  return {treino,justificativa:partes.ficha||'Ficha individualizada para revisão profissional.'};
+}
 
-    const response = await fetch("https://api.openai.com/v1/responses", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: process.env.OPENAI_MODEL || "gpt-5.1",
-        input: prompt,
-        max_output_tokens: 2200
-      })
-    });
+export default async function handler(req,res){
+  if(req.method!=='POST')return res.status(405).json({error:'Use POST.'});
 
-    const data = await response.json();
-    if (!response.ok) {
-      return res.status(response.status).json({ error: "Erro na API da OpenAI. Verifique a chave, créditos e modelo configurado." });
-    }
-
-    const treinoBruto = data.output_text || (data.output || []).flatMap(i => i.content || []).map(c => c.text || "").join("\n").trim();
-    const treino = limitarTreinoTexto(treinoBruto, { limite, nivel, divisao });
-    return res.status(200).json({ treino });
-
-  } catch (error) {
-    return res.status(500).json({ error: "Erro interno ao gerar treino." });
+  try{
+    const dados=typeof req.body==='string'?JSON.parse(req.body||'{}'):(req.body||{});
+    if(!process.env.OPENAI_API_KEY)return res.status(500).json({error:'OPENAI_API_KEY não configurada na Vercel.'});
+    const limites=calcularLimites(dados);
+    const resultado=dados.acao==='chat'?await responderChat(dados,limites):await gerarFicha(dados,limites);
+    return res.status(200).json(resultado);
+  }catch(error){
+    const status=Number(error.status)||500;
+    const mensagem=status===401?'Chave da OpenAI inválida ou sem acesso.':status===429?'Limite ou saldo da OpenAI atingido.':error.message||'Erro interno ao gerar treino.';
+    return res.status(status).json({error:mensagem});
   }
 }
